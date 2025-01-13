@@ -7,7 +7,14 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        saira: ["Saira", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+        ubuntu: ["Ubuntu", "sans-serif"],
+        arsenal: ["Arsenal SC", "serif"],
+      },
+    },
   },
   plugins: [],
 } satisfies Config;

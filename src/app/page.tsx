@@ -1,3 +1,9 @@
+import Hero from "./componentes/hero";
+
 export default function Home() {
-  return <div className="text-4xl">Pix On Chain Created</div>;
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
 }
