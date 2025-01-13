@@ -142,7 +142,7 @@ const Hero: React.FC = () => {
         alt="Imagem de Celular"
         width={872}
         height={797}
-        className="absolute z-10 right-0 bottom-0 max-w-[50vw] w-[40%] md:w-[35%] lg:w-[30%] xl:w-[25%] max-h-screen"
+        className="absolute z-10 right-0 bottom-0 max-w-[50vw] w-[40%] md:w-[35%] lg:w-[32%] xl:w-[32%] 2xl:w-[36%] max-h-screen"
       />
     </div>
   );
