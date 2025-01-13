@@ -10,6 +10,7 @@ export default {
     extend: {
       fontFamily: {
         saira: ["Saira", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
       },
     },
   },
