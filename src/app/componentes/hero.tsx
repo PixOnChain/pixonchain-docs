@@ -17,13 +17,42 @@ interface SocialLink {
   src: StaticImageData;
   width: number;
   height: number;
+  href: string;
 }
 
 const socialLinks: SocialLink[] = [
-  { id: 1, name: "Whatsapp", src: whatsapp, width: 19, height: 19 },
-  { id: 2, name: "Twitter", src: twitter, width: 19, height: 19 },
-  { id: 3, name: "Instagram", src: instagram, width: 19, height: 19 },
-  { id: 4, name: "LinkedIn", src: linkedin, width: 19, height: 19 },
+  {
+    id: 1,
+    name: "Whatsapp",
+    src: whatsapp,
+    width: 19,
+    height: 19,
+    href: "https://wa.me/554731705121",
+  },
+  {
+    id: 2,
+    name: "Twitter",
+    src: twitter,
+    width: 19,
+    height: 19,
+    href: "https://x.com/pixonchain_com",
+  },
+  {
+    id: 3,
+    name: "Instagram",
+    src: instagram,
+    width: 19,
+    height: 19,
+    href: "https://instagram.com/pixonchain",
+  },
+  {
+    id: 4,
+    name: "LinkedIn",
+    src: linkedin,
+    width: 19,
+    height: 19,
+    href: "https://linkedin.com/company/pixonchain",
+  },
 ];
 
 const Hero: React.FC = () => {
@@ -74,8 +103,13 @@ const Hero: React.FC = () => {
                   />
                 </div>
               </button>
-              <button className="font-montserrat font-medium text-sm sm:text-base leading-6 bg-[#7747FF] bg-opacity-15 rounded-lg px-4 h-[50px] sm:h-[60px] max-w-[262px] sm:max-w-[265px] text-start transition-all duration-300 hover:bg-opacity-30 hover:shadow-lg hover:scale-105">
-                <div className="flex gap-3 items-center justify-center">
+              <button className="font-medium text-sm sm:text-base leading-6 bg-[#7747FF] bg-opacity-15 rounded-lg px-4 h-[50px] sm:h-[60px] max-w-[256px] text-start">
+                <a
+                  href="https://discord.gg/tJ8zEprjs6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex gap-3 items-center justify-center"
+                >
                   <span>
                     Fazer parte da{" "}
                     <span className="font-extrabold">comunidade grátis </span>
@@ -86,7 +120,7 @@ const Hero: React.FC = () => {
                     width={45}
                     height={45}
                   />
-                </div>
+                </a>
               </button>
             </div>
             <span className="font-light text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-normal sm:leading-relaxed md:leading-6 lg:leading-6 xl:leading-6 max-w-[476px]">
@@ -103,9 +137,10 @@ const Hero: React.FC = () => {
           {socialLinks.map((social) => (
             <a
               key={social.id}
-              href="#"
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={social.name}
-              className="transition-transform duration-300 hover:scale-110"
             >
               <Image
                 src={social.src}
