@@ -106,9 +106,12 @@ const Hero: React.FC = () => {
               className="sm:w-[252px] w-[150px]"
             />
           </div>
-          <button className="font-montserrat font-medium text-sm sm:text-base leading-6 bg-[#7747FF] rounded-lg px-2 sm:px-4 md:px-6 h-[52px] transition-all duration-300 hover:bg-[#5E34CC] hover:scale-105">
-            <span className="font-bold">Entre em contato</span>
-          </button>
+          <a
+            href="https://wa.me/554731705121"
+            className="font-bold font-montserrat flex justify-center items-center text-sm sm:text-base leading-6 bg-[#7747FF] rounded-lg px-2 sm:px-4 md:px-6 h-[52px] transition-all duration-300 hover:bg-[#5E34CC] hover:scale-105"
+          >
+            Entre em contato
+          </a>
         </div>
 
         <div className="w-full flex flex-col lg:flex-row gap-6 justify-center items-center flex-1 z-20 relative pt-4">
