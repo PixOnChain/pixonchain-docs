@@ -106,7 +106,7 @@ const Hero: React.FC = () => {
               className="sm:w-[252px] w-[150px]"
             />
           </div>
-          <button className="font-medium text-sm sm:text-base leading-6 bg-[#7747FF] rounded-lg px-2 sm:px-4 md:px-6 h-[52px]">
+          <button className="font-montserrat font-medium text-sm sm:text-base leading-6 bg-[#7747FF] rounded-lg px-2 sm:px-4 md:px-6 h-[52px] transition-all duration-300 hover:bg-[#5E34CC] hover:scale-105">
             <span className="font-bold">Entre em contato</span>
           </button>
         </div>
@@ -116,15 +116,15 @@ const Hero: React.FC = () => {
             <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#F3F3F3] max-w-[924px] leading-snug sm:leading-tight md:leading-[50px] lg:leading-[60px] xl:leading-[68px]">
               Crie sua própria corretora de criptomoedas
             </h1>
-            <p className="max-w-[800px] font-light text-sm sm:text-base md:text-lg lg:text-xl xl:text-[30px] leading-relaxed sm:leading-[28px] md:leading-[32px] lg:leading-[38px]">
+            <p className="max-w-[800px] font-light text-sm sm:text-base md:text-lg lg:text-xl xl:text-[32px] leading-relaxed sm:leading-[28px] md:leading-[32px] lg:leading-[38px]">
               Garanta seu <span className="font-bold">Early Adoption Pass</span>{" "}
               e torne-se um dos pioneiros na adoção dessa tecnologia. Ao
               adquirir o passe, você fará parte de um{" "}
               <span className="font-bold">grupo seleto e exclusivo</span> no
               universo cripto.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button className="font-medium text-start text-sm sm:text-base leading-6 bg-[#7747FF] rounded-lg px-4 h-[50px] sm:h-[60px] max-w-[262px]">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
+              <button className="font-montserrat font-medium text-start text-sm sm:text-base leading-6 bg-[#7747FF] rounded-lg px-4 h-[50px] sm:h-[60px] max-w-[262px] sm:max-w-[278px] transition-all duration-300 hover:bg-[#5E34CC] hover:shadow-lg hover:scale-105">
                 <div className="flex gap-3 items-center justify-center">
                   <span>
                     Garantir{" "}
@@ -158,7 +158,7 @@ const Hero: React.FC = () => {
                 </a>
               </button>
             </div>
-            <span className="font-light text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-normal sm:leading-relaxed md:leading-[28px] lg:leading-[30px] xl:leading-[32px] max-w-[476px]">
+            <span className="font-light text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-normal sm:leading-relaxed md:leading-6 lg:leading-6 xl:leading-6 max-w-[476px]">
               A <span className="font-bold">oportunidade</span> para entrar na{" "}
               <span className="font-bold">lista de espera</span> encerrará em{" "}
               <span className="font-bold">{timeLeft.dias} dias</span>,{" "}
@@ -168,6 +168,7 @@ const Hero: React.FC = () => {
             </span>
           </div>
         </div>
+
         <div className="flex gap-2 relative z-30 pb-6 pt-6">
           {socialLinks.map((social) => (
             <a
