@@ -1,22 +1,23 @@
-import React from "react";
-import Image, { StaticImageData } from "next/image";
+import React from "react"
+import Image, { StaticImageData } from "next/image"
 
-import logo from "@/app/assets/logo-pixonchain.png";
-import vipCard from "@/app/assets/cartao-vip.png";
-import discord from "@/app/assets/discord.png";
-import bg from "@/app/assets/bg.png";
-import phone from "@/app/assets/phone.png";
-import instagram from "@/app/assets/instagram.png";
-import twitter from "@/app/assets/twitter.png";
-import linkedin from "@/app/assets/linkedin.png";
-import whatsapp from "@/app/assets/whatsapp.png";
+import logo from "@/app/assets/logo-pixonchain.png"
+import vipCard from "@/app/assets/cartao-vip.png"
+import discord from "@/app/assets/discord.png"
+import bg from "@/app/assets/bg.png"
+import phone from "@/app/assets/phone.png"
+import instagram from "@/app/assets/instagram.png"
+import twitter from "@/app/assets/twitter.png"
+import linkedin from "@/app/assets/linkedin.png"
+import whatsapp from "@/app/assets/whatsapp.png"
 
 interface SocialLink {
-  id: number;
-  name: string;
-  src: StaticImageData;
-  width: number;
-  height: number;
+  id: number
+  name: string
+  src: StaticImageData
+  width: number
+  height: number
+  href: string
 }
 
 const socialLinks: SocialLink[] = [
@@ -26,6 +27,7 @@ const socialLinks: SocialLink[] = [
     src: whatsapp,
     width: 19,
     height: 19,
+    href: "https://wa.me/554731705121", // Link do WhatsApp
   },
   {
     id: 2,
@@ -33,6 +35,7 @@ const socialLinks: SocialLink[] = [
     src: twitter,
     width: 19,
     height: 19,
+    href: "https://x.com/pixonchain_com", // Link do Twitter
   },
   {
     id: 3,
@@ -40,6 +43,7 @@ const socialLinks: SocialLink[] = [
     src: instagram,
     width: 19,
     height: 19,
+    href: "https://instagram.com/pixonchain", // Link do Instagram
   },
   {
     id: 4,
@@ -47,8 +51,9 @@ const socialLinks: SocialLink[] = [
     src: linkedin,
     width: 19,
     height: 19,
+    href: "https://linkedin.com/company/pixonchain", // Link do LinkedIn
   },
-];
+]
 
 const Hero: React.FC = () => {
   return (
@@ -99,7 +104,12 @@ const Hero: React.FC = () => {
                 </div>
               </button>
               <button className="font-medium text-sm sm:text-base leading-6 bg-[#7747FF] bg-opacity-15 rounded-lg px-4 h-[50px] sm:h-[60px] max-w-[256px] text-start">
-                <div className="flex gap-3 items-center justify-center">
+                <a
+                  href="https://discord.gg/tJ8zEprjs6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex gap-3 items-center justify-center"
+                >
                   <span>
                     Fazer parte da{" "}
                     <span className="font-extrabold">comunidade grátis </span>
@@ -110,7 +120,7 @@ const Hero: React.FC = () => {
                     width={45}
                     height={45}
                   />
-                </div>
+                </a>
               </button>
             </div>
             <span className="font-light text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-normal sm:leading-relaxed md:leading-[28px] lg:leading-[30px] xl:leading-[32px] max-w-[476px]">
@@ -124,7 +134,13 @@ const Hero: React.FC = () => {
         </div>
         <div className="flex gap-2 relative z-30 pb-6 pt-6">
           {socialLinks.map((social) => (
-            <a key={social.id} href="#" aria-label={social.name}>
+            <a
+              key={social.id}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.name}
+            >
               <Image
                 src={social.src}
                 alt={social.name}
@@ -145,7 +161,7 @@ const Hero: React.FC = () => {
         className="absolute z-10 right-0 bottom-0 max-w-[50vw] w-[40%] md:w-[35%] lg:w-[32%] xl:w-[32%] 2xl:w-[36%] max-h-screen"
       />
     </div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero
