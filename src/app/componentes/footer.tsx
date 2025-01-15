@@ -24,6 +24,10 @@ const Footer = () => {
       title: "Política de Privacidade",
       path: "/policies/privacypolicy",
     },
+    {
+        title: "Política de Exclusão de Dados",
+        path: "/policies/userdatadeletionpolicy",
+      },
   ]
 
   return (
