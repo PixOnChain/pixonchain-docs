@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import Image, { StaticImageData } from "next/image";
+import React, { useState, useEffect } from "react"
+import Image, { StaticImageData } from "next/image"
 
-import logo from "@/app/assets/logo-pixonchain.png";
-import vipCard from "@/app/assets/cartao-vip.png";
-import discord from "@/app/assets/discord.png";
-import bg from "@/app/assets/bg.png";
-import phone from "@/app/assets/phone.png";
-import instagram from "@/app/assets/instagram.png";
-import twitter from "@/app/assets/twitter.png";
-import linkedin from "@/app/assets/linkedin.png";
-import whatsapp from "@/app/assets/whatsapp.png";
-import ModalContactUs from "./modalContactUs";
+import logo from "@/app/assets/logo-pixonchain.png"
+import vipCard from "@/app/assets/cartao-vip.png"
+import discord from "@/app/assets/discord.png"
+import bg from "@/app/assets/bg.png"
+import phone from "@/app/assets/phone.png"
+import instagram from "@/app/assets/instagram.png"
+import twitter from "@/app/assets/twitter.png"
+import linkedin from "@/app/assets/linkedin.png"
+import whatsapp from "@/app/assets/whatsapp.png"
+import ModalContactUs from "./modalContactUs"
 
 interface SocialLink {
-  id: number;
-  name: string;
-  src: StaticImageData;
-  width: number;
-  height: number;
-  href: string;
+  id: number
+  name: string
+  src: StaticImageData
+  width: number
+  height: number
+  href: string
 }
 
 const socialLinks: SocialLink[] = [
@@ -56,7 +56,7 @@ const socialLinks: SocialLink[] = [
     height: 19,
     href: "https://linkedin.com/company/pixonchain",
   },
-];
+]
 
 const Hero: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -64,39 +64,39 @@ const Hero: React.FC = () => {
     horas: 0,
     minutos: 0,
     segundos: 0,
-  });
+  })
 
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
   const toggleModal = () => {
-    setIsOpenModal(!isOpenModal);
-  };
+    setIsOpenModal(!isOpenModal)
+  }
 
   useEffect(() => {
-    const endDate = new Date("2025-02-04T23:59:59").getTime();
+    const endDate = new Date("2025-02-04T23:59:59").getTime()
     const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = endDate - now;
+      const now = new Date().getTime()
+      const difference = endDate - now
 
       if (difference > 0) {
-        const dias = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const dias = Math.floor(difference / (1000 * 60 * 60 * 24))
         const horas = Math.floor(
           (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
+        )
         const minutos = Math.floor(
           (difference % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const segundos = Math.floor((difference % (1000 * 60)) / 1000);
+        )
+        const segundos = Math.floor((difference % (1000 * 60)) / 1000)
 
-        setTimeLeft({ dias, horas, minutos, segundos });
+        setTimeLeft({ dias, horas, minutos, segundos })
       } else {
-        clearInterval(interval);
-        setTimeLeft({ dias: 0, horas: 0, minutos: 0, segundos: 0 });
+        clearInterval(interval)
+        setTimeLeft({ dias: 0, horas: 0, minutos: 0, segundos: 0 })
       }
-    }, 1000);
+    }, 1000)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
@@ -182,6 +182,13 @@ const Hero: React.FC = () => {
                 <span className="font-bold">{timeLeft.minutos} minutos</span> e{" "}
                 <span className="font-bold">{timeLeft.segundos} segundos</span>.
               </span>
+              <span className="font-light text-gray-300 text-xs sm:text-sm md:text-base leading-normal sm:leading-relaxed md:leading-6 lg:leading-6 xl:leading-6 max-w-[476px]">
+                *Atualmente, temos {" "}
+                <span className="font-bold text-[#7747FF]">
+                  138 pessoas
+                </span>{" "}
+                na fila de espera. Não fique de fora!
+              </span>
             </div>
           </div>
 
@@ -214,7 +221,7 @@ const Hero: React.FC = () => {
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero
