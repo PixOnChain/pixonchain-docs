@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 
 const KYTPolicy = () => {
   return (
@@ -9,15 +9,16 @@ const KYTPolicy = () => {
       <div className="w-full max-w-4xl text-justify space-y-4">
         <h2 className="text-xl font-bold">1. Introdução</h2>
         <p>
-          O Pix on Chain é um produto desenvolvido pela IORA PROCESSAMENTO DE
-          DADOS LTDA, inscrita no CNPJ sob o nº 45.783.959/0001-89, com sede na
-          Rua Vereador Nereu Liberato Nunes, nº 588, Sala 306, Andar 3, Centro,
-          Navegantes (SC), CEP: 88370-232, e-mail:{" "}
+          O Pix on Chain é um produto desenvolvido pela PIX ON CHAIN -
+          INTERMEDIACOES EM BLOCKCHAIN E SERVICOS DE PAGAMENTOS LTDA, inscrita
+          no CNPJ sob o nº 58.850.762/0001-67, com sede na Rua Vereador Nereu
+          Liberato Nunes, nº 588, Centro, Navegantes (SC), CEP: 88370-232,
+          e-mail:{" "}
           <a
-            href="mailto:contact@ioralabs.com"
+            href="mailto:contact@pixonchain.com"
             className="text-blue-500 underline"
           >
-            contact@ioralabs.com
+            contact@pixonchain.com
           </a>
           .
         </p>
@@ -108,7 +109,9 @@ const KYTPolicy = () => {
           </li>
         </ul>
 
-        <h3 className="text-lg font-semibold">4.3. Integração com Inteligência Artificial</h3>
+        <h3 className="text-lg font-semibold">
+          4.3. Integração com Inteligência Artificial
+        </h3>
         <ul className="list-disc list-inside">
           <li>
             Sistemas de inteligência artificial identificam anomalias em tempo
@@ -156,7 +159,7 @@ const KYTPolicy = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default KYTPolicy;
+export default KYTPolicy

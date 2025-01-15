@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 
 const AnticorrupcaoPolicy = () => {
   return (
@@ -9,8 +9,23 @@ const AnticorrupcaoPolicy = () => {
         Política Antissuborno e Anticorrupção
       </h1>
       <div className="w-full max-w-4xl text-justify space-y-4">
-        <p className="text-sm text-gray-400">Atualizado em 13 de março de 2024</p>
-
+        <p className="text-sm text-gray-400">
+          Atualizado em 13 de março de 2024
+        </p>
+        <p>
+          O Pix on Chain é um produto desenvolvido pela PIX ON CHAIN -
+          INTERMEDIACOES EM BLOCKCHAIN E SERVICOS DE PAGAMENTOS LTDA, inscrita
+          no CNPJ sob o nº 58.850.762/0001-67, com sede na Rua Vereador Nereu
+          Liberato Nunes, nº 588, Centro, Navegantes (SC), CEP: 88370-232,
+          e-mail:{" "}
+          <a
+            href="mailto:contact@pixonchain.com"
+            className="text-blue-500 underline"
+          >
+            contact@pixonchain.com
+          </a>
+          .
+        </p>
         <h2 className="text-xl font-bold">1. Introdução e Objetivos</h2>
         <p>
           A Pix on Chain reafirma seu compromisso com a ética, transparência e
@@ -37,7 +52,9 @@ const AnticorrupcaoPolicy = () => {
           <li>Colaboradores permanentes e temporários.</li>
           <li>Sócios, acionistas e diretores.</li>
           <li>Estagiários e menores aprendizes.</li>
-          <li>Fornecedores, parceiros e terceiros que atuem em nome da empresa.</li>
+          <li>
+            Fornecedores, parceiros e terceiros que atuem em nome da empresa.
+          </li>
         </ul>
         <p>
           A política se aplica tanto a operações realizadas no Brasil quanto no
@@ -59,17 +76,25 @@ const AnticorrupcaoPolicy = () => {
             indevidas.
           </li>
           <li>
-            <strong>Pagamento de Facilitação:</strong> Pagamentos realizados para
-            acelerar processos ou garantir a execução de atividades rotineiras,
-            que são estritamente proibidos na Pix on Chain.
+            <strong>Pagamento de Facilitação:</strong> Pagamentos realizados
+            para acelerar processos ou garantir a execução de atividades
+            rotineiras, que são estritamente proibidos na Pix on Chain.
           </li>
         </ul>
 
         <h2 className="text-xl font-bold">4. Diretrizes Gerais</h2>
-        <h3 className="text-lg font-semibold">4.1. Proibição de Práticas Corruptas e Suborno</h3>
+        <h3 className="text-lg font-semibold">
+          4.1. Proibição de Práticas Corruptas e Suborno
+        </h3>
         <ul className="list-disc list-inside">
-          <li>É proibido oferecer, prometer, solicitar ou aceitar qualquer tipo de suborno.</li>
-          <li>Pagamentos de facilitação não são permitidos sob nenhuma circunstância.</li>
+          <li>
+            É proibido oferecer, prometer, solicitar ou aceitar qualquer tipo de
+            suborno.
+          </li>
+          <li>
+            Pagamentos de facilitação não são permitidos sob nenhuma
+            circunstância.
+          </li>
           <li>
             Presentes ou hospitalidades podem ser aceitos apenas quando forem de
             valor simbólico, proporcionais e alinhados às práticas comerciais
@@ -77,7 +102,9 @@ const AnticorrupcaoPolicy = () => {
           </li>
         </ul>
 
-        <h3 className="text-lg font-semibold">4.2. Relação com Agentes Públicos</h3>
+        <h3 className="text-lg font-semibold">
+          4.2. Relação com Agentes Públicos
+        </h3>
         <ul className="list-disc list-inside">
           <li>
             É vedada qualquer tentativa de influenciar decisões de agentes
@@ -89,7 +116,9 @@ const AnticorrupcaoPolicy = () => {
           </li>
         </ul>
 
-        <h3 className="text-lg font-semibold">4.3. Seleção de Parceiros e Fornecedores</h3>
+        <h3 className="text-lg font-semibold">
+          4.3. Seleção de Parceiros e Fornecedores
+        </h3>
         <ul className="list-disc list-inside">
           <li>
             Todos os parceiros e fornecedores devem ser selecionados com base em
@@ -102,7 +131,9 @@ const AnticorrupcaoPolicy = () => {
         </ul>
 
         <h2 className="text-xl font-bold">5. Procedimentos de Prevenção</h2>
-        <h3 className="text-lg font-semibold">5.1. Treinamento e Capacitação</h3>
+        <h3 className="text-lg font-semibold">
+          5.1. Treinamento e Capacitação
+        </h3>
         <p>
           Todos os colaboradores receberão treinamento anual obrigatório sobre
           práticas anticorrupção, abordando cenários reais e condutas proibidas.
@@ -110,21 +141,25 @@ const AnticorrupcaoPolicy = () => {
 
         <h3 className="text-lg font-semibold">5.2. Canal de Denúncias</h3>
         <p>
-          A Pix on Chain oferece um canal de denúncias seguro e confidencial para
-          reportar possíveis violações desta política. Denúncias podem ser feitas
-          anonimamente, e todos os casos serão investigados com imparcialidade e
-          agilidade.
+          A Pix on Chain oferece um canal de denúncias seguro e confidencial
+          para reportar possíveis violações desta política. Denúncias podem ser
+          feitas anonimamente, e todos os casos serão investigados com
+          imparcialidade e agilidade.
         </p>
 
         <h2 className="text-xl font-bold">6. Condutas Específicas</h2>
-        <h3 className="text-lg font-semibold">6.1. Gerenciamento de Presentes e Hospitalidades</h3>
+        <h3 className="text-lg font-semibold">
+          6.1. Gerenciamento de Presentes e Hospitalidades
+        </h3>
         <ul className="list-disc list-inside">
           <li>De valor simbólico ou promocional.</li>
           <li>Não influenciar decisões ou criar conflitos de interesse.</li>
           <li>Alinhados às práticas comerciais usuais.</li>
         </ul>
 
-        <h2 className="text-xl font-bold">7. Consequências do Descumprimento</h2>
+        <h2 className="text-xl font-bold">
+          7. Consequências do Descumprimento
+        </h2>
         <p>
           Qualquer violação desta política será tratada com seriedade e poderá
           resultar em advertências, suspensão ou desligamento de colaboradores,
@@ -140,7 +175,7 @@ const AnticorrupcaoPolicy = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AnticorrupcaoPolicy;
+export default AnticorrupcaoPolicy

@@ -13,6 +13,20 @@ const TermosDeServico = () => {
           Última atualização: 15 de Janeiro de 2025
         </p>
         <p>
+          O Pix on Chain é um produto desenvolvido pela PIX ON CHAIN -
+          INTERMEDIACOES EM BLOCKCHAIN E SERVICOS DE PAGAMENTOS LTDA, inscrita
+          no CNPJ sob o nº 58.850.762/0001-67, com sede na Rua Vereador Nereu
+          Liberato Nunes, nº 588, Centro, Navegantes (SC), CEP: 88370-232,
+          e-mail:{" "}
+          <a
+            href="mailto:contact@pixonchain.com"
+            className="text-blue-500 underline"
+          >
+            contact@pixonchain.com
+          </a>
+          .
+        </p>
+        <p>
           Estes Termos de Serviço descrevem as condições para utilização da
           plataforma Pix on Chain, incluindo APIs e outras ferramentas digitais
           voltadas para operações financeiras e integração de pagamentos. Ao
