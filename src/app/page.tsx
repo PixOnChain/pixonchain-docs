@@ -6,6 +6,7 @@ import Image from "next/image";
 import Head from "next/head";
 import Script from "next/script";
 import { FaWhatsapp } from "react-icons/fa";
+import Footer from "./componentes/footer";
 
 export default function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -103,6 +104,7 @@ export default function Home() {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }
