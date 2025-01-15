@@ -3,6 +3,25 @@
 import React from "react";
 
 const Footer = () => {
+  const policies = [
+    {
+      title: "Política de KYT",
+      path: "/policies/kyt",
+    },
+    {
+      title: "Política Antissuborno",
+      path: "/policies/antissuborno",
+    },
+    {
+      title: "Política de KYC",
+      path: "/policies/kyc",
+    },
+    {
+      title: "Termo de Serviços",
+      path: "/policies/termo",
+    },
+  ];
+
   return (
     <footer className="bg-gray-900 text-white py-6 px-4">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
@@ -10,38 +29,15 @@ const Footer = () => {
           © {new Date().getFullYear()} Pix on Chain - Todos os direitos reservados.
         </p>
         <div className="flex flex-wrap gap-4 mt-4 md:mt-0">
-          <a
-            href="/kyt.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-gray-300 hover:underline"
-          >
-            Política de KYT
-          </a>
-          <a
-            href="/antissubornoeanticorrupcao.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-gray-300 hover:underline"
-          >
-            Política Antissuborno
-          </a>
-          <a
-            href="/kyc.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-gray-300 hover:underline"
-          >
-            Política de KYC
-          </a>
-          <a
-            href="/termo_servico.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-gray-300 hover:underline"
-          >
-            Termo de Serviços
-          </a>
+          {policies.map((policy, index) => (
+            <a
+              key={index}
+              href={policy.path}
+              className="text-sm text-gray-300 hover:underline"
+            >
+              {policy.title}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
