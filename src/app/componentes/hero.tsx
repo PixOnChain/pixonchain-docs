@@ -185,7 +185,7 @@ const Hero: React.FC = () => {
               <span className="font-light text-gray-300 text-xs sm:text-sm md:text-base leading-normal sm:leading-relaxed md:leading-6 lg:leading-6 xl:leading-6 max-w-[476px]">
                 *Atualmente, temos {" "}
                 <span className="font-bold text-[#7747FF]">
-                  138 pessoas
+                  142 pessoas
                 </span>{" "}
                 na fila de espera. Não fique de fora!
               </span>
