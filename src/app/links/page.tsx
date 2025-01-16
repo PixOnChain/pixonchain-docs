@@ -1,9 +1,15 @@
-"use client";
+"use client"
 
-import React from "react";
-import Image from "next/image";
-import { FaTwitter, FaLinkedin, FaInstagram, FaDiscord, FaYoutube } from "react-icons/fa";
-import logo from "@/app/assets/logo-pixonchain.png";
+import React from "react"
+import Image from "next/image"
+import {
+  FaTwitter,
+  FaLinkedin,
+  FaInstagram,
+  FaDiscord,
+  FaYoutube,
+} from "react-icons/fa"
+import logo from "@/app/assets/logo-pixonchain.png"
 
 const Linktree = () => {
   const socialLinks = [
@@ -37,20 +43,20 @@ const Linktree = () => {
       url: "https://www.youtube.com/@pedro_dapps",
       icon: <FaYoutube />,
     },
-  ];
+  ]
 
   const mainLinks = [
     {
       title: "Website Oficial",
       url: "https://pixonchain.com",
-      animated: true,
+      animated: false,
     },
     {
       title: "Apresentação Comercial",
       url: "/business_presentation",
       animated: false,
     },
-  ];
+  ]
 
   const pedroLinks = [
     {
@@ -62,18 +68,20 @@ const Linktree = () => {
       url: "https://github.com/pedrosgmagalhaes",
     },
     {
-      title: "Projeto-piloto de CBDC do Brasil contém código que pode congelar ou subtrair fundos de usuários, afirma desenvolvedor - CoinTelegraph",
+      title:
+        "Projeto-piloto de CBDC do Brasil contém código que pode congelar ou subtrair fundos de usuários, afirma desenvolvedor - CoinTelegraph",
       url: "https://br.cointelegraph.com/news/brazil-cbdc-pilot-source-code-can-freeze-funds",
     },
     {
-      title: "Drex: o que é o “real digital” e por que a direita está em campanha contra ele - Gazeta do Povo",
+      title:
+        "Drex: o que é o “real digital” e por que a direita está em campanha contra ele - Gazeta do Povo",
       url: "https://www.gazetadopovo.com.br/economia/drex-o-que-e-o-real-digital-e-por-que-a-direita-esta-em-campanha-contra-ele/",
     },
     {
       title: "Criptomoedas e Grupos Internacionais - Gazeta do Povo",
       url: "https://www.gazetadopovo.com.br/ideias/hamas-e-outros-grupos-terroristas-usam-criptomoedas-para-burlar-sancoes-financeiras-internacionais/",
     },
-  ];
+  ]
 
   const policyLinks = [
     {
@@ -92,7 +100,7 @@ const Linktree = () => {
       title: "Entre em Contato",
       url: "mailto:contact@pixonchain.com",
     },
-  ];
+  ]
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
@@ -101,6 +109,17 @@ const Linktree = () => {
       </div>
 
       <h1 className="text-2xl font-bold mb-6">Pix on Chain - Links</h1>
+
+      <div className="w-full max-w-md mb-8">
+        <a
+          href="https://discordapp.com/events/1324916112982282332/1329558171206811709/1331933950771200000"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block text-center bg-[#7747ff] text-white font-bold py-6 px-8 rounded-lg hover:bg-purple-700 transition-colors shadow-lg animate-pulse"
+        >
+          🔴 Live no Discord - Hoje às 19:30 (Como montar sua corretora de criptomoedas?)
+        </a>
+      </div>
 
       <div className="w-full max-w-md mb-10">
         <div className="space-y-4">
@@ -173,10 +192,11 @@ const Linktree = () => {
       </div>
 
       <footer className="mt-10 text-sm text-gray-400">
-        © {new Date().getFullYear()} Pix on Chain - Todos os direitos reservados.
+        © {new Date().getFullYear()} Pix on Chain - Todos os direitos
+        reservados.
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Linktree;
+export default Linktree
