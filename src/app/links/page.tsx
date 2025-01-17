@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import {
   FaTwitter,
@@ -12,6 +12,27 @@ import {
 import logo from "@/app/assets/logo-pixonchain.png"
 
 const Linktree = () => {
+  const [timeRemaining, setTimeRemaining] = useState(18 * 24 * 3600)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeRemaining((prev) => (prev > 0 ? prev - 1 : 0))
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const formatTime = (seconds: number) => {
+    const days = Math.floor(seconds / 86400)
+    const hours = Math.floor((seconds % 86400) / 3600)
+    const minutes = Math.floor((seconds % 3600) / 60)
+    const secs = seconds % 60
+    return `${String(days).padStart(2, "0")}d ${String(hours).padStart(
+      2,
+      "0"
+    )}h ${String(minutes).padStart(2, "0")}m ${String(secs).padStart(2, "0")}s`
+  }
+
   const socialLinks = [
     {
       title: "Twitter - Pix on Chain",
@@ -110,14 +131,16 @@ const Linktree = () => {
 
       <h1 className="text-2xl font-bold mb-6">Pix on Chain - Links</h1>
 
-      <div className="w-full max-w-md mb-8">
+      <div className="w-full max-w-md mb-8 text-center">
         <a
-          href="https://discordapp.com/events/1324916112982282332/1329558171206811709/1331933950771200000"
+          href="https://pixonchain.com/checkout"
           target="_blank"
           rel="noopener noreferrer"
-          className="block text-center bg-[#7747ff] text-white font-bold py-6 px-8 rounded-lg hover:bg-purple-700 transition-colors shadow-lg animate-pulse"
+          className="block bg-[#7747ff] text-white font-bold py-6 px-8 rounded-lg hover:bg-purple-700 transition-colors shadow-lg animate-pulse"
         >
-          🔴 Live no Discord - Hoje às 19:30 (Como montar sua corretora de criptomoedas?)
+          🚀 Aproveite Early Adoption - Faltam{" "}
+          <span className="text-yellow-300">{formatTime(timeRemaining)}</span>{" "}
+          para acabar o desconto!
         </a>
       </div>
 
