@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa"
 import logo from "@/app/assets/logo-pixonchain.png"
 import Head from "next/head"
-import { trackEvent } from "../utils/analytics"; 
+import { trackEvent } from "../utils/analytics"
 
 const Linktree = () => {
   const [timeRemaining, setTimeRemaining] = useState(18 * 24 * 3600)
@@ -139,22 +139,49 @@ const Linktree = () => {
         <Image src={logo} alt="Pix on Chain Logo" width={250} height={250} />
       </div>
 
-      <h1 className="text-2xl font-bold mb-6">Pix on Chain - Links</h1>
-
-      <div className="w-full max-w-md mb-8 text-center">
+      {/* Promoção */}
+      <div className="w-full max-w-md mb-10">
+        <h2 className="text-lg font-bold mb-4">🚀 Pix on Chain - Whitelabel</h2>
         <a
           href="https://pixonchain.com/checkout"
           target="_blank"
           rel="noopener noreferrer"
           className="block bg-[#7747ff] text-white font-bold py-6 px-8 rounded-lg hover:bg-purple-700 transition-colors shadow-lg animate-pulse"
         >
-          🚀 Aproveite Early Adoption - Faltam{" "}
-          <span className="text-yellow-300">{formatTime(timeRemaining)}</span>{" "}
-          para acabar o desconto!
+          Aproveite Early Adoption - Pix On Chain - Plataforma Whitelabel
+          <br />
+          <span className="text-yellow-300 text-sm block mt-2">
+            Faltam {formatTime(timeRemaining)} para acabar o desconto!
+          </span>
         </a>
       </div>
 
+      {/* Área de Desenvolvedores */}
       <div className="w-full max-w-md mb-10">
+        <h2 className="text-lg font-bold mb-4">📄 Área de Desenvolvedores</h2>
+        <p className="text-sm text-gray-400 mb-4">
+          Documentação das APIs para usuários que desejam consumir as APIs do
+          Pix on Chain.
+        </p>
+        <a
+          href="/documentacao.pdf"
+          download
+          onClick={() =>
+            trackEvent({
+              action: "download_documentacao",
+              category: "Downloads",
+              label: "Documentação Pix on Chain",
+            })
+          }
+          className="block text-center bg-blue-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          📥 Download da Documentação
+        </a>
+      </div>
+
+      {/* Links Importantes */}
+      <div className="w-full max-w-md mb-10">
+        <h2 className="text-lg font-bold mb-4">🔗 Links Importantes</h2>
         <div className="space-y-4">
           {mainLinks.map((link, index) => (
             <a
@@ -162,9 +189,7 @@ const Linktree = () => {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`block text-center bg-[#7747ff] text-white font-medium py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors ${
-                link.animated ? "animate-pulse hover:animate-none" : ""
-              }`}
+              className="block text-center bg-[#7747ff] text-white font-medium py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
             >
               {link.title}
             </a>
@@ -172,6 +197,7 @@ const Linktree = () => {
         </div>
       </div>
 
+      {/* Redes Sociais */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">🌐 Redes Sociais</h2>
         <div className="space-y-4">
@@ -197,6 +223,7 @@ const Linktree = () => {
         </div>
       </div>
 
+      {/* Sobre Pedro Magalhães */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">📚 Sobre Pedro Magalhães</h2>
         <div className="space-y-4">
@@ -214,8 +241,9 @@ const Linktree = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-md">
-        <h2 className="text-lg font-bold mb-4">📜 Políticas</h2>
+      {/* Termos e Serviços */}
+      <div className="w-full max-w-md mb-10">
+        <h2 className="text-lg font-bold mb-4">📜 Termos e Serviços</h2>
         <div className="space-y-4">
           {policyLinks.map((link, index) => (
             <a
@@ -231,6 +259,7 @@ const Linktree = () => {
         </div>
       </div>
 
+      {/* Rodapé */}
       <footer className="mt-10 text-sm text-gray-400">
         © {new Date().getFullYear()} Pix on Chain - Todos os direitos
         reservados.
