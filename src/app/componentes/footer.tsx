@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import React from "react"
+import React from "react";
 
 const Footer = () => {
   const policies = [
     {
       title: "Política de KYT",
-      path: "/policies/kyt",
+      path: "/policies-and-terms",
     },
     {
       title: "Política Antissuborno",
-      path: "/policies/antissuborno",
+      path: "/policies-and-terms",
     },
     {
       title: "Política de KYC",
-      path: "/policies/kyc",
+      path: "/policies-and-terms",
     },
     {
       title: "Termo de Serviços",
-      path: "/policies/termo",
+      path: "/policies-and-terms",
     },
     {
       title: "Política de Privacidade",
-      path: "/policies/privacypolicy",
+      path: "/policies-and-terms",
     },
     {
-        title: "Política de Exclusão de Dados",
-        path: "/policies/userdatadeletionpolicy",
-      },
-  ]
+      title: "Política de Exclusão de Dados",
+      path: "/policies-and-terms",
+    },
+  ];
 
   return (
     <footer className="bg-gray-900 text-white py-6 px-4">
@@ -50,7 +50,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

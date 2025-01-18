@@ -1,0 +1,65 @@
+/* scrollbar.css */
+.scrollbar::-webkit-scrollbar {
+  height: 12px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #7747ff;
+  border-radius: 8px;
+  border: 3px solid #ffffff;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 9px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #7747ff;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #7747ff;
+}
+
+.pdf-viewer-container {
+  height: 100%;
+  max-height: 1005px;
+  overflow-y: auto; /* Ativa o overflow-y no contêiner */
+}
+
+.pdf-viewer-container::-webkit-scrollbar {
+  width: 9px; /* Largura da barra de rolagem */
+}
+
+.pdf-viewer-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Cor da trilha da barra */
+  border-radius: 10px; /* Bordas arredondadas para a trilha */
+}
+
+.pdf-viewer-container::-webkit-scrollbar-thumb {
+  background-color: #7747ff; /* Cor da barra de rolagem */
+  border-radius: 10px; /* Bordas arredondadas para a barra */
+  border: 2px solid #f1f1f1; /* Cria um efeito de espessura ao redor da barra */
+}
+
+.pdf-viewer-container::-webkit-scrollbar-thumb:hover {
+  background-color: #7747ff; /* Cor quando o usuário interagir */
+}
+
+/* Firefox */
+.pdf-viewer-container {
+  scrollbar-width: thin;
+  scrollbar-color: #7747ff #f1f1f1;
+}

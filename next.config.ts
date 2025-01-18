@@ -1,8 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   images: {
-    domains: ['fakeqrcode.com'],
+    domains: ["www.facebook.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.facebook.com",
+        pathname: "/tr",
+      },
+    ],
   },
 };
-
-module.exports = nextConfig;
