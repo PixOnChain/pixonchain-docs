@@ -1,26 +1,31 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import Hero from "./componentes/hero";
-import Image from "next/image";
-import Head from "next/head";
-import Script from "next/script";
-import { FaWhatsapp } from "react-icons/fa";
-import Footer from "./componentes/footer";
+import React, { useState } from "react"
+import Hero from "./componentes/hero"
+import Image from "next/image"
+import Head from "next/head"
+import Script from "next/script"
+import { FaWhatsapp } from "react-icons/fa"
+import Footer from "./componentes/footer"
 
 export default function Home() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+    setIsDropdownOpen(!isDropdownOpen)
+  }
 
   return (
     <>
       <Head>
         <title>Pix on Chain - A Corretora de Criptomoedas.</title>
+        <meta
+          name="description"
+          content="Pix on Chain, sua corretora de criptomoedas."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      
+
       {/* Google Analytics */}
       <Script
         strategy="afterInteractive"
@@ -37,7 +42,7 @@ export default function Home() {
           `,
         }}
       />
-      
+
       {/* Meta Pixel Code */}
       <Script
         id="meta-pixel"
@@ -106,5 +111,5 @@ export default function Home() {
       </main>
       <Footer />
     </>
-  );
+  )
 }
