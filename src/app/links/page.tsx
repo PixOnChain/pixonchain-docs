@@ -8,6 +8,7 @@ import {
   FaInstagram,
   FaDiscord,
   FaYoutube,
+  FaDownload,
 } from "react-icons/fa"
 import logo from "@/app/assets/logo-pixonchain.png"
 import Head from "next/head"
@@ -72,7 +73,7 @@ const Linktree = () => {
     {
       title: "Website Oficial",
       url: "https://pixonchain.com",
-      animated: false,
+      animated: true,
     },
     {
       title: "Apresentação Comercial",
@@ -81,30 +82,30 @@ const Linktree = () => {
     },
   ]
 
-  const pedroLinks = [
-    {
-      title: "Reentrancy Attack Example no GitHub",
-      url: "https://github.com/pedrosgmagalhaes/reentrancy_attack_example",
-    },
-    {
-      title: "GitHub de Pedro Magalhães",
-      url: "https://github.com/pedrosgmagalhaes",
-    },
-    {
-      title:
-        "Projeto-piloto de CBDC do Brasil contém código que pode congelar ou subtrair fundos de usuários, afirma desenvolvedor - CoinTelegraph",
-      url: "https://br.cointelegraph.com/news/brazil-cbdc-pilot-source-code-can-freeze-funds",
-    },
-    {
-      title:
-        "Drex: o que é o “real digital” e por que a direita está em campanha contra ele - Gazeta do Povo",
-      url: "https://www.gazetadopovo.com.br/economia/drex-o-que-e-o-real-digital-e-por-que-a-direita-esta-em-campanha-contra-ele/",
-    },
-    {
-      title: "Criptomoedas e Grupos Internacionais - Gazeta do Povo",
-      url: "https://www.gazetadopovo.com.br/ideias/hamas-e-outros-grupos-terroristas-usam-criptomoedas-para-burlar-sancoes-financeiras-internacionais/",
-    },
-  ]
+  // const pedroLinks = [
+  //   {
+  //     title: "Reentrancy Attack Example no GitHub",
+  //     url: "https://github.com/pedrosgmagalhaes/reentrancy_attack_example",
+  //   },
+  //   {
+  //     title: "GitHub de Pedro Magalhães",
+  //     url: "https://github.com/pedrosgmagalhaes",
+  //   },
+  //   {
+  //     title:
+  //       "Projeto-piloto de CBDC do Brasil contém código que pode congelar ou subtrair fundos de usuários, afirma desenvolvedor - CoinTelegraph",
+  //     url: "https://br.cointelegraph.com/news/brazil-cbdc-pilot-source-code-can-freeze-funds",
+  //   },
+  //   {
+  //     title:
+  //       "Drex: o que é o “real digital” e por que a direita está em campanha contra ele - Gazeta do Povo",
+  //     url: "https://www.gazetadopovo.com.br/economia/drex-o-que-e-o-real-digital-e-por-que-a-direita-esta-em-campanha-contra-ele/",
+  //   },
+  //   {
+  //     title: "Criptomoedas e Grupos Internacionais - Gazeta do Povo",
+  //     url: "https://www.gazetadopovo.com.br/ideias/hamas-e-outros-grupos-terroristas-usam-criptomoedas-para-burlar-sancoes-financeiras-internacionais/",
+  //   },
+  // ]
 
   const policyLinks = [
     {
@@ -173,9 +174,10 @@ const Linktree = () => {
               label: "Documentação Pix on Chain",
             })
           }
-          className="block text-center bg-blue-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center justify-center gap-2 bg-gray-800 text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          📥 Download da Documentação
+          <FaDownload className="text-lg" />
+          Download da Documentação
         </a>
       </div>
 
@@ -224,7 +226,7 @@ const Linktree = () => {
       </div>
 
       {/* Sobre Pedro Magalhães */}
-      <div className="w-full max-w-md mb-10">
+      {/* <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">📚 Sobre Pedro Magalhães</h2>
         <div className="space-y-4">
           {pedroLinks.map((link, index) => (
@@ -239,7 +241,7 @@ const Linktree = () => {
             </a>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Termos e Serviços */}
       <div className="w-full max-w-md mb-10">
