@@ -9,11 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.1.4",
+    "@emailjs/browser": "^4.4.1",
+    "@react-pdf-viewer/core": "^3.12.0",
+    "canvas": "^3.0.1",
+    "next": "^15.1.5",
+    "pdfjs-dist": "^3.11.174",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.4.0",
-    "react-toastify": "^11.0.3"
+    "react-i18next": "^15.4.0",
+    "react-icons": "^5.4.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
