@@ -10,6 +10,7 @@ import {
   FaYoutube,
 } from "react-icons/fa"
 import logo from "@/app/assets/logo-pixonchain.png"
+import Head from "next/head"
 
 const Linktree = () => {
   const [timeRemaining, setTimeRemaining] = useState(18 * 24 * 3600)
@@ -125,6 +126,14 @@ const Linktree = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
+      <Head>
+        <title>Pix on Chain - Links Úteis</title>
+        <meta
+          name="description"
+          content="Encontre todos os links úteis da Pix on Chain em um só lugar."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <div className="mb-8">
         <Image src={logo} alt="Pix on Chain Logo" width={250} height={250} />
       </div>

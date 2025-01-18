@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Pix on Chain - A Corretora de Criptomoedas.",
-  description: "Bem-vindo à Pix on Chain, sua corretora de criptomoedas confiável.",
+  description: "Pix on Chain - tornamos fácil aquilo que parecia difícil.",
 };
 
 export default function RootLayout({
