@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa"
 import logo from "@/app/assets/logo-pixonchain.png"
 import Head from "next/head"
+import { trackEvent } from "../utils/analytics"; 
 
 const Linktree = () => {
   const [timeRemaining, setTimeRemaining] = useState(18 * 24 * 3600)
@@ -180,6 +181,13 @@ const Linktree = () => {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent({
+                  action: "click_social_link",
+                  category: "Social Links",
+                  label: link.title,
+                })
+              }
               className="flex items-center gap-3 bg-gray-800 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors"
             >
               <span className="text-xl">{link.icon}</span>

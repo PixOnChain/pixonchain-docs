@@ -7,12 +7,19 @@ import Head from "next/head"
 import Script from "next/script"
 import { FaWhatsapp } from "react-icons/fa"
 import Footer from "./componentes/footer"
+import { trackEvent } from "./utils/analytics"
 
 export default function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
+
+    trackEvent({
+      action: "toggle_dropdown",
+      category: "Interaction",
+      label: isDropdownOpen ? "Closed Dropdown" : "Opened Dropdown",
+    })
   }
 
   return (
@@ -93,6 +100,13 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-green-600 hover:underline"
+                    onClick={() =>
+                      trackEvent({
+                        action: "click_whatsapp",
+                        category: "Contact",
+                        label: "WhatsApp Chat",
+                      })
+                    }
                   >
                     <FaWhatsapp /> WhatsApp
                   </a>
@@ -101,6 +115,13 @@ export default function Home() {
                   <a
                     href="mailto:contato@pixonchain.com"
                     className="flex items-center gap-2 text-gray-600 hover:underline"
+                    onClick={() =>
+                      trackEvent({
+                        action: "click_email",
+                        category: "Contact",
+                        label: "Email Contact",
+                      })
+                    }
                   >
                     ✉️ Email
                   </a>
