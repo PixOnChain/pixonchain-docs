@@ -13,36 +13,28 @@ const DeveloperSections = () => {
       description: "Verifica o status de saúde do servidor.",
       method: "GET",
       url: "https://api.pixonchain.com/health",
-      exampleRequest: `
-        GET {{baseUrl}}/health
-      `,
-      exampleResponse: `
-        {
-          "status": "OK",
-          "service": {
-            "name": "pix-on-chain",
-            "version": "1.0.1"
-          },
-          "uptime": 2468.431,
-          "timestamp": "2025-01-19T18:46:06.751Z"
-        }
-      `,
+      exampleRequest: `GET https://api.pixonchain.com/health`,
+      exampleResponse: `{
+    "status": "OK",
+    "service": {
+      "name": "pix-on-chain",
+      "version": "1.0.1"
+    },
+    "uptime": 2468.431,
+    "timestamp": "2025-01-19T18:46:06.751Z"
+  }`,
     },
     {
       name: "Generate API Keys",
       description: "Gera novas chaves de API para autenticação.",
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/keys/generate-api-keys",
-      exampleRequest: `
-        POST {{baseUrl}}/api/auth/keys/generate-api-keys
-      `,
-      exampleResponse: `
-        {
-          "message": "API keys generated successfully",
-          "apiKey": "example-api-key",
-          "secretKey": "example-secret-key"
-        }
-      `,
+      exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/generate-api-keys`,
+      exampleResponse: `{
+    "message": "API keys generated successfully",
+    "apiKey": "example-api-key",
+    "secretKey": "example-secret-key"
+  }`,
     },
     {
       name: "Key Validation",
@@ -50,50 +42,47 @@ const DeveloperSections = () => {
         "Valida as chaves de API fornecidas para garantir acesso às APIs.",
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/keys/key-validate",
-      exampleRequest: `
-        POST {{baseUrl}}/api/auth/keys/key-validate
-      `,
-      exampleResponse: `
-        {
-          "accessToken": "example-access-token"
-        }
-      `,
+      exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/key-validate`,
+      exampleResponse: `{
+    "accessToken": "example-access-token"
+  }`,
     },
     {
-      name: "Quote/Purchase Token",
+      name: "Quote/Purchase Token (Pix para USDT)",
       description:
-        "Solicita um orçamento para a compra de tokens com base no valor e endereço do destinatário.",
+        "Solicita um orçamento para a compra de tokens com base no valor e endereço do destinatário com o QR Code do Pix.",
       method: "POST",
       url: "https://api.pixonchain.com/api/banking/quote-transaction",
-      exampleRequest: `
-        POST {{baseUrl}}/api/banking/quote-transaction
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/quote-transaction
         {
           "value": 602,
           "simulation": false,
           "receiverAddress": "0xexampleaddress"
-        }
-      `,
-      exampleResponse: `
-        {
+        }`,
+      exampleResponse: `{
           "id": "transaction-id",
           "due": "2025-01-19T18:21:36.972Z",
           "brCode": "example-br-code"
-        }
-      `,
+        }`,
+      label: (
+        <span className="flex items-center gap-1 mr-2">
+          <span className="text-red-500">🔥</span>
+          HOT
+        </span>
+      ),
+      labelBgColor: "bg-[#E8E4FF]",
+      labelTextColor: "text-[red]",
     },
+
     {
       name: "Quote Execution",
       description: "Executa um orçamento utilizando o ID da transação.",
       method: "GET",
       url: "https://api.pixonchain.com/api/banking/quote-transaction/:transactionId",
-      exampleRequest: `
-        GET {{baseUrl}}/api/banking/quote-transaction/:transactionId
-      `,
-      exampleResponse: `
-        {
-          "depositsLogs": []
-        }
-      `,
+      exampleRequest: `GET https://api.pixonchain.com/api/banking/quote-transaction/:transactionId`,
+      exampleResponse: `{
+    "depositsLogs": []
+  }`,
     },
     {
       name: "Add Webhook",
@@ -101,59 +90,53 @@ const DeveloperSections = () => {
         "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
       method: "POST",
       url: "https://api.pixonchain.com/api/webhooks",
-      exampleRequest: `
-        POST {{baseUrl}}/api/webhooks
-        {
-          "url": "https://webhook.example.com"
-        }
-      `,
-      exampleResponse: `
-        {
-          "success": true,
-          "id": "webhook-id",
-          "url": "https://webhook.example.com"
-        }
-      `,
+      exampleRequest: `POST https://api.pixonchain.com/api/webhooks
+  {
+    "url": "https://webhook.example.com"
+  }`,
+      exampleResponse: `{
+    "success": true,
+    "id": "webhook-id",
+    "url": "https://webhook.example.com"
+  }`,
     },
     {
       name: "List all Webhooks",
       description: "Lista todos os webhooks cadastrados na plataforma.",
       method: "GET",
       url: "https://api.pixonchain.com/api/webhooks",
-      exampleRequest: `
-        GET {{baseUrl}}/api/webhooks
-      `,
-      exampleResponse: `
-        {
-          "success": true,
-          "webhooks": [
-            {
-              "id": "webhook-id",
-              "url": "https://webhook.example.com",
-              "event_provider": "example-provider"
-            }
-          ]
-        }
-      `,
+      exampleRequest: `GET https://api.pixonchain.com/api/webhooks`,
+      exampleResponse: `{
+    "success": true,
+    "webhooks": [
+      {
+        "id": "webhook-id",
+        "url": "https://webhook.example.com",
+        "event_provider": "example-provider"
+      }
+    ]
+  }`,
+      label: "NEW",
+      labelBgColor: "bg-[#7747ff]",
+      labelTextColor: "text-white",
     },
     {
       name: "Delete Webhook",
       description: "Exclui um webhook específico com base no ID fornecido.",
       method: "DELETE",
       url: "https://api.pixonchain.com/api/webhooks/:id",
-      exampleRequest: `
-        DELETE {{baseUrl}}/api/webhooks/:id
-      `,
-      exampleResponse: `
-        {
+      exampleRequest: `DELETE https://api.pixonchain.com/api/webhooks/:id`,
+      exampleResponse: `{
           "success": true,
           "message": "Webhook successfully deleted.",
           "faasResponse": {
             "success": true,
             "deletedId": "webhook-id"
           }
-        }
-      `,
+        }`,
+      label: "NEW",
+      labelBgColor: "bg-[#7747ff]",
+      labelTextColor: "text-white",
     },
   ]
 
@@ -172,8 +155,13 @@ const DeveloperSections = () => {
           credenciais de acesso. Entre em contato com nosso suporte para
           solicitar suas credenciais.
         </p>
+        <p className="text-sm text-gray-300 mb-3">
+          As credenciais devem ser enviadas no{" "}
+          <b className="text-[#7747ff]">Header</b> de cada requisição para
+          autenticação e autorização.
+        </p>
         <p className="text-sm text-gray-300 font-mono bg-gray-700 p-3 rounded-lg">
-          Exemplo de credenciais:
+          Exemplo de credenciais no Header:
           <br />
           <span className="block mt-2">
             <b>x-api-key</b>: ********
@@ -197,49 +185,59 @@ const DeveloperSections = () => {
           </a>
         </div>
       </div>
+
       <div className="w-full max-w-md bg-gray-800 rounded-lg p-4 shadow-lg">
-  <div className="w-full max-w-4xl space-y-6">
-    {endpoints.map((endpoint, index) => (
-      <div key={index} className="bg-gray-800 rounded-lg p-4 text-left">
-        <h2 className="text-lg font-bold mb-2">{endpoint.name}</h2>
-        <p className="text-sm text-gray-300 mb-3">
-          {endpoint.description}
-        </p>
-        <div className="mb-4">
-          <span
-            className="block text-sm text-yellow-300 font-mono break-words"
-            style={{ wordWrap: 'break-word', maxWidth: '200px' }}
-          >
-            <b>Method:</b> {endpoint.method}
-          </span>
-          <span
-            className="block text-sm text-yellow-300 font-mono break-words"
-            style={{ wordWrap: 'break-word', maxWidth: '300px' }}
-          >
-            <b>URL:</b> {endpoint.url}
-          </span>
+        <div className="w-full max-w-4xl space-y-6">
+          {endpoints.map((endpoint, index) => (
+            <div key={index} className="bg-gray-800 rounded-lg p-4 text-left">
+              <div className="flex items-center mb-2">
+                <h2 className="text-lg font-bold">{endpoint.name}</h2>
+                {endpoint.label && (
+                  <span
+                    className={`ml-3 px-2 py-1 text-xs font-bold rounded-full ${endpoint.labelBgColor} ${endpoint.labelTextColor}`}
+                  >
+                    {endpoint.label}
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-gray-300 mb-3">
+                {endpoint.description}
+              </p>
+              <div className="mb-4">
+                <span
+                  className="block text-sm text-yellow-300 font-mono break-words"
+                  style={{ wordWrap: "break-word", maxWidth: "200px" }}
+                >
+                  <b>Method:</b> {endpoint.method}
+                </span>
+                <span
+                  className="block text-sm text-yellow-300 font-mono break-words"
+                  style={{ wordWrap: "break-word", maxWidth: "300px" }}
+                >
+                  <b>URL:</b> {endpoint.url}
+                </span>
+              </div>
+              <details className="mb-3">
+                <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
+                  Exemplo de Requisição
+                </summary>
+                <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
+                  {endpoint.exampleRequest}
+                </pre>
+              </details>
+              <details>
+                <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
+                  Exemplo de Resposta
+                </summary>
+                <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
+                  {endpoint.exampleResponse}
+                </pre>
+              </details>
+            </div>
+          ))}
         </div>
-        <details className="mb-3">
-          <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
-            Exemplo de Requisição
-          </summary>
-          <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-            {endpoint.exampleRequest}
-          </pre>
-        </details>
-        <details>
-          <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
-            Exemplo de Resposta
-          </summary>
-          <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-            {endpoint.exampleResponse}
-          </pre>
-        </details>
       </div>
-    ))}
-  </div>
-</div>
-      
+
       <button
         onClick={() => router.back()}
         className="mt-8 flex items-center justify-center gap-2 bg-gray-700 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors"
