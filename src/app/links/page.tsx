@@ -1,40 +1,39 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react"
-import Image from "next/image"
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   FaTwitter,
   FaLinkedin,
   FaInstagram,
   FaDiscord,
   FaYoutube,
-  FaDownload,
-} from "react-icons/fa"
-import logo from "@/app/assets/logo-pixonchain.png"
-import Head from "next/head"
-import { trackEvent } from "../utils/analytics"
+} from "react-icons/fa";
+import logo from "@/app/assets/logo-pixonchain.png";
+import Head from "next/head";
+import { trackEvent } from "../utils/analytics";
 
 const Linktree = () => {
-  const [timeRemaining, setTimeRemaining] = useState(18 * 24 * 3600)
+  const [timeRemaining, setTimeRemaining] = useState(18 * 24 * 3600);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeRemaining((prev) => (prev > 0 ? prev - 1 : 0))
-    }, 1000)
+      setTimeRemaining((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [])
+    return () => clearInterval(timer);
+  }, []);
 
   const formatTime = (seconds: number) => {
-    const days = Math.floor(seconds / 86400)
-    const hours = Math.floor((seconds % 86400) / 3600)
-    const minutes = Math.floor((seconds % 3600) / 60)
-    const secs = seconds % 60
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
     return `${String(days).padStart(2, "0")}d ${String(hours).padStart(
       2,
       "0"
-    )}h ${String(minutes).padStart(2, "0")}m ${String(secs).padStart(2, "0")}s`
-  }
+    )}h ${String(minutes).padStart(2, "0")}m ${String(secs).padStart(2, "0")}s`;
+  };
 
   const socialLinks = [
     {
@@ -67,7 +66,7 @@ const Linktree = () => {
       url: "https://www.youtube.com/@pedro_dapps",
       icon: <FaYoutube />,
     },
-  ]
+  ];
 
   const mainLinks = [
     {
@@ -80,32 +79,7 @@ const Linktree = () => {
       url: "/business_presentation",
       animated: false,
     },
-  ]
-
-  // const pedroLinks = [
-  //   {
-  //     title: "Reentrancy Attack Example no GitHub",
-  //     url: "https://github.com/pedrosgmagalhaes/reentrancy_attack_example",
-  //   },
-  //   {
-  //     title: "GitHub de Pedro Magalhães",
-  //     url: "https://github.com/pedrosgmagalhaes",
-  //   },
-  //   {
-  //     title:
-  //       "Projeto-piloto de CBDC do Brasil contém código que pode congelar ou subtrair fundos de usuários, afirma desenvolvedor - CoinTelegraph",
-  //     url: "https://br.cointelegraph.com/news/brazil-cbdc-pilot-source-code-can-freeze-funds",
-  //   },
-  //   {
-  //     title:
-  //       "Drex: o que é o “real digital” e por que a direita está em campanha contra ele - Gazeta do Povo",
-  //     url: "https://www.gazetadopovo.com.br/economia/drex-o-que-e-o-real-digital-e-por-que-a-direita-esta-em-campanha-contra-ele/",
-  //   },
-  //   {
-  //     title: "Criptomoedas e Grupos Internacionais - Gazeta do Povo",
-  //     url: "https://www.gazetadopovo.com.br/ideias/hamas-e-outros-grupos-terroristas-usam-criptomoedas-para-burlar-sancoes-financeiras-internacionais/",
-  //   },
-  // ]
+  ];
 
   const policyLinks = [
     {
@@ -124,7 +98,7 @@ const Linktree = () => {
       title: "Entre em Contato",
       url: "mailto:contact@pixonchain.com",
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
@@ -136,8 +110,17 @@ const Linktree = () => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+
       <div className="mb-8">
         <Image src={logo} alt="Pix on Chain Logo" width={250} height={250} />
+      </div>
+
+      {/* Notificação de Alerta */}
+      <div className="w-full max-w-md bg-black text-white rounded-lg p-4 mb-6 shadow-lg flex items-center gap-3">
+        <span className="font-bold text-lg">⚠️ Atenção:</span>
+        <p className="text-sm">
+          Nova endpoint para cadastrar webhooks: agora você pode receber até 10 webhooks por chamadas em diferentes URLs.
+        </p>
       </div>
 
       {/* Promoção */}
@@ -165,19 +148,17 @@ const Linktree = () => {
           Pix on Chain.
         </p>
         <a
-          href="/documentacao.pdf"
-          download
+          href="/mobile/developer_sections"
           onClick={() =>
             trackEvent({
-              action: "download_documentacao",
-              category: "Downloads",
-              label: "Documentação Pix on Chain",
+              action: "view_developer_section",
+              category: "Navigation",
+              label: "Área de Desenvolvedores",
             })
           }
           className="flex items-center justify-center gap-2 bg-gray-800 text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          <FaDownload className="text-lg" />
-          Download da Documentação
+          📄 Acessar Documentação
         </a>
       </div>
 
@@ -225,24 +206,6 @@ const Linktree = () => {
         </div>
       </div>
 
-      {/* Sobre Pedro Magalhães */}
-      {/* <div className="w-full max-w-md mb-10">
-        <h2 className="text-lg font-bold mb-4">📚 Sobre Pedro Magalhães</h2>
-        <div className="space-y-4">
-          {pedroLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center bg-gray-800 text-white font-medium py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              {link.title}
-            </a>
-          ))}
-        </div>
-      </div> */}
-
       {/* Termos e Serviços */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">📜 Termos e Serviços</h2>
@@ -267,7 +230,7 @@ const Linktree = () => {
         reservados.
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Linktree
+export default Linktree;
