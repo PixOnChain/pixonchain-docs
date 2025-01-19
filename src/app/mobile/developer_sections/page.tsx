@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FaWhatsapp, FaArrowLeft } from "react-icons/fa"
+import { FaWhatsapp, FaArrowLeft, FaStar } from "react-icons/fa"
 import { useRouter } from "next/navigation"
 
 const DeveloperSections = () => {
@@ -48,14 +48,15 @@ const DeveloperSections = () => {
   }`,
     },
     {
-      name: "Quote/Purchase Token (Pix para USDT)",
+      name: "Quote/Purchase Token",
+      subtitle: "Gera o QR Code do Pix para USDT",
       description:
-        "Solicita um orçamento para a compra de tokens com base no valor e endereço do destinatário com o QR Code do Pix.",
+        "Gera o QR Code do Pix para realizar uma cotação com base no valor (em decimais) e no endereço de recebimento USDT na Polygon. Você pode simular ou efetuar a cotação passando o parâmetro `simulation` como true ou false.",
       method: "POST",
       url: "https://api.pixonchain.com/api/banking/quote-transaction",
       exampleRequest: `POST https://api.pixonchain.com/api/banking/quote-transaction
         {
-          "value": 602,
+          "value": 600,
           "simulation": false,
           "receiverAddress": "0xexampleaddress"
         }`,
@@ -64,25 +65,47 @@ const DeveloperSections = () => {
           "due": "2025-01-19T18:21:36.972Z",
           "brCode": "example-br-code"
         }`,
-      label: (
-        <span className="flex items-center gap-1 mr-2">
-          <span className="text-red-500">🔥</span>
-          HOT
-        </span>
-      ),
-      labelBgColor: "bg-[#E8E4FF]",
-      labelTextColor: "text-[red]",
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              HOT
+            </span>
+          ),
+          bgColor: "bg-[#E8E4FF]",
+          textColor: "text-[red]",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg">💸</span>
+              PIX PARA USDT
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
     },
-
     {
-      name: "Quote Execution",
-      description: "Executa um orçamento utilizando o ID da transação.",
+      name: "Get Transaction Quote/Purchase",
+      subtitle: "Recupera o ID da ordem gerada do Pix convertida em USDT",
+      description:
+        "Recupera os detalhes de uma cotação de transação utilizando o ID gerado anteriormente. Permite verificar o status da cotação e os logs de depósitos associados.",
       method: "GET",
       url: "https://api.pixonchain.com/api/banking/quote-transaction/:transactionId",
       exampleRequest: `GET https://api.pixonchain.com/api/banking/quote-transaction/:transactionId`,
       exampleResponse: `{
-    "depositsLogs": []
-  }`,
+          "depositsLogs": [
+            {
+              "timestamp": "2025-01-19T18:30:45.123Z",
+              "status": "Completed",
+              "amount": "6.00",
+              "receiverAddress": "0xexampleaddress"
+            }
+          ]
+        }`,
     },
     {
       name: "Add Webhook",
@@ -99,6 +122,20 @@ const DeveloperSections = () => {
     "id": "webhook-id",
     "url": "https://webhook.example.com"
   }`,
+  labels: [
+    {
+      text: (
+        <span className="flex items-center gap-1 mr-2">
+          <span className="text-yellow-500 text-lg p-1">
+            <FaStar />
+          </span>
+          NOVIDADE
+        </span>
+      ),
+      bgColor: "bg-[#7747ff]",
+      textColor: "text-white",
+    },
+  ],
     },
     {
       name: "List all Webhooks",
@@ -116,9 +153,20 @@ const DeveloperSections = () => {
       }
     ]
   }`,
-      label: "NEW",
-      labelBgColor: "bg-[#7747ff]",
-      labelTextColor: "text-white",
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-yellow-500 text-lg p-1">
+                <FaStar />
+              </span>
+              NOVIDADE
+            </span>
+          ),
+          bgColor: "bg-[#7747ff]",
+          textColor: "text-white",
+        },
+      ],
     },
     {
       name: "Delete Webhook",
@@ -134,9 +182,20 @@ const DeveloperSections = () => {
             "deletedId": "webhook-id"
           }
         }`,
-      label: "NEW",
-      labelBgColor: "bg-[#7747ff]",
-      labelTextColor: "text-white",
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-yellow-500 text-lg p-1">
+                <FaStar />
+              </span>
+              NOVIDADE
+            </span>
+          ),
+          bgColor: "bg-[#7747ff]",
+          textColor: "text-white",
+        },
+      ],
     },
   ]
 
@@ -185,20 +244,28 @@ const DeveloperSections = () => {
           </a>
         </div>
       </div>
-
       <div className="w-full max-w-md bg-gray-800 rounded-lg p-4 shadow-lg">
         <div className="w-full max-w-4xl space-y-6">
           {endpoints.map((endpoint, index) => (
             <div key={index} className="bg-gray-800 rounded-lg p-4 text-left">
-              <div className="flex items-center mb-2">
+              <div className="flexc-col items-center mb-2">
                 <h2 className="text-lg font-bold">{endpoint.name}</h2>
-                {endpoint.label && (
-                  <span
-                    className={`ml-3 px-2 py-1 text-xs font-bold rounded-full ${endpoint.labelBgColor} ${endpoint.labelTextColor}`}
-                  >
-                    {endpoint.label}
-                  </span>
+                {endpoint.subtitle && (
+                  <p className="text-sm text-gray-400 font-medium mt-1">
+                    {endpoint.subtitle}
+                  </p>
                 )}
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                {endpoint.labels &&
+                  endpoint.labels.map((label, labelIndex) => (
+                    <span
+                      key={labelIndex}
+                      className={`flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-full ${label.bgColor} ${label.textColor}`}
+                    >
+                      {label.text}
+                    </span>
+                  ))}
               </div>
               <p className="text-sm text-gray-300 mb-3">
                 {endpoint.description}
