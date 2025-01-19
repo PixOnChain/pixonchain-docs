@@ -3,6 +3,7 @@
 import React from "react"
 import { FaWhatsapp, FaArrowLeft, FaStar } from "react-icons/fa"
 import { useRouter } from "next/navigation"
+import { SiTether } from 'react-icons/si';
 
 const DeveloperSections = () => {
   const router = useRouter()
@@ -79,7 +80,9 @@ const DeveloperSections = () => {
         {
           text: (
             <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg">💸</span>
+              <span className="text-green-500 text-lg p-1">
+                 <SiTether className="text-lg text-white" />
+              </span>
               PIX PARA USDT
             </span>
           ),
