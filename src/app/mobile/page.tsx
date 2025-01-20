@@ -24,34 +24,38 @@ const LoginPage = () => {
   ]
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError("");
+  
     try {
-      const response = await fetch(
-        "https://api.pixonchain.com/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      )
-
+      const response = await fetch("http://localhost:3001/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
       if (response.ok) {
-        const data = await response.json()
-        localStorage.setItem("accessToken", data.accessToken)
-        localStorage.setItem("refreshToken", data.refreshToken)
-        router.push("/members-area")
+        const data = await response.json();
+  
+        if (data.accessToken && data.refreshToken) {
+          localStorage.setItem("accessToken", data.accessToken);
+          localStorage.setItem("refreshToken", data.refreshToken);
+          router.push("/members-area");
+        } else {
+          setError("Erro ao autenticar. Tokens não foram recebidos.");
+        }
       } else {
-        setError("E-mail ou senha inválidos.")
+        const errorData = await response.json();
+        setError(errorData.message || "E-mail ou senha inválidos.");
       }
     } catch (error) {
-      console.error("Erro ao fazer login:", error)
-      setError("Erro ao conectar ao servidor. Tente novamente.")
+      console.error("Erro ao fazer login:", error);
+      setError("Erro ao conectar ao servidor. Tente novamente.");
     }
-  }
-
+  };
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#13121C] to-[#1C1B29] flex items-center justify-center">
       <Head>

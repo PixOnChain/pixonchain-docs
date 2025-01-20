@@ -12,6 +12,7 @@
     "@emailjs/browser": "^4.4.1",
     "@react-pdf-viewer/core": "^3.12.0",
     "@types/webpack": "^5.28.5",
+    "axios": "^1.7.9",
     "canvas": "^3.0.1",
     "next": "^15.1.5",
     "node-loader": "^2.1.0",
