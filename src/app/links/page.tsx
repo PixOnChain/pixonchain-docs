@@ -115,7 +115,6 @@ const Linktree = () => {
         <Image src={logo} alt="Pix on Chain Logo" width={250} height={250} />
       </div>
 
-      {/* Notificação de Alerta */}
       <div className="w-full max-w-md bg-black text-white rounded-lg p-4 mb-6 shadow-lg flex items-center gap-3">
         <span className="font-bold text-lg">⚠️ Atenção:</span>
         <p className="text-sm">
@@ -123,7 +122,6 @@ const Linktree = () => {
         </p>
       </div>
 
-      {/* Promoção */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">🚀 Pix on Chain - Whitelabel</h2>
         <a
@@ -140,7 +138,6 @@ const Linktree = () => {
         </a>
       </div>
 
-      {/* Área de Desenvolvedores */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">📄 Área de Desenvolvedores</h2>
         <p className="text-sm text-gray-400 mb-4">
@@ -162,7 +159,6 @@ const Linktree = () => {
         </a>
       </div>
 
-      {/* Links Importantes */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">🔗 Links Importantes</h2>
         <div className="space-y-4">
@@ -180,7 +176,6 @@ const Linktree = () => {
         </div>
       </div>
 
-      {/* Redes Sociais */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">🌐 Redes Sociais</h2>
         <div className="space-y-4">
@@ -206,7 +201,6 @@ const Linktree = () => {
         </div>
       </div>
 
-      {/* Termos e Serviços */}
       <div className="w-full max-w-md mb-10">
         <h2 className="text-lg font-bold mb-4">📜 Termos e Serviços</h2>
         <div className="space-y-4">
@@ -224,7 +218,6 @@ const Linktree = () => {
         </div>
       </div>
 
-      {/* Rodapé */}
       <footer className="mt-10 text-sm text-gray-400">
         © {new Date().getFullYear()} Pix on Chain - Todos os direitos
         reservados.

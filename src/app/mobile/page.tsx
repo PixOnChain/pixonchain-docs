@@ -25,10 +25,30 @@ const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (email === "user@example.com" && password === "password123") {
-      router.push("/members-area")
-    } else {
-      setError("E-mail ou senha inválidos.")
+    setError("")
+    try {
+      const response = await fetch(
+        "https://api.pixonchain.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      )
+
+      if (response.ok) {
+        const data = await response.json()
+        localStorage.setItem("accessToken", data.accessToken)
+        localStorage.setItem("refreshToken", data.refreshToken)
+        router.push("/members-area")
+      } else {
+        setError("E-mail ou senha inválidos.")
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error)
+      setError("Erro ao conectar ao servidor. Tente novamente.")
     }
   }
 
