@@ -3,8 +3,12 @@
 import React from "react"
 import {
   FaCalendarAlt,
+  FaHeartbeat,
+  FaKey,
   FaLink,
   FaMoneyBill,
+  FaServer,
+  FaShieldAlt,
   FaWallet,
   FaWhatsapp,
 } from "react-icons/fa"
@@ -19,14 +23,40 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/health",
       exampleRequest: `GET https://api.pixonchain.com/health`,
       exampleResponse: `{
-    "status": "OK",
-    "service": {
-      "name": "pix-on-chain",
-      "version": "1.0.1"
-    },
-    "uptime": 2468.431,
-    "timestamp": "2025-01-19T18:46:06.751Z"
-  }`,
+        "status": "OK",
+        "service": {
+          "name": "pix-on-chain",
+          "version": "1.0.1"
+        },
+        "uptime": 2468.431,
+        "timestamp": "2025-01-19T18:46:06.751Z"
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaHeartbeat className="text-lg text-white" />
+              </span>
+              HEALTH
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-blue-500 text-lg p-1">
+                <FaServer className="text-lg text-white" />
+              </span>
+              SERVER
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+      ],
     },
     {
       name: "Generate API Keys",
@@ -35,21 +65,72 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/auth/keys/generate-api-keys",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/generate-api-keys`,
       exampleResponse: `{
-    "message": "API keys generated successfully",
-    "apiKey": "example-api-key",
-    "secretKey": "example-secret-key"
-  }`,
+        "message": "API keys generated successfully",
+        "apiKey": "example-api-key",
+        "secretKey": "example-secret-key"
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <FaKey className="text-lg text-white" />
+              </span>
+              API KEYS
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-yellow-500 text-lg p-1">
+                <FaShieldAlt className="text-lg text-white" />
+              </span>
+              SECURITY
+            </span>
+          ),
+          bgColor: "bg-[#3b82f6]",
+          textColor: "text-white",
+        },
+      ],
     },
     {
       name: "Key Validation",
-      description:
-        "Valida as chaves de API fornecidas para garantir acesso às APIs.",
+      description: "Valida as chaves de API fornecidas para garantir acesso às APIs.",
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/keys/key-validate",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/key-validate`,
       exampleResponse: `{
-    "accessToken": "example-access-token"
-  }`,
+        "accessToken": "example-access-token"
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <FaKey className="text-lg text-white" />
+              </span>
+              API KEYS
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-yellow-500 text-lg p-1">
+                <FaShieldAlt className="text-lg text-white" />
+              </span>
+              SECURITY
+            </span>
+          ),
+          bgColor: "bg-[#3b82f6]",
+          textColor: "text-white",
+        },
+      ],
     },
     {
       name: "Get User Wallet",
