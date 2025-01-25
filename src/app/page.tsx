@@ -374,9 +374,6 @@ const DeveloperSections = () => {
           <span className="block">
             <b>x-secret-key</b>: ********
           </span>
-          <span className="block">
-            <b>x-tenant-id</b>: ********
-          </span>
         </p>
 
         {/* Exemplo com Curl */}
@@ -386,11 +383,11 @@ const DeveloperSections = () => {
           </h3>
           <pre className="bg-gray-900 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
             <code>
-              {`curl -X GET "https://api.pixonchain.com/health" \\\n  -H "x-api-key: SEU_API_KEY" \\\n  -H "x-secret-key: SEU_SECRET_KEY" \\\n  -H "x-tenant-id: SEU_TENANT_ID"`}
+              {`curl -X GET "https://api.pixonchain.com/health" \\\n  -H "x-api-key: SEU_API_KEY" \\\n  -H "x-secret-key: SEU_SECRET_KEY""`}
             </code>
           </pre>
           <p className="text-xs text-gray-400 mt-2">
-            Substitua <code>SEU_API_KEY</code>, <code>SEU_SECRET_KEY</code>, e{" "}
+            Substitua <code>SEU_API_KEY</code>, e{" "}
             <code>SEU_TENANT_ID</code> pelos valores fornecidos.
           </p>
         </div>
