@@ -1,7 +1,13 @@
 "use client"
 
 import React from "react"
-import { FaWhatsapp } from "react-icons/fa"
+import {
+  FaCalendarAlt,
+  FaLink,
+  FaMoneyBill,
+  FaWallet,
+  FaWhatsapp,
+} from "react-icons/fa"
 import { SiTether } from "react-icons/si"
 
 const DeveloperSections = () => {
@@ -46,6 +52,85 @@ const DeveloperSections = () => {
   }`,
     },
     {
+      name: "Get User Wallet",
+      description:
+        "Recupera as informações da carteira do usuário, incluindo saldos e detalhes da conta.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/wallet/user",
+      exampleRequest: `GET https://api.pixonchain.com/api/wallet/user`,
+      exampleResponse: `{
+        "success": true,
+        "result": {
+            "success": true,
+            "wallet": {
+                "partner": "partner-id",
+                "name": "string",
+                "smartAccount": "string",
+                "customerId": "uuid",
+                "externalId": "uuid",
+                "networkId": "number",
+                "role": "string",
+                "createdAt": "date",
+                "updatedAt": "date",
+                "__v": "number"
+            },
+            "balances": [
+                {
+                    "partner": "partner-id",
+                    "name": "string",
+                    "symbol": "string",
+                    "decimals": "number",
+                    "description": "string",
+                    "address": "string",
+                    "assetId": "uuid",
+                    "externalId": "string",
+                    "networkId": "number",
+                    "createdAt": "date",
+                    "updatedAt": "date",
+                    "managed": "boolean",
+                    "balance": "string"
+                }
+            ]
+        }
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              HOT
+            </span>
+          ),
+          bgColor: "bg-[#13121C]",
+          textColor: "text-[red]",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaWallet className="text-lg text-white" />
+              </span>
+              WALLET ADDRESS
+            </span>
+          ),
+          bgColor: "bg-[#502FAA]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-yellow-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              BALANCE
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+    },
+    {
       name: "Quote/Purchase Token",
       subtitle: "Gera o QR Code do Pix para USDT",
       description:
@@ -71,7 +156,7 @@ const DeveloperSections = () => {
               HOT
             </span>
           ),
-          bgColor: "bg-[#E8E4FF]",
+          bgColor: "bg-[#13121C]",
           textColor: "text-[red]",
         },
         {
@@ -138,14 +223,40 @@ const DeveloperSections = () => {
       method: "POST",
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `POST https://api.pixonchain.com/api/webhooks
-  {
-    "url": "https://webhook.example.com"
-  }`,
+      {
+        "url": "https://webhook.example.com"
+      }`,
       exampleResponse: `{
-    "success": true,
-    "id": "webhook-id",
-    "url": "https://webhook.example.com"
-  }`,
+        "success": true,
+        "id": "webhook-id",
+        "url": "https://webhook.example.com"
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <FaLink className="text-lg text-white" />
+              </span>
+              WEBHOOK
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-blue-500 text-lg p-1">
+                <FaCalendarAlt className="text-lg text-white" />
+              </span>
+              EVENTS
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
     },
     {
       name: "List all Webhooks",
@@ -154,15 +265,41 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `GET https://api.pixonchain.com/api/webhooks`,
       exampleResponse: `{
-    "success": true,
-    "webhooks": [
-      {
-        "id": "webhook-id",
-        "url": "https://webhook.example.com",
-        "event_provider": "example-provider"
-      }
-    ]
-  }`,
+        "success": true,
+        "webhooks": [
+          {
+            "id": "webhook-id",
+            "url": "https://webhook.example.com",
+            "event_provider": "example-provider"
+          }
+        ]
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <FaLink className="text-lg text-white" />
+              </span>
+              WEBHOOK
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-blue-500 text-lg p-1">
+                <FaCalendarAlt className="text-lg text-white" />
+              </span>
+              EVENTS
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
     },
     {
       name: "Delete Webhook",
@@ -178,6 +315,32 @@ const DeveloperSections = () => {
             "deletedId": "webhook-id"
           }
         }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <FaLink className="text-lg text-white" />
+              </span>
+              WEBHOOK
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-blue-500 text-lg p-1">
+                <FaCalendarAlt className="text-lg text-white" />
+              </span>
+              EVENTS
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
     },
   ]
 
@@ -256,7 +419,7 @@ const DeveloperSections = () => {
                   {endpoint.subtitle}
                 </p>
               )}
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-3 mt-2">
                 {endpoint.labels?.map((label, labelIndex) => (
                   <span
                     key={labelIndex}
