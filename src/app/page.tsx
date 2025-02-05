@@ -9,48 +9,80 @@ import {
   FaMoneyBill,
   FaServer,
   FaShieldAlt,
-  FaWallet,
   FaWhatsapp,
+  FaEthereum,
 } from "react-icons/fa"
-import { SiTether } from "react-icons/si"
+import Image from "next/image"
+import PolyIcon from "./assets/icons/cryptocurrencies/matic.svg"
+import TrxIcon from "./assets/icons/cryptocurrencies/trx.svg"
+import BitcoinIcon from "./assets/icons/cryptocurrencies/btc.svg"
+
+const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
 const DeveloperSections = () => {
   const endpoints = [
     {
-      name: "Health Check",
-      description: "Verifica o status de saúde do servidor.",
-      method: "GET",
-      url: "https://api.pixonchain.com/health",
-      exampleRequest: `GET https://api.pixonchain.com/health`,
+      name: "Login",
+      subtitle: "Autenticação de Usuário",
+      description: "Autentica o usuário e retorna tokens de acesso.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/auth/login",
+      exampleRequest: `POST https://api.pixonchain.com/api/auth/login
+    {
+      "email": "user@example.com",
+      "password": "strongpassword123"
+    }`,
       exampleResponse: `{
-        "status": "OK",
-        "service": {
-          "name": "pix-on-chain",
-          "version": "1.0.1"
-        },
-        "uptime": 2468.431,
-        "timestamp": "2025-01-19T18:46:06.751Z"
-      }`,
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjE2MjM5MDIyLCJleHAiOjE2MTYyNDI2MjJ9.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+      "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4gdXNlZCBmb3IgcmVmcmVzaGluZyB0aGUgYWNjZXNzIHRva2Vu",
+      "userId": "12345678-1234-1234-1234-123456789012"
+    }`,
       labels: [
         {
           text: (
             <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaHeartbeat className="text-lg text-white" />
+              <span className="text-purple-500 text-lg p-1">
+                <FaKey className="text-lg text-white" />
               </span>
-              HEALTH
+              LOGIN
             </span>
           ),
-          bgColor: "bg-[#00cc66]",
+          bgColor: "bg-[#7747FF]",
           textColor: "text-white",
         },
+      ],
+    },
+    {
+      name: "Signup",
+      subtitle: "Registro de Usuário",
+      description: "Registra um novo usuário na plataforma.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/auth/signup",
+      exampleRequest: `POST https://api.pixonchain.com/api/auth/signup
+    {
+      "fullName": "John Doe",
+      "tax_id": "12345678909",
+      "birthDate": "1990-01-01",
+      "email": "john.doe@example.com",
+      "phone": "5511999999999",
+      "whatsapp": "5511999999999",
+      "telegram": "5511999999999",
+      "userType": "PF",
+      "password": "securepassword123",
+      "tenant_id": "12345678-1234-1234-1234-123456789012",
+      "type": "PF"
+    }`,
+      exampleResponse: `{
+      "message": "User registered successfully"
+    }`,
+      labels: [
         {
           text: (
             <span className="flex items-center gap-1 mr-2">
-              <span className="text-blue-500 text-lg p-1">
-                <FaServer className="text-lg text-white" />
+              <span className="text-purple-500 text-lg p-1">
+                <FaKey className="text-lg text-white" />
               </span>
-              SERVER
+              SIGNUP
             </span>
           ),
           bgColor: "bg-[#7747FF]",
@@ -60,15 +92,16 @@ const DeveloperSections = () => {
     },
     {
       name: "Generate API Keys",
+      subtitle: "Geração de Chaves de API",
       description: "Gera novas chaves de API para autenticação.",
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/keys/generate-api-keys",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/generate-api-keys`,
       exampleResponse: `{
-        "message": "API keys generated successfully",
-        "apiKey": "example-api-key",
-        "secretKey": "example-secret-key"
-      }`,
+      "message": "API keys generated successfully",
+      "apiKey": "example-api-key",
+      "secretKey": "example-secret-key"
+    }`,
       labels: [
         {
           text: (
@@ -98,13 +131,14 @@ const DeveloperSections = () => {
     },
     {
       name: "Key Validation",
+      subtitle: "Validação de Chaves de API",
       description: "Valida as chaves de API fornecidas para garantir acesso às APIs.",
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/keys/key-validate",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/key-validate`,
       exampleResponse: `{
-        "accessToken": "example-access-token"
-      }`,
+      "accessToken": "example-access-token"
+    }`,
       labels: [
         {
           text: (
@@ -132,48 +166,107 @@ const DeveloperSections = () => {
         },
       ],
     },
+    // Banking e Transações
     {
-      name: "Get User Wallet",
-      description:
-        "Recupera as informações da carteira do usuário, incluindo saldos e detalhes da conta.",
-      method: "GET",
-      url: "https://api.pixonchain.com/api/wallet/user",
-      exampleRequest: `GET https://api.pixonchain.com/api/wallet/user`,
+      name: "Generate QR Code",
+      subtitle: "Geração de QR Code",
+      description: "Gera um QR Code para pagamento via Pix.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/banking/generate-qrcode",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/generate-qrcode
+    {
+      "value": "0.51"
+    }`,
       exampleResponse: `{
-        "success": true,
-        "result": {
-            "success": true,
-            "wallet": {
-                "partner": "partner-id",
-                "name": "string",
-                "smartAccount": "string",
-                "customerId": "uuid",
-                "externalId": "uuid",
-                "networkId": "number",
-                "role": "string",
-                "createdAt": "date",
-                "updatedAt": "date",
-                "__v": "number"
-            },
-            "balances": [
-                {
-                    "partner": "partner-id",
-                    "name": "string",
-                    "symbol": "string",
-                    "decimals": "number",
-                    "description": "string",
-                    "address": "string",
-                    "assetId": "uuid",
-                    "externalId": "string",
-                    "networkId": "number",
-                    "createdAt": "date",
-                    "updatedAt": "date",
-                    "managed": "boolean",
-                    "balance": "string"
-                }
-            ]
-        }
-      }`,
+      "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
+      "value": "0.51",
+      "expiration": 3600,
+      "txid": "09a8d6b9b8df46ee9627c55b8d835e80"
+    }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              QR CODE
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+    },
+    {
+      name: "Get BR Code",
+      subtitle: "Recuperação de BR Code",
+      description: "Recupera os detalhes de um BR Code gerado anteriormente.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/banking/brcodes/:uuid",
+      exampleRequest: `GET https://api.pixonchain.com/api/banking/brcodes/:uuid`,
+      exampleResponse: `{
+      "amount": "0.51",
+      "fees": null,
+      "network": null,
+      "token": null,
+      "qr_code": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
+      "wallet_address": null,
+      "created_at": "2025-02-05T21:54:42.883Z",
+      "pix_status": "pending",
+      "tx_hash": null
+    }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              BR CODE
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+    },
+    {
+      name: "Create Order",
+      subtitle: "Criação de Ordem",
+      description: `Cria uma nova ordem de compra ou venda. As moedas aceitas são: ${allowedCryptos.join(', ')}. O cBRL é uma stablecoin em reais, também chamada de real tokenizado da Pix on Chain.`,
+      method: "POST",
+      url: "https://api.pixonchain.com/api/orders/create",
+      exampleRequest: `POST https://api.pixonchain.com/api/orders/create
+    {
+      "orderType": "buy",
+      "sourceCurrency": "cBRL",
+      "targetCurrency": "USDT",
+      "sourceAmount": 7.00,
+      "network": "MATIC",
+      "generatePixCode": true,
+      "walletAddress": "0xexampleaddress"
+    }`,
+      exampleResponse: `{
+      "id": 197,
+      "order_type": "buy",
+      "source_currency": "cBRL",
+      "target_currency": "USDT",
+      "source_amount": "7.00000000",
+      "target_amount": "1.16279070",
+      "network": "MATIC",
+      "status": "PENDING",
+      "created_at": "2025-02-05T22:12:06.258Z",
+      "approved": false,
+      "wallet_address": "0xexampleaddress",
+      "basePrice": 6.02,
+      "qrCodeData": {
+        "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/f03c5e356d294f1c8856ddf3af660e9c52040000530398654047.005802BR5901*6013FLORIANOPOLIS61088803200562070503***630495E1",
+        "value": "7.00",
+        "expiration": 3600,
+        "txid": "7e3bce64404f45f9af7abd9069c763a8"
+      }
+    }`,
       labels: [
         {
           text: (
@@ -189,18 +282,110 @@ const DeveloperSections = () => {
           text: (
             <span className="flex items-center gap-1 mr-2">
               <span className="text-green-500 text-lg p-1">
-                <FaWallet className="text-lg text-white" />
+                <FaMoneyBill className="text-lg text-white" />
               </span>
-              WALLET ADDRESS
+              ORDER
             </span>
           ),
-          bgColor: "bg-[#502FAA]",
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-blue-500 text-lg p-1">
+                <FaEthereum className="text-lg text-white" />
+              </span>
+              ETHEREUM
+            </span>
+          ),
+          bgColor: "bg-[#627EEA]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <Image src={PolyIcon} alt="Polygon" width={20} height={20} />
+              </span>
+              POLYGON
+            </span>
+          ),
+          bgColor: "bg-[#8247E5]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg p-1">
+                <Image src={TrxIcon} alt="TRON" width={20} height={20} />
+              </span>
+              TRON
+            </span>
+          ),
+          bgColor: "bg-[#E51A4C]",
           textColor: "text-white",
         },
         {
           text: (
             <span className="flex items-center gap-1 mr-2">
               <span className="text-yellow-500 text-lg p-1">
+                <Image src={BitcoinIcon} alt="BTC" width={20} height={20} />
+              </span>
+              BITCOIN
+            </span>
+          ),
+          bgColor: "bg-[#F7931A]",
+          textColor: "text-white",
+        },
+      ],
+    },
+    {
+      name: "Get Balance",
+      subtitle: "Recuperação de Saldo",
+      description: "Recupera os saldos de moedas fiduciárias e criptomoedas.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/banking/balance",
+      exampleRequest: `GET https://api.pixonchain.com/api/banking/balance`,
+      exampleResponse: `{
+        "fiatBalances": [
+          {
+            "currency": "cBRL",
+            "balance": 317.63905
+          }
+        ],
+        "cryptoBalances": [
+          {
+            "currency": "BTC",
+            "balance": 0
+          },
+          {
+            "currency": "ETH",
+            "balance": 0
+          },
+          {
+            "currency": "HTR",
+            "balance": 0
+          },
+          {
+            "currency": "POLY",
+            "balance": 0
+          },
+          {
+            "currency": "USDC",
+            "balance": 0
+          },
+          {
+            "currency": "USDT",
+            "balance": 0
+          }
+        ]
+      }`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
                 <FaMoneyBill className="text-lg text-white" />
               </span>
               BALANCE
@@ -211,107 +396,65 @@ const DeveloperSections = () => {
         },
       ],
     },
+    // Outros
     {
-      name: "Quote/Purchase Token",
-      subtitle: "Gera o QR Code do Pix para USDT",
-      description:
-        "Gera o QR Code do Pix para realizar uma cotação com base no valor (em decimais) e no endereço de recebimento USDT na Polygon. Você pode simular ou efetuar a cotação passando o parâmetro `simulation` como true ou false.",
-      method: "POST",
-      url: "https://api.pixonchain.com/api/banking/quote-transaction",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/quote-transaction
-        {
-          "value": 600,
-          "simulation": false,
-          "receiverAddress": "0xexampleaddress"
-        }`,
+      name: "Health Check",
+      subtitle: "Verificação de Saúde do Servidor",
+      description: "Verifica o status de saúde do servidor.",
+      method: "GET",
+      url: "https://api.pixonchain.com/health",
+      exampleRequest: `GET https://api.pixonchain.com/health`,
       exampleResponse: `{
-          "id": "transaction-id",
-          "due": "2025-01-19T18:21:36.972Z",
-          "brCode": "example-br-code"
-        }`,
+      "status": "OK",
+      "service": {
+        "name": "pix-on-chain",
+        "version": "1.0.1"
+      },
+      "uptime": 2468.431,
+      "timestamp": "2025-01-19T18:46:06.751Z"
+    }`,
       labels: [
         {
           text: (
             <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              HOT
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
               <span className="text-green-500 text-lg p-1">
-                <SiTether className="text-lg text-white" />
+                <FaHeartbeat className="text-lg text-white" />
               </span>
-              PIX PARA USDT
+              HEALTH
             </span>
           ),
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
-      ],
-    },
-    {
-      name: "Get Transaction Quote/Purchase",
-      subtitle: "Recupera o ID da ordem gerada do Pix convertida em USDT",
-      description:
-        "Recupera os detalhes de uma cotação de transação utilizando o ID gerado anteriormente. Permite verificar o status da cotação e os logs de depósitos associados.",
-      method: "GET",
-      url: "https://api.pixonchain.com/api/banking/quote-transaction/:transactionId",
-      exampleRequest: `GET https://api.pixonchain.com/api/banking/quote-transaction/:transactionId`,
-      exampleResponse: `{
-          "depositsLogs": [
-            {
-              "timestamp": "2025-01-19T18:30:45.123Z",
-              "status": "Completed",
-              "amount": "6.00",
-              "receiverAddress": "0xexampleaddress"
-            }
-          ]
-        }`,
-      labels: [
         {
           text: (
             <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              HOT
-            </span>
-          ),
-          bgColor: "bg-[#E8E4FF]",
-          textColor: "text-[red]",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <SiTether className="text-lg text-white" />
+              <span className="text-blue-500 text-lg p-1">
+                <FaServer className="text-lg text-white" />
               </span>
-              PIX PARA USDT
+              SERVER
             </span>
           ),
-          bgColor: "bg-[#00cc66]",
+          bgColor: "bg-[#7747FF]",
           textColor: "text-white",
         },
       ],
     },
     {
       name: "Add Webhook",
-      description:
-        "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
+      subtitle: "Adição de Webhook",
+      description: "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
       method: "POST",
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `POST https://api.pixonchain.com/api/webhooks
       {
-        "url": "https://webhook.example.com"
-      }`,
+      "url": "https://webhook.example.com"
+    }`,
       exampleResponse: `{
-        "success": true,
-        "id": "webhook-id",
-        "url": "https://webhook.example.com"
-      }`,
+      "success": true,
+      "id": "webhook-id",
+      "url": "https://webhook.example.com"
+    }`,
       labels: [
         {
           text: (
@@ -341,20 +484,21 @@ const DeveloperSections = () => {
     },
     {
       name: "List all Webhooks",
+      subtitle: "Listagem de Webhooks",
       description: "Lista todos os webhooks cadastrados na plataforma.",
       method: "GET",
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `GET https://api.pixonchain.com/api/webhooks`,
       exampleResponse: `{
-        "success": true,
-        "webhooks": [
-          {
-            "id": "webhook-id",
-            "url": "https://webhook.example.com",
-            "event_provider": "example-provider"
-          }
-        ]
-      }`,
+      "success": true,
+      "webhooks": [
+        {
+          "id": "webhook-id",
+          "url": "https://webhook.example.com",
+          "event_provider": "example-provider"
+        }
+      ]
+    }`,
       labels: [
         {
           text: (
@@ -384,18 +528,19 @@ const DeveloperSections = () => {
     },
     {
       name: "Delete Webhook",
+      subtitle: "Exclusão de Webhook",
       description: "Exclui um webhook específico com base no ID fornecido.",
       method: "DELETE",
       url: "https://api.pixonchain.com/api/webhooks/:id",
       exampleRequest: `DELETE https://api.pixonchain.com/api/webhooks/:id`,
       exampleResponse: `{
-          "success": true,
-          "message": "Webhook successfully deleted.",
-          "faasResponse": {
-            "success": true,
-            "deletedId": "webhook-id"
-          }
-        }`,
+      "success": true,
+      "message": "Webhook successfully deleted.",
+      "faasResponse": {
+        "success": true,
+        "deletedId": "webhook-id"
+      }
+    }`,
       labels: [
         {
           text: (
@@ -475,7 +620,7 @@ const DeveloperSections = () => {
 
         <div className="flex justify-center align-center mt-4">
           <a
-            href="https://wa.me/554731705121"
+            href="https://wa.me/5547992134469"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 bg-[#7747ff] text-white font-medium py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
