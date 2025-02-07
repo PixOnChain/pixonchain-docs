@@ -10,12 +10,7 @@ import {
   FaServer,
   FaShieldAlt,
   FaWhatsapp,
-  FaEthereum,
 } from "react-icons/fa"
-import Image from "next/image"
-import PolyIcon from "./assets/icons/cryptocurrencies/matic.svg"
-import TrxIcon from "./assets/icons/cryptocurrencies/trx.svg"
-import BitcoinIcon from "./assets/icons/cryptocurrencies/btc.svg"
 
 const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
@@ -28,15 +23,15 @@ const DeveloperSections = () => {
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/login",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/login
-    {
-      "email": "user@example.com",
-      "password": "strongpassword123"
-    }`,
+{
+  "email": "user@example.com",
+  "password": "strongpassword123"
+}`,
       exampleResponse: `{
-      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjE2MjM5MDIyLCJleHAiOjE2MTYyNDI2MjJ9.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-      "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4gdXNlZCBmb3IgcmVmcmVzaGluZyB0aGUgYWNjZXNzIHRva2Vu",
-      "userId": "12345678-1234-1234-1234-123456789012"
-    }`,
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjE2MjM5MDIyLCJleHAiOjE2MTYyNDI2MjJ9.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4gdXNlZCBmb3IgcmVmcmVzaGluZyB0aGUgYWNjZXNzIHRva2Vu",
+  "userId": "12345678-1234-1234-1234-123456789012"
+}`,
       labels: [
         {
           text: (
@@ -51,6 +46,9 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- email: Email do usuário.
+- password: Senha do usuário.`,
     },
     {
       name: "Signup",
@@ -59,22 +57,22 @@ const DeveloperSections = () => {
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/signup",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/signup
-    {
-      "fullName": "John Doe",
-      "tax_id": "12345678909",
-      "birthDate": "1990-01-01",
-      "email": "john.doe@example.com",
-      "phone": "5511999999999",
-      "whatsapp": "5511999999999",
-      "telegram": "5511999999999",
-      "userType": "PF",
-      "password": "securepassword123",
-      "tenant_id": "12345678-1234-1234-1234-123456789012",
-      "type": "PF"
-    }`,
+{
+  "fullName": "John Doe",
+  "tax_id": "12345678909",
+  "birthDate": "1990-01-01",
+  "email": "john.doe@example.com",
+  "phone": "5511999999999",
+  "whatsapp": "5511999999999",
+  "telegram": "5511999999999",
+  "userType": "PF",
+  "password": "securepassword123",
+  "tenant_id": "12345678-1234-1234-1234-123456789012",
+  "type": "PF"
+}`,
       exampleResponse: `{
-      "message": "User registered successfully"
-    }`,
+  "message": "User registered successfully"
+}`,
       labels: [
         {
           text: (
@@ -89,6 +87,18 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- fullName: Nome completo do usuário.
+- tax_id: CPF do usuário.
+- birthDate: Data de nascimento do usuário.
+- email: Email do usuário.
+- phone: Telefone do usuário.
+- whatsapp: Número do WhatsApp do usuário.
+- telegram: Número do Telegram do usuário.
+- userType: Tipo de usuário (PF ou PJ).
+- password: Senha do usuário.
+- tenant_id: ID do tenant.
+- type: Tipo de usuário (PF ou PJ).`,
     },
     {
       name: "Generate API Keys",
@@ -98,10 +108,10 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/auth/keys/generate-api-keys",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/generate-api-keys`,
       exampleResponse: `{
-      "message": "API keys generated successfully",
-      "apiKey": "example-api-key",
-      "secretKey": "example-secret-key"
-    }`,
+  "message": "API keys generated successfully",
+  "apiKey": "example-api-key",
+  "secretKey": "example-secret-key"
+}`,
       labels: [
         {
           text: (
@@ -128,6 +138,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     {
       name: "Key Validation",
@@ -137,8 +149,8 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/auth/keys/key-validate",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/key-validate`,
       exampleResponse: `{
-      "accessToken": "example-access-token"
-    }`,
+  "accessToken": "example-access-token"
+}`,
       labels: [
         {
           text: (
@@ -165,6 +177,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     // Banking e Transações
     {
@@ -174,15 +188,15 @@ const DeveloperSections = () => {
       method: "POST",
       url: "https://api.pixonchain.com/api/banking/generate-qrcode",
       exampleRequest: `POST https://api.pixonchain.com/api/banking/generate-qrcode
-    {
-      "value": "0.51"
-    }`,
+{
+  "value": "0.51"
+}`,
       exampleResponse: `{
-      "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
-      "value": "0.51",
-      "expiration": 3600,
-      "txid": "09a8d6b9b8df46ee9627c55b8d835e80"
-    }`,
+  "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
+  "value": "0.51",
+  "expiration": 3600,
+  "txid": "09a8d6b9b8df46ee9627c55b8d835e80"
+}`,
       labels: [
         {
           text: (
@@ -197,6 +211,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- value: Valor do pagamento.`,
     },
     {
       name: "Get BR Code",
@@ -206,16 +222,16 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/banking/brcodes/:uuid",
       exampleRequest: `GET https://api.pixonchain.com/api/banking/brcodes/:uuid`,
       exampleResponse: `{
-      "amount": "0.51",
-      "fees": null,
-      "network": null,
-      "token": null,
-      "qr_code": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
-      "wallet_address": null,
-      "created_at": "2025-02-05T21:54:42.883Z",
-      "pix_status": "pending",
-      "tx_hash": null
-    }`,
+  "amount": "0.51",
+  "fees": null,
+  "network": null,
+  "token": null,
+  "qr_code": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
+  "wallet_address": null,
+  "created_at": "2025-02-05T21:54:42.883Z",
+  "pix_status": "pending",
+  "tx_hash": null
+}`,
       labels: [
         {
           text: (
@@ -230,6 +246,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     {
       name: "Create Order",
@@ -238,35 +256,35 @@ const DeveloperSections = () => {
       method: "POST",
       url: "https://api.pixonchain.com/api/orders/create",
       exampleRequest: `POST https://api.pixonchain.com/api/orders/create
-    {
-      "orderType": "buy",
-      "sourceCurrency": "cBRL",
-      "targetCurrency": "USDT",
-      "sourceAmount": 7.00,
-      "network": "MATIC",
-      "generatePixCode": true,
-      "walletAddress": "0xexampleaddress"
-    }`,
+{
+  "orderType": "buy",
+  "sourceCurrency": "cBRL",
+  "targetCurrency": "USDT",
+  "sourceAmount": 7.00,
+  "network": "MATIC",
+  "generatePixCode": true,
+  "walletAddress": "0xexampleaddress"
+}`,
       exampleResponse: `{
-      "id": 197,
-      "order_type": "buy",
-      "source_currency": "cBRL",
-      "target_currency": "USDT",
-      "source_amount": "7.00000000",
-      "target_amount": "1.16279070",
-      "network": "MATIC",
-      "status": "PENDING",
-      "created_at": "2025-02-05T22:12:06.258Z",
-      "approved": false,
-      "wallet_address": "0xexampleaddress",
-      "basePrice": 6.02,
-      "qrCodeData": {
-        "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/f03c5e356d294f1c8856ddf3af660e9c52040000530398654047.005802BR5901*6013FLORIANOPOLIS61088803200562070503***630495E1",
-        "value": "7.00",
-        "expiration": 3600,
-        "txid": "7e3bce64404f45f9af7abd9069c763a8"
-      }
-    }`,
+  "id": 197,
+  "order_type": "buy",
+  "source_currency": "cBRL",
+  "target_currency": "USDT",
+  "source_amount": "7.00000000",
+  "target_amount": "1.16279070",
+  "network": "MATIC",
+  "status": "PENDING",
+  "created_at": "2025-02-05T22:12:06.258Z",
+  "approved": false,
+  "wallet_address": "0xexampleaddress",
+  "basePrice": 6.02,
+  "qrCodeData": {
+    "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/f03c5e356d294f1c8856ddf3af660e9c52040000530398654047.005802BR5901*6013FLORIANOPOLIS61088803200562070503***630495E1",
+    "value": "7.00",
+    "expiration": 3600,
+    "txid": "7e3bce64404f45f9af7abd9069c763a8"
+  }
+}`,
       labels: [
         {
           text: (
@@ -290,55 +308,15 @@ const DeveloperSections = () => {
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-blue-500 text-lg p-1">
-                <FaEthereum className="text-lg text-white" />
-              </span>
-              ETHEREUM
-            </span>
-          ),
-          bgColor: "bg-[#627EEA]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <Image src={PolyIcon} alt="Polygon" width={20} height={20} />
-              </span>
-              POLYGON
-            </span>
-          ),
-          bgColor: "bg-[#8247E5]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg p-1">
-                <Image src={TrxIcon} alt="TRON" width={20} height={20} />
-              </span>
-              TRON
-            </span>
-          ),
-          bgColor: "bg-[#E51A4C]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-yellow-500 text-lg p-1">
-                <Image src={BitcoinIcon} alt="BTC" width={20} height={20} />
-              </span>
-              BITCOIN
-            </span>
-          ),
-          bgColor: "bg-[#F7931A]",
-          textColor: "text-white",
-        },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- orderType: Tipo da ordem (buy ou sell).
+- sourceCurrency: Moeda de origem.
+- targetCurrency: Moeda de destino.
+- sourceAmount: Quantidade da moeda de origem.
+- network: Rede utilizada para a transação.
+- generatePixCode: Booleano indicando se deve gerar um código Pix.
+- walletAddress: Endereço da carteira para a transação.`,
     },
     {
       name: "Get Balance",
@@ -348,39 +326,39 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/banking/balance",
       exampleRequest: `GET https://api.pixonchain.com/api/banking/balance`,
       exampleResponse: `{
-        "fiatBalances": [
-          {
-            "currency": "cBRL",
-            "balance": 317.63905
-          }
-        ],
-        "cryptoBalances": [
-          {
-            "currency": "BTC",
-            "balance": 0
-          },
-          {
-            "currency": "ETH",
-            "balance": 0
-          },
-          {
-            "currency": "HTR",
-            "balance": 0
-          },
-          {
-            "currency": "POLY",
-            "balance": 0
-          },
-          {
-            "currency": "USDC",
-            "balance": 0
-          },
-          {
-            "currency": "USDT",
-            "balance": 0
-          }
-        ]
-      }`,
+  "fiatBalances": [
+    {
+      "currency": "cBRL",
+      "balance": 317.63905
+    }
+  ],
+  "cryptoBalances": [
+    {
+      "currency": "BTC",
+      "balance": 0
+    },
+    {
+      "currency": "ETH",
+      "balance": 0
+    },
+    {
+      "currency": "HTR",
+      "balance": 0
+    },
+    {
+      "currency": "POLY",
+      "balance": 0
+    },
+    {
+      "currency": "USDC",
+      "balance": 0
+    },
+    {
+      "currency": "USDT",
+      "balance": 0
+    }
+  ]
+}`,
       labels: [
         {
           text: (
@@ -395,6 +373,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     // Outros
     {
@@ -405,14 +385,14 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/health",
       exampleRequest: `GET https://api.pixonchain.com/health`,
       exampleResponse: `{
-      "status": "OK",
-      "service": {
-        "name": "pix-on-chain",
-        "version": "1.0.1"
-      },
-      "uptime": 2468.431,
-      "timestamp": "2025-01-19T18:46:06.751Z"
-    }`,
+  "status": "OK",
+  "service": {
+    "name": "pix-on-chain",
+    "version": "1.0.1"
+  },
+  "uptime": 2468.431,
+  "timestamp": "2025-01-19T18:46:06.751Z"
+}`,
       labels: [
         {
           text: (
@@ -439,6 +419,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     {
       name: "Add Webhook",
@@ -447,14 +429,14 @@ const DeveloperSections = () => {
       method: "POST",
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `POST https://api.pixonchain.com/api/webhooks
-      {
-      "url": "https://webhook.example.com"
-    }`,
+{
+  "url": "https://webhook.example.com"
+}`,
       exampleResponse: `{
-      "success": true,
-      "id": "webhook-id",
-      "url": "https://webhook.example.com"
-    }`,
+  "success": true,
+  "id": "webhook-id",
+  "url": "https://webhook.example.com"
+}`,
       labels: [
         {
           text: (
@@ -481,6 +463,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- url: URL do webhook.`,
     },
     {
       name: "List all Webhooks",
@@ -490,15 +474,15 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `GET https://api.pixonchain.com/api/webhooks`,
       exampleResponse: `{
-      "success": true,
-      "webhooks": [
-        {
-          "id": "webhook-id",
-          "url": "https://webhook.example.com",
-          "event_provider": "example-provider"
-        }
-      ]
-    }`,
+  "success": true,
+  "webhooks": [
+    {
+      "id": "webhook-id",
+      "url": "https://webhook.example.com",
+      "event_provider": "example-provider"
+    }
+  ]
+}`,
       labels: [
         {
           text: (
@@ -525,6 +509,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     {
       name: "Delete Webhook",
@@ -534,13 +520,13 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/webhooks/:id",
       exampleRequest: `DELETE https://api.pixonchain.com/api/webhooks/:id`,
       exampleResponse: `{
-      "success": true,
-      "message": "Webhook successfully deleted.",
-      "faasResponse": {
-        "success": true,
-        "deletedId": "webhook-id"
-      }
-    }`,
+  "success": true,
+  "message": "Webhook successfully deleted.",
+  "faasResponse": {
+    "success": true,
+    "deletedId": "webhook-id"
+  }
+}`,
       labels: [
         {
           text: (
@@ -567,6 +553,8 @@ const DeveloperSections = () => {
           textColor: "text-white",
         },
       ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
   ]
 
@@ -595,10 +583,10 @@ const DeveloperSections = () => {
           Exemplo de credenciais no Header:
           <br />
           <span className="block mt-2">
-            <b>x-api-key</b>: ********
+            <b className="text-yellow-300">x-api-key</b>: <span className="text-green-300">********</span>
           </span>
           <span className="block">
-            <b>x-secret-key</b>: ********
+            <b className="text-yellow-300">x-secret-key</b>: <span className="text-green-300">********</span>
           </span>
         </p>
 
@@ -609,12 +597,16 @@ const DeveloperSections = () => {
           </h3>
           <pre className="bg-gray-900 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
             <code>
-              {`curl -X GET "https://api.pixonchain.com/health" \\\n  -H "x-api-key: SEU_API_KEY" \\\n  -H "x-secret-key: SEU_SECRET_KEY""`}
+              {`curl -X GET "https://api.pixonchain.com/health" \\\n  -H "x-api-key: `}
+              <span className="text-green-300">SEU_API_KEY</span>
+              {`" \\\n  -H "x-secret-key: `}
+              <span className="text-green-300">SEU_SECRET_KEY</span>
+              {`"`}
             </code>
           </pre>
           <p className="text-xs text-gray-400 mt-2">
-            Substitua <code>SEU_API_KEY</code>, e{" "}
-            <code>SEU_TENANT_ID</code> pelos valores fornecidos.
+            Substitua <code className="text-green-300">SEU_API_KEY</code>, e{" "}
+            <code className="text-green-300">SEU_SECRET_KEY</code> pelos valores fornecidos.
           </p>
         </div>
 
@@ -642,11 +634,11 @@ const DeveloperSections = () => {
                   {endpoint.subtitle}
                 </p>
               )}
-              <div className="flex items-center gap-2 mb-3 mt-2">
+              <div className="flex flex-wrap gap-2 mb-3 mt-2">
                 {endpoint.labels?.map((label, labelIndex) => (
                   <span
                     key={labelIndex}
-                    className={`flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-full ${label.bgColor} ${label.textColor}`}
+                    className={`flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-full ${label.bgColor} ${label.textColor} w-full sm:w-auto`}
                   >
                     {label.text}
                   </span>
@@ -668,17 +660,33 @@ const DeveloperSections = () => {
                   Exemplo de Requisição
                 </summary>
                 <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                  {endpoint.exampleRequest}
+                  <code>
+                    {endpoint.exampleRequest}
+                  </code>
                 </pre>
               </details>
-              <details>
+              <details className="mb-3">
                 <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
                   Exemplo de Resposta
                 </summary>
                 <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                  {endpoint.exampleResponse}
+                  <code>
+                    {endpoint.exampleResponse}
+                  </code>
                 </pre>
               </details>
+              {endpoint.bodyExplanation && (
+                <details>
+                  <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
+                    Explicação do Corpo da Requisição
+                  </summary>
+                  <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
+                    <code>
+                      {endpoint.bodyExplanation}
+                    </code>
+                  </pre>
+                </details>
+              )}
             </div>
           ))}
         </div>
