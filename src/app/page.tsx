@@ -376,7 +376,173 @@ const DeveloperSections = () => {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
-    // Outros
+    {
+      name: "Process Payment (CHAVE)",
+      subtitle: "Processamento de Pagamento via Chave Pix",
+      description: "Processa um pagamento utilizando uma chave Pix.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/banking/payment",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
+{
+  "type": "CHAVE",
+  "valor": 0.01,
+  "descricao": "Payment for invoice #1234",
+  "destinatario": {
+    "chave": "CHAVE_PIX_AQUI"
+  }
+}`,
+      exampleResponse: `{
+  "status": "success",
+  "message": "Payment processed successfully",
+  "transactionId": "txn_1234567890"
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              PAYMENT
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- type: Tipo de pagamento (CHAVE).
+- valor: Valor do pagamento.
+- descricao: Descrição do pagamento.
+- destinatario: Objeto contendo a chave Pix do destinatário.`,
+    },
+    {
+      name: "Process Payment (PIX_COPIA_E_COLA)",
+      subtitle: "Processamento de Pagamento via Pix Copia e Cola",
+      description: "Processa um pagamento utilizando um código Pix Copia e Cola.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/banking/payment",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
+{
+  "type": "PIX_COPIA_E_COLA",
+  "descricao": "Payment for service subscription",
+  "destinatario": {
+    "pixCopiaECola": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b52040000530398654045.005802BR5917Brla Digital Ltda6009Sao Paulo621605120000Kiref1236304E61E"
+  }
+}`,
+      exampleResponse: `{
+  "status": "success",
+  "message": "Payment processed successfully",
+  "transactionId": "txn_1234567890"
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              PAYMENT
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- type: Tipo de pagamento (PIX_COPIA_E_COLA).
+- descricao: Descrição do pagamento.
+- destinatario: Objeto contendo o código Pix Copia e Cola do destinatário.`,
+    },
+    {
+      name: "Process Payment (DADOS_BANCARIOS)",
+      subtitle: "Processamento de Pagamento via Dados Bancários",
+      description: "Processa um pagamento utilizando dados bancários.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/banking/payment",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
+{
+  "type": "DADOS_BANCARIOS",
+  "valor": 0.1,
+  "descricao": "Withdrawal order 45",
+  "destinatario": {
+    "tipo": "DADOS_BANCARIOS",
+    "nome": "Pedro Sergio Gonçalves Magalhaes",
+    "contaCorrente": "54076358",
+    "tipoConta": "CONTA_CORRENTE",
+    "banco": "077",
+    "agencia": "0001"
+  }
+}`,
+      exampleResponse: `{
+  "status": "success",
+  "message": "Payment processed successfully",
+  "transactionId": "txn_1234567890"
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              PAYMENT
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- type: Tipo de pagamento (DADOS_BANCARIOS).
+- valor: Valor do pagamento.
+- descricao: Descrição do pagamento.
+- destinatario: Objeto contendo os dados bancários do destinatário.`,
+    },
+    {
+      name: "Get Statement",
+      subtitle: "Recuperação de Extrato",
+      description: "Recupera o extrato de transações.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/banking/statement",
+      exampleRequest: `GET https://api.pixonchain.com/api/banking/statement`,
+      exampleResponse: `{
+  "transactions": [
+    {
+      "transaction_id": "0076a43e-69e3-44d3-aa4d-950e27d2f0ec",
+      "status": "COMPLETED",
+      "amount": "100.00",
+      "currency": "cBRL",
+      "end_to_end_id": null,
+      "created_at": "2025-02-09T01:42:06.898Z",
+      "creditor_name": null,
+      "creditor_document": null,
+      "debtor_name": null,
+      "debtor_document": null
+    },
+    // ...more transactions...
+  ],
+  "total": 9,
+  "page": 1,
+  "limit": 10
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              STATEMENT
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
+    },
     {
       name: "Health Check",
       subtitle: "Verificação de Saúde do Servidor",
