@@ -12,7 +12,7 @@ import {
   FaWhatsapp,
 } from "react-icons/fa"
 
-const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
+// const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
 const DeveloperSections = () => {
   const endpoints = [
@@ -250,40 +250,32 @@ const DeveloperSections = () => {
 - Nenhum campo necessário.`,
     },
     {
-      name: "Create Order",
-      subtitle: "Criação de Ordem",
-      description: `Cria uma nova ordem de compra ou venda. As moedas aceitas são: ${allowedCryptos.join(', ')}. O cBRL é uma stablecoin em reais, também chamada de real tokenizado da Pix on Chain.`,
+      name: "Crypto Transaction",
+      subtitle: "Cotação e Execução de Transação",
+      description: "Obtém uma cotação para uma transação ou executa uma transação real.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/orders/create",
-      exampleRequest: `POST https://api.pixonchain.com/api/orders/create
+      url: "https://api.pixonchain.com/api/banking/quote-transaction",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/quote-transaction
 {
-  "orderType": "buy",
-  "sourceCurrency": "cBRL",
-  "targetCurrency": "USDT",
-  "sourceAmount": 7.00,
-  "network": "MATIC",
-  "generatePixCode": true,
-  "walletAddress": "0xexampleaddress"
+  "value": 601,
+  "simulation": true,
+  "receiverAddress": "0x78f71eA0f0e7d5CEb742963CbdbCb60607bE890C"
 }`,
       exampleResponse: `{
-  "id": 197,
-  "order_type": "buy",
-  "source_currency": "cBRL",
-  "target_currency": "USDT",
-  "source_amount": "7.00000000",
-  "target_amount": "1.16279070",
-  "network": "MATIC",
-  "status": "PENDING",
-  "created_at": "2025-02-05T22:12:06.258Z",
-  "approved": false,
-  "wallet_address": "0xexampleaddress",
-  "basePrice": 6.02,
-  "qrCodeData": {
-    "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/f03c5e356d294f1c8856ddf3af660e9c52040000530398654047.005802BR5901*6013FLORIANOPOLIS61088803200562070503***630495E1",
-    "value": "7.00",
-    "expiration": 3600,
-    "txid": "7e3bce64404f45f9af7abd9069c763a8"
-  }
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbW91bnRCcmwiOiI2LjAxIiwiYW1vdW50VXNkIjoiMC45NyIsImJhc2VGZWUiOiIwIiwiYmFzZVByaWNlIjoiNS43NjM5IiwiY2hhaW4iOiJQb2x5Z29uIiwiZXhwIjoxNzM5Mzc5MTQ0LCJnYXNGZWUiOiIwIiwiaW5wdXRDb2luIjoiQlJMQSIsIm1hcmt1cEZlZSI6IjAiLCJvcGVyYXRpb24iOiJwaXgtdG8tdXNkIiwib3V0cHV0Q29pbiI6IlVTRFQiLCJzdWIiOiIwNWUxOWM0YS02OGQyLTQ3NGMtYTg1Ni1jMmQ4Mzc0YTI2NzYiLCJzdWJhY2NvdW50SWQiOiIiLCJ0b2tlbklkIjoiOTE1ZTNkODAtYjg1Yy00NDMxLWExNTItOWU2Y2EzZDkzNWVhIn0.n7gTXi129JLL_LkxFbuqDz4kBKMprZdQYjtEs2hRGGY",
+  "basePrice": "5.7639",
+  "sub": "05e19c4a-68d2-474c-a856-c2d8374a2676",
+  "operation": "pix-to-usd",
+  "amountBrl": "6.01",
+  "amountUsd": "0.97",
+  "amountToken": "0",
+  "baseFee": "0",
+  "gasFee": "0",
+  "markupFee": "0",
+  "markupToken": "USDT",
+  "inputCoin": "BRLA",
+  "outputCoin": "USDT",
+  "chain": "Polygon"
 }`,
       labels: [
         {
@@ -302,7 +294,7 @@ const DeveloperSections = () => {
               <span className="text-green-500 text-lg p-1">
                 <FaMoneyBill className="text-lg text-white" />
               </span>
-              ORDER
+              CRYPTO
             </span>
           ),
           bgColor: "bg-[#00cc66]",
@@ -310,13 +302,90 @@ const DeveloperSections = () => {
         },
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- orderType: Tipo da ordem (buy ou sell).
-- sourceCurrency: Moeda de origem.
-- targetCurrency: Moeda de destino.
-- sourceAmount: Quantidade da moeda de origem.
-- network: Rede utilizada para a transação.
-- generatePixCode: Booleano indicando se deve gerar um código Pix.
-- walletAddress: Endereço da carteira para a transação.`,
+- value: Valor da transação.
+- simulation: Booleano indicando se é uma simulação. Se for false, a transação será processada.
+- receiverAddress: Endereço do destinatário.`,
+    },
+    {
+      name: "Get Crypto Transaction",
+      subtitle: "Recuperação de Cotação de Transação",
+      description: "Recupera os detalhes de uma cotação de transação.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/banking/quote-transaction/:transactionId",
+      exampleRequest: `GET https://api.pixonchain.com/api/banking/quote-transaction/:transactionId`,
+      exampleResponse: `{
+  "depositsLogs": [
+    {
+      "id": "72760ed0-3f06-4955-a5f3-f8491dc5f5c1",
+      "chain": "Polygon",
+      "walletAddress": "0xAAbAAfCD77d1828689BF2f196Bb4fE6C9e5e2bb7",
+      "receiverAddress": "0xAAbAAfCD77d1828689BF2f196Bb4fE6C9e5e2bb7",
+      "coin": "USDT",
+      "amountBrl": 600,
+      "amountUsd": 97,
+      "taxId": "12345678901",
+      "due": "2025-02-11T21:01:28.101093Z",
+      "createdAt": "2025-02-11T20:56:28.101122Z",
+      "status": "PAID",
+      "updatedAt": "2025-02-11T20:56:54.614427Z",
+      "payerName": "Nome Fictício",
+      "referenceLabel": "P2Ut3puGLdbZb",
+      "externalId": "7ad1bec0585e48138c05ebfd3a78753c",
+      "pixToUsdOps": [
+        {
+          "id": "0d1ac23f-a362-4b1f-831f-b050c43c15d5",
+          "brlaAmount": 600,
+          "usdAmount": 97,
+          "coin": "USDT",
+          "createdAt": "2025-02-11T20:56:54.654908Z",
+          "smartContractOps": [
+            {
+              "id": "04f4040a-22f6-4645-911a-736be1d9dbea",
+              "operationName": "PIX-TO-USD",
+              "posted": true,
+              "tx": "0x67870297b28ec8730432d3f3498ff3cb656f1916cddc884967d620dedf67b64b",
+              "notPostedReason": "",
+              "createdAt": "2025-02-11T20:56:54.719537Z",
+              "isRetry": false,
+              "feedback": {
+                "id": "81d4dafd-31e4-4c63-a17c-e16d31037015",
+                "success": true,
+                "errorMsg": "",
+                "createdAt": "2025-02-11T20:56:58Z"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              HOT
+            </span>
+          ),
+          bgColor: "bg-[#13121C]",
+          textColor: "text-[red]",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              CRYPTO
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
     },
     {
       name: "Get Balance",
