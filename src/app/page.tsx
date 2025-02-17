@@ -14,6 +14,186 @@ import {
 
 // const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
+interface EventDetailsProps {
+  event: {
+    eventId: string;
+    eventType: string;
+    eventVersion: string;
+    source: string;
+    userId: string;
+    timestamp: string;
+    details: {
+      status: string;
+      value?: string;
+      qrCode?: string;
+      currency: string;
+      idempotencyKey: string;
+      easterEgg?: string;
+      paymentPayload?: {
+        type: string;
+        valor: string;
+        descricao: string;
+        destinatario: {
+          chave: string;
+        };
+      };
+      txId?: string;
+      amount?: number;
+      endToEndId?: string;
+      eventDate?: string;
+      paymentAmount?: number;
+      externalId?: string;
+      txid?: string;
+      expiration?: number;
+      network?: string;
+    };
+  };
+}
+
+interface EventTypeSectionProps {
+  events: EventDetailsProps['event'][];
+  type: string;
+}
+
+const EventDetails: React.FC<EventDetailsProps> = ({ event }) => (
+  <details className="mb-3">
+    <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
+      {event.eventType} - {event.details.status}
+    </summary>
+    <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
+      <code>{JSON.stringify(event, null, 2)}</code>
+    </pre>
+  </details>
+);
+
+const EventTypeSection: React.FC<EventTypeSectionProps> = ({ events, type }) => (
+  <div className="mb-6">
+    <h3 className="text-lg font-bold mb-3">{type}</h3>
+    {events.map((event, index) => (
+      <EventDetails key={index} event={event} />
+    ))}
+  </div>
+);
+
+const eventsData = [
+  {
+    "eventId": "6ec9d5f2-f64d-4280-9244-293f3065bd16",
+    "eventType": "PAYMENT REQUEST",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:08:33Z",
+    "details": {
+      "status": "CREATED",
+      "value": "15",
+      "qrCode": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
+      "currency": "BRLA",
+      "idempotencyKey": "4ca54dba-8a22-4fe2-a88f-d7e12db4db34"
+    }
+  },
+  {
+    "eventId": "6d2748d1-4826-4393-98a1-652229e4040c",
+    "eventType": "PAYMENT",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:09:02Z",
+    "details": {
+      "status": "QUEUE",
+      "paymentPayload": {
+        "type": "CHAVE",
+        "valor": "1.01",
+        "descricao": "Payment for invoice #1234",
+        "destinatario": {
+          "chave": "13113124719"
+        }
+      },
+      "currency": "cPix",
+      "idempotencyKey": "09770527-9e89-4cc6-87cb-338fc125286e"
+    }
+  },
+  {
+    "eventId": "54158180-b07f-4382-b040-0c400dbadb9e",
+    "eventType": "PAYMENT",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:09:06Z",
+    "details": {
+      "type": "WITHDRAWAL",
+      "status": "CONFIRMED",
+      "paymentPayload": {
+        "type": "CHAVE",
+        "valor": "1.01",
+        "descricao": "Payment for invoice #1234",
+        "destinatario": {
+          "chave": "13113124719"
+        }
+      },
+      "txId": "7272e5ddae8d488a8457a770d5494987",
+      "amount": 0.37,
+      "currency": "cPix",
+      "endToEndId": "E05491616202502170009052554e019a",
+      "eventDate": "2025-02-17T00:09:05.255+00:00",
+      "paymentAmount": 0.37,
+      "idempotencyKey": "a7d7afce-789b-4da0-bd01-e672ebbfdcbf"
+    }
+  },
+  {
+    "eventId": "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
+    "eventType": "PAYMENT REQUEST",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:10:53Z",
+    "details": {
+      "status": "CREATED",
+      "value": "1.01",
+      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
+      "currency": "cPix",
+      "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      "txid": "f56313b59c0f4b9e80a4cc348a775b40",
+      "expiration": 3600,
+      "network": "Hathor",
+      "idempotencyKey": "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f"
+    }
+  },
+  {
+    "eventId": "3afacb85-a159-4db3-83fa-fde611bc5325",
+    "eventType": "DEPOSIT",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:30:32Z",
+    "details": {
+      "amount": 1.01,
+      "currency": "cPix",
+      "txId": "76ac0d48f96744f88c33b0763be25599",
+      "type": "DEPOSIT",
+      "status": "COMPLETED",
+      "totalAmount": 0.359799,
+      "feeAmount": 0.650201,
+      "walletAddress": "HS7FMTgjzNw7AYgFPCyK1GLfhzeYUM1L1F",
+      "network": "Hathor",
+      "hashExplorerUrl": "https://explorer.hathor.network/transaction/00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
+      "txHash": "00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
+      "idempotencyKey": "66ad2db5-2d5c-4c4c-9391-250387b57883"
+    }
+  }
+];
+
+type EventType = {
+  [key: string]: typeof eventsData;
+};
+
+const groupedEvents: EventType = eventsData.reduce((acc: { [key: string]: typeof eventsData }, event) => {
+  if (!acc[event.eventType]) {
+    acc[event.eventType] = [];
+  }
+  acc[event.eventType].push(event);
+  return acc;
+}, {});
+
 const DeveloperSections = () => {
   const endpoints = [
     {
@@ -144,7 +324,8 @@ const DeveloperSections = () => {
     {
       name: "Key Validation",
       subtitle: "Validação de Chaves de API",
-      description: "Valida as chaves de API fornecidas para garantir acesso às APIs.",
+      description:
+        "Valida as chaves de API fornecidas para garantir acesso às APIs.",
       method: "POST",
       url: "https://api.pixonchain.com/api/auth/keys/key-validate",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/key-validate`,
@@ -186,13 +367,13 @@ const DeveloperSections = () => {
       subtitle: "Geração de QR Code",
       description: "Gera um QR Code para pagamento via Pix.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/generate-qrcode",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/generate-qrcode
+      url: "https://api.pixonchain.com/api/banking/generate-cpix-qrcode",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/generate-cpix-qrcode
 {
   "value": "0.51"
 }`,
       exampleResponse: `{
-  "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
+  "qrCode": "00020126580014br.gov.bcb.pix0136fd276...000530398654040.515802BR5901*60...088803200562070503***6304BEB5",
   "value": "0.51",
   "expiration": 3600,
   "txid": "09a8d6b9b8df46ee9627c55b8d835e80"
@@ -250,9 +431,10 @@ const DeveloperSections = () => {
 - Nenhum campo necessário.`,
     },
     {
-      name: "Crypto Transaction",
-      subtitle: "Cotação e Execução de Transação",
-      description: "Obtém uma cotação para uma transação ou executa uma transação real.",
+      name: "Crypto Transaction (Pix to USDT)",
+      subtitle: "Cotação e Execução de Transação Pix para USDT",
+      description:
+        "Obtém uma cotação para uma transação ou executa uma transação real. Receben valores em USDT diretamente na carteira do usuário.",
       method: "POST",
       url: "https://api.pixonchain.com/api/banking/quote-transaction",
       exampleRequest: `POST https://api.pixonchain.com/api/banking/quote-transaction
@@ -488,7 +670,8 @@ const DeveloperSections = () => {
     {
       name: "Process Payment (PIX_COPIA_E_COLA)",
       subtitle: "Processamento de Pagamento via Pix Copia e Cola",
-      description: "Processa um pagamento utilizando um código Pix Copia e Cola.",
+      description:
+        "Processa um pagamento utilizando um código Pix Copia e Cola.",
       method: "POST",
       url: "https://api.pixonchain.com/api/banking/payment",
       exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
@@ -660,17 +843,22 @@ const DeveloperSections = () => {
     {
       name: "Add Webhook",
       subtitle: "Adição de Webhook",
-      description: "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
+      description:
+        "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
       method: "POST",
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `POST https://api.pixonchain.com/api/webhooks
 {
-  "url": "https://webhook.example.com"
+  "urls": [
+    "https://webhook.site/12345678-1234-1234-1234-123456789012"
+  ]
 }`,
       exampleResponse: `{
   "success": true,
   "id": "webhook-id",
-  "url": "https://webhook.example.com"
+  "urls": [
+    "https://webhook.site/12345678-1234-1234-1234-123456789012"
+  ]
 }`,
       labels: [
         {
@@ -699,7 +887,7 @@ const DeveloperSections = () => {
         },
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- url: URL do webhook.`,
+- urls: Lista de URLs do webhook.`,
     },
     {
       name: "List all Webhooks",
@@ -709,14 +897,18 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/webhooks",
       exampleRequest: `GET https://api.pixonchain.com/api/webhooks`,
       exampleResponse: `{
-  "success": true,
-  "webhooks": [
-    {
-      "id": "webhook-id",
-      "url": "https://webhook.example.com",
-      "event_provider": "example-provider"
-    }
-  ]
+    "success": true,
+    "webhooks": [
+        {
+            "id": "cf38411a-8638-4243-8ea6-ac9bea6e7c60",
+            "user_id": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+            "urls": [
+                "https://webhook.site/8ea591c7-0786-4e81-9cdb-872ebadb6e82"
+            ],
+            "created_at": "2025-02-17T00:07:10.694Z",
+            "updated_at": "2025-02-17T00:07:10.694Z"
+        }
+    ]
 }`,
       labels: [
         {
@@ -756,10 +948,14 @@ const DeveloperSections = () => {
       exampleRequest: `DELETE https://api.pixonchain.com/api/webhooks/:id`,
       exampleResponse: `{
   "success": true,
-  "message": "Webhook successfully deleted.",
-  "faasResponse": {
-    "success": true,
-    "deletedId": "webhook-id"
+  "webhook": {
+    "id": 1,
+    "user_id": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "urls": [
+      "https://webhook.site/f9927649-cfde-4507-b648-94f2371defca"
+    ],
+    "created_at": "2025-02-16T20:05:43.956Z",
+    "updated_at": "2025-02-16T20:05:43.956Z"
   }
 }`,
       labels: [
@@ -791,6 +987,133 @@ const DeveloperSections = () => {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
+    {
+      name: "Event Types",
+      subtitle: "Tipos de Events",
+      description: "Lista os tipos de eventos que podem ser monitorados via webhooks.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/events",
+      exampleRequest: `GET https://api.pixonchain.com/api/events`,
+      exampleResponse: `[
+  {
+    "eventId": "6ec9d5f2-f64d-4280-9244-293f3065bd16",
+    "eventType": "PAYMENT REQUEST",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:08:33Z",
+    "details": {
+      "status": "CREATED",
+      "value": "15",
+      "qrCode": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
+      "currency": "BRLA",
+      "idempotencyKey": "4ca54dba-8a22-4fe2-a88f-d7e12db4db34"
+    }
+  },
+  {
+    "eventId": "6d2748d1-4826-4393-98a1-652229e4040c",
+    "eventType": "PAYMENT",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:09:02Z",
+    "details": {
+      "status": "QUEUE",
+      "paymentPayload": {
+        "type": "CHAVE",
+        "valor": "1.01",
+        "descricao": "Payment for invoice #1234",
+        "destinatario": {
+          "chave": "13113124719"
+        }
+      },
+      "currency": "cPix",
+      "idempotencyKey": "09770527-9e89-4cc6-87cb-338fc125286e"
+    }
+  },
+  {
+    "eventId": "54158180-b07f-4382-b040-0c400dbadb9e",
+    "eventType": "PAYMENT",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:09:06Z",
+    "details": {
+      "type": "WITHDRAWAL",
+      "status": "CONFIRMED",
+      "paymentPayload": {
+        "type": "CHAVE",
+        "valor": "1.01",
+        "descricao": "Payment for invoice #1234",
+        "destinatario": {
+          "chave": "13113124719"
+        }
+      },
+      "txId": "7272e5ddae8d488a8457a770d5494987",
+      "amount": 0.37,
+      "currency": "cPix",
+      "endToEndId": "E05491616202502170009052554e019a",
+      "eventDate": "2025-02-17T00:09:05.255+00:00",
+      "paymentAmount": 0.37,
+      "idempotencyKey": "a7d7afce-789b-4da0-bd01-e672ebbfdcbf"
+    }
+  },
+  {
+    "eventId": "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
+    "eventType": "PAYMENT REQUEST",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:10:53Z",
+    "details": {
+      "status": "CREATED",
+      "value": "1.01",
+      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
+      "currency": "cPix",
+      "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      "txid": "f56313b59c0f4b9e80a4cc348a775b40",
+      "expiration": 3600,
+      "network": "Hathor",
+      "idempotencyKey": "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f"
+    }
+  },
+  {
+    "eventId": "d0fe0227-1641-4cf8-857b-5e0d0d44fc18",
+    "eventType": "PAYMENT REQUEST",
+    "eventVersion": "1.0",
+    "source": "PixOnChain",
+    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    "timestamp": "2025-02-16T21:12:43Z",
+    "details": {
+      "status": "CREATED",
+      "value": "1.01",
+      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***6304F5F3",
+      "currency": "cPix",
+      "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      "txid": "a5dea817d81b4daa837c80a78fcf2b7d",
+      "expiration": 3600,
+      "network": "Hathor",
+      "idempotencyKey": "a6c2ae82-72dc-4694-8efb-4990953c1cf6"
+    }
+  }
+]`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-purple-500 text-lg p-1">
+                <FaLink className="text-lg text-white" />
+              </span>
+              WEBHOOKS
+            </span>
+          ),
+          bgColor: "bg-[#7747FF]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
+    }
   ]
 
   return (
@@ -818,10 +1141,12 @@ const DeveloperSections = () => {
           Exemplo de credenciais no Header:
           <br />
           <span className="block mt-2">
-            <b className="text-yellow-300">x-api-key</b>: <span className="text-green-300">********</span>
+            <b className="text-yellow-300">x-api-key</b>:{" "}
+            <span className="text-green-300">********</span>
           </span>
           <span className="block">
-            <b className="text-yellow-300">x-secret-key</b>: <span className="text-green-300">********</span>
+            <b className="text-yellow-300">x-secret-key</b>:{" "}
+            <span className="text-green-300">********</span>
           </span>
         </p>
 
@@ -841,7 +1166,8 @@ const DeveloperSections = () => {
           </pre>
           <p className="text-xs text-gray-400 mt-2">
             Substitua <code className="text-green-300">SEU_API_KEY</code>, e{" "}
-            <code className="text-green-300">SEU_SECRET_KEY</code> pelos valores fornecidos.
+            <code className="text-green-300">SEU_SECRET_KEY</code> pelos valores
+            fornecidos.
           </p>
         </div>
 
@@ -895,9 +1221,7 @@ const DeveloperSections = () => {
                   Exemplo de Requisição
                 </summary>
                 <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                  <code>
-                    {endpoint.exampleRequest}
-                  </code>
+                  <code>{endpoint.exampleRequest}</code>
                 </pre>
               </details>
               <details className="mb-3">
@@ -905,9 +1229,7 @@ const DeveloperSections = () => {
                   Exemplo de Resposta
                 </summary>
                 <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                  <code>
-                    {endpoint.exampleResponse}
-                  </code>
+                  <code>{endpoint.exampleResponse}</code>
                 </pre>
               </details>
               {endpoint.bodyExplanation && (
@@ -916,15 +1238,21 @@ const DeveloperSections = () => {
                     Explicação do Corpo da Requisição
                   </summary>
                   <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                    <code>
-                      {endpoint.bodyExplanation}
-                    </code>
+                    <code>{endpoint.bodyExplanation}</code>
                   </pre>
                 </details>
               )}
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Listagem de Eventos */}
+      <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg mt-6">
+        <h2 className="text-2xl font-bold mb-6">📅 Tipos de Events</h2>
+        {Object.keys(groupedEvents).map((type, index) => (
+          <EventTypeSection key={index} events={groupedEvents[type]} type={type} />
+        ))}
       </div>
     </div>
   )
