@@ -9,50 +9,50 @@ import {
   FaMoneyBill,
   FaServer,
   FaShieldAlt,
-  FaWhatsapp,
+  FaYoutube,
 } from "react-icons/fa"
 
 // const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
 interface EventDetailsProps {
   event: {
-    eventId: string;
-    eventType: string;
-    eventVersion: string;
-    source: string;
-    userId: string;
-    timestamp: string;
+    eventId: string
+    eventType: string
+    eventVersion: string
+    source: string
+    userId: string
+    timestamp: string
     details: {
-      status: string;
-      value?: string;
-      qrCode?: string;
-      currency: string;
-      idempotencyKey: string;
-      easterEgg?: string;
+      status: string
+      value?: string
+      qrCode?: string
+      currency: string
+      idempotencyKey: string
+      easterEgg?: string
       paymentPayload?: {
-        type: string;
-        valor: string;
-        descricao: string;
+        type: string
+        valor: string
+        descricao: string
         destinatario: {
-          chave: string;
-        };
-      };
-      txId?: string;
-      amount?: number;
-      endToEndId?: string;
-      eventDate?: string;
-      paymentAmount?: number;
-      externalId?: string;
-      txid?: string;
-      expiration?: number;
-      network?: string;
-    };
-  };
+          chave: string
+        }
+      }
+      txId?: string
+      amount?: number
+      endToEndId?: string
+      eventDate?: string
+      paymentAmount?: number
+      externalId?: string
+      txid?: string
+      expiration?: number
+      network?: string
+    }
+  }
 }
 
 interface EventTypeSectionProps {
-  events: EventDetailsProps['event'][];
-  type: string;
+  events: EventDetailsProps["event"][]
+  type: string
 }
 
 const EventDetails: React.FC<EventDetailsProps> = ({ event }) => (
@@ -64,135 +64,145 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => (
       <code>{JSON.stringify(event, null, 2)}</code>
     </pre>
   </details>
-);
+)
 
-const EventTypeSection: React.FC<EventTypeSectionProps> = ({ events, type }) => (
+const EventTypeSection: React.FC<EventTypeSectionProps> = ({
+  events,
+  type,
+}) => (
   <div className="mb-6">
     <h3 className="text-lg font-bold mb-3">{type}</h3>
     {events.map((event, index) => (
       <EventDetails key={index} event={event} />
     ))}
   </div>
-);
+)
 
 const eventsData = [
   {
-    "eventId": "6ec9d5f2-f64d-4280-9244-293f3065bd16",
-    "eventType": "PAYMENT REQUEST",
-    "eventVersion": "1.0",
-    "source": "PixOnChain",
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:08:33Z",
-    "details": {
-      "status": "CREATED",
-      "value": "15",
-      "qrCode": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
-      "currency": "BRLA",
-      "idempotencyKey": "4ca54dba-8a22-4fe2-a88f-d7e12db4db34"
-    }
+    eventId: "6ec9d5f2-f64d-4280-9244-293f3065bd16",
+    eventType: "PAYMENT REQUEST",
+    eventVersion: "1.0",
+    source: "PixOnChain",
+    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    timestamp: "2025-02-16T21:08:33Z",
+    details: {
+      status: "CREATED",
+      value: "15",
+      qrCode:
+        "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
+      currency: "BRLA",
+      idempotencyKey: "4ca54dba-8a22-4fe2-a88f-d7e12db4db34",
+    },
   },
   {
-    "eventId": "6d2748d1-4826-4393-98a1-652229e4040c",
-    "eventType": "PAYMENT",
-    "eventVersion": "1.0",
-    "source": "PixOnChain",
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:09:02Z",
-    "details": {
-      "status": "QUEUE",
-      "paymentPayload": {
-        "type": "CHAVE",
-        "valor": "1.01",
-        "descricao": "Payment for invoice #1234",
-        "destinatario": {
-          "chave": "13113124719"
-        }
+    eventId: "6d2748d1-4826-4393-98a1-652229e4040c",
+    eventType: "PAYMENT",
+    eventVersion: "1.0",
+    source: "PixOnChain",
+    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    timestamp: "2025-02-16T21:09:02Z",
+    details: {
+      status: "QUEUE",
+      paymentPayload: {
+        type: "CHAVE",
+        valor: "1.01",
+        descricao: "Payment for invoice #1234",
+        destinatario: {
+          chave: "13113124719",
+        },
       },
-      "currency": "cPix",
-      "idempotencyKey": "09770527-9e89-4cc6-87cb-338fc125286e"
-    }
+      currency: "cPix",
+      idempotencyKey: "09770527-9e89-4cc6-87cb-338fc125286e",
+    },
   },
   {
-    "eventId": "54158180-b07f-4382-b040-0c400dbadb9e",
-    "eventType": "PAYMENT",
-    "eventVersion": "1.0",
-    "source": "PixOnChain",
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:09:06Z",
-    "details": {
-      "type": "WITHDRAWAL",
-      "status": "CONFIRMED",
-      "paymentPayload": {
-        "type": "CHAVE",
-        "valor": "1.01",
-        "descricao": "Payment for invoice #1234",
-        "destinatario": {
-          "chave": "13113124719"
-        }
+    eventId: "54158180-b07f-4382-b040-0c400dbadb9e",
+    eventType: "PAYMENT",
+    eventVersion: "1.0",
+    source: "PixOnChain",
+    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    timestamp: "2025-02-16T21:09:06Z",
+    details: {
+      type: "WITHDRAWAL",
+      status: "CONFIRMED",
+      paymentPayload: {
+        type: "CHAVE",
+        valor: "1.01",
+        descricao: "Payment for invoice #1234",
+        destinatario: {
+          chave: "13113124719",
+        },
       },
-      "txId": "7272e5ddae8d488a8457a770d5494987",
-      "amount": 0.37,
-      "currency": "cPix",
-      "endToEndId": "E05491616202502170009052554e019a",
-      "eventDate": "2025-02-17T00:09:05.255+00:00",
-      "paymentAmount": 0.37,
-      "idempotencyKey": "a7d7afce-789b-4da0-bd01-e672ebbfdcbf"
-    }
+      txId: "7272e5ddae8d488a8457a770d5494987",
+      amount: 0.37,
+      currency: "cPix",
+      endToEndId: "E05491616202502170009052554e019a",
+      eventDate: "2025-02-17T00:09:05.255+00:00",
+      paymentAmount: 0.37,
+      idempotencyKey: "a7d7afce-789b-4da0-bd01-e672ebbfdcbf",
+    },
   },
   {
-    "eventId": "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
-    "eventType": "PAYMENT REQUEST",
-    "eventVersion": "1.0",
-    "source": "PixOnChain",
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:10:53Z",
-    "details": {
-      "status": "CREATED",
-      "value": "1.01",
-      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
-      "currency": "cPix",
-      "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      "txid": "f56313b59c0f4b9e80a4cc348a775b40",
-      "expiration": 3600,
-      "network": "Hathor",
-      "idempotencyKey": "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f"
-    }
+    eventId: "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
+    eventType: "PAYMENT REQUEST",
+    eventVersion: "1.0",
+    source: "PixOnChain",
+    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    timestamp: "2025-02-16T21:10:53Z",
+    details: {
+      status: "CREATED",
+      value: "1.01",
+      qrCode:
+        "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
+      currency: "cPix",
+      externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      txid: "f56313b59c0f4b9e80a4cc348a775b40",
+      expiration: 3600,
+      network: "Hathor",
+      idempotencyKey: "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f",
+    },
   },
   {
-    "eventId": "3afacb85-a159-4db3-83fa-fde611bc5325",
-    "eventType": "DEPOSIT",
-    "eventVersion": "1.0",
-    "source": "PixOnChain",
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:30:32Z",
-    "details": {
-      "amount": 1.01,
-      "currency": "cPix",
-      "txId": "76ac0d48f96744f88c33b0763be25599",
-      "type": "DEPOSIT",
-      "status": "COMPLETED",
-      "totalAmount": 0.359799,
-      "feeAmount": 0.650201,
-      "walletAddress": "HS7FMTgjzNw7AYgFPCyK1GLfhzeYUM1L1F",
-      "network": "Hathor",
-      "hashExplorerUrl": "https://explorer.hathor.network/transaction/00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
-      "txHash": "00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
-      "idempotencyKey": "66ad2db5-2d5c-4c4c-9391-250387b57883"
-    }
-  }
-];
+    eventId: "3afacb85-a159-4db3-83fa-fde611bc5325",
+    eventType: "DEPOSIT",
+    eventVersion: "1.0",
+    source: "PixOnChain",
+    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+    timestamp: "2025-02-16T21:30:32Z",
+    details: {
+      amount: 1.01,
+      currency: "cPix",
+      txId: "76ac0d48f96744f88c33b0763be25599",
+      type: "DEPOSIT",
+      status: "COMPLETED",
+      totalAmount: 0.359799,
+      feeAmount: 0.650201,
+      walletAddress: "HS7FMTgjzNw7AYgFPCyK1GLfhzeYUM1L1F",
+      network: "Hathor",
+      hashExplorerUrl:
+        "https://explorer.hathor.network/transaction/00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
+      txHash:
+        "00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
+      idempotencyKey: "66ad2db5-2d5c-4c4c-9391-250387b57883",
+    },
+  },
+]
 
 type EventType = {
-  [key: string]: typeof eventsData;
-};
+  [key: string]: typeof eventsData
+}
 
-const groupedEvents: EventType = eventsData.reduce((acc: { [key: string]: typeof eventsData }, event) => {
-  if (!acc[event.eventType]) {
-    acc[event.eventType] = [];
-  }
-  acc[event.eventType].push(event);
-  return acc;
-}, {});
+const groupedEvents: EventType = eventsData.reduce(
+  (acc: { [key: string]: typeof eventsData }, event) => {
+    if (!acc[event.eventType]) {
+      acc[event.eventType] = []
+    }
+    acc[event.eventType].push(event)
+    return acc
+  },
+  {}
+)
 
 const DeveloperSections = () => {
   const endpoints = [
@@ -208,8 +218,8 @@ const DeveloperSections = () => {
   "password": "strongpassword123"
 }`,
       exampleResponse: `{
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjE2MjM5MDIyLCJleHAiOjE2MTYyNDI2MjJ9.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-  "refreshToken": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4gdXNlZCBmb3IgcmVmcmVzaGluZyB0aGUgYWNjZXNzIHRva2Vu",
+  "accessToken": "string",
+  "refreshToken": "string",
   "userId": "12345678-1234-1234-1234-123456789012"
 }`,
       labels: [
@@ -990,7 +1000,8 @@ const DeveloperSections = () => {
     {
       name: "Event Types",
       subtitle: "Tipos de Events",
-      description: "Lista os tipos de eventos que podem ser monitorados via webhooks.",
+      description:
+        "Lista os tipos de eventos que podem ser monitorados via webhooks.",
       method: "GET",
       url: "https://api.pixonchain.com/api/events",
       exampleRequest: `GET https://api.pixonchain.com/api/events`,
@@ -1113,7 +1124,7 @@ const DeveloperSections = () => {
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
-    }
+    },
   ]
 
   return (
@@ -1173,13 +1184,13 @@ const DeveloperSections = () => {
 
         <div className="flex justify-center align-center mt-4">
           <a
-            href="https://wa.me/5547992134469"
+            href="https://www.youtube.com/watch?v=LSOUfZd930k"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 bg-[#7747ff] text-white font-medium py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
           >
-            <FaWhatsapp className="text-lg" />
-            Quero obter minhas credenciais
+            <FaYoutube className="text-lg" />
+            Como obter minhas credenciais
           </a>
         </div>
       </div>
@@ -1251,7 +1262,11 @@ const DeveloperSections = () => {
       <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg mt-6">
         <h2 className="text-2xl font-bold mb-6">📅 Tipos de Events</h2>
         {Object.keys(groupedEvents).map((type, index) => (
-          <EventTypeSection key={index} events={groupedEvents[type]} type={type} />
+          <EventTypeSection
+            key={index}
+            events={groupedEvents[type]}
+            type={type}
+          />
         ))}
       </div>
     </div>
