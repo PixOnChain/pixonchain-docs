@@ -214,13 +214,13 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/auth/login",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/login
 {
-  "email": "user@example.com",
-  "password": "strongpassword123"
+"email": "user@example.com",
+"password": "strongpassword123"
 }`,
       exampleResponse: `{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "userId": "12345678-1234-1234-1234-123456789012"
+"accessToken": "string",
+"refreshToken": "string",
+"userId": "12345678-1234-1234-1234-123456789012"
 }`,
       labels: [
         {
@@ -248,20 +248,20 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/auth/signup",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/signup
 {
-  "fullName": "John Doe",
-  "tax_id": "12345678909",
-  "birthDate": "1990-01-01",
-  "email": "john.doe@example.com",
-  "phone": "5511999999999",
-  "whatsapp": "5511999999999",
-  "telegram": "5511999999999",
-  "userType": "PF",
-  "password": "securepassword123",
-  "tenant_id": "12345678-1234-1234-1234-123456789012",
-  "type": "PF"
+"fullName": "John Doe",
+"tax_id": "12345678909",
+"birthDate": "1990-01-01",
+"email": "john.doe@example.com",
+"phone": "5511999999999",
+"whatsapp": "5511999999999",
+"telegram": "5511999999999",
+"userType": "PF",
+"password": "securepassword123",
+"tenant_id": "12345678-1234-1234-1234-123456789012",
+"type": "PF"
 }`,
       exampleResponse: `{
-  "message": "User registered successfully"
+"message": "User registered successfully"
 }`,
       labels: [
         {
@@ -298,9 +298,9 @@ const DeveloperSections = () => {
       url: "https://api.pixonchain.com/api/auth/keys/generate-api-keys",
       exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/generate-api-keys`,
       exampleResponse: `{
-  "message": "API keys generated successfully",
-  "apiKey": "example-api-key",
-  "secretKey": "example-secret-key"
+"message": "API keys generated successfully",
+"apiKey": "example-api-key",
+"secretKey": "example-secret-key"
 }`,
       labels: [
         {
@@ -371,7 +371,110 @@ const DeveloperSections = () => {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
-    // Banking e Transações
+    {
+      name: "Convert Currency",
+      subtitle: "Conversão de Moedas",
+      description:
+        "Converte um valor de uma moeda de origem para uma moeda de destino, com opção de simulação ou execução real.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/banking/convert",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/convert
+{
+  "fromCurrency": "cPix",
+  "toCurrency": "USDT",
+  "amount": 800,
+  "simulation": false
+}`,
+      exampleResponse:
+`{
+  "message": "Conversion successful",
+  "fromCurrency": "cPix",
+  "toCurrency": "USDT",
+  "price": "5.9491",
+  "feeAmount": "0.7000",
+  "fromAmount": "8.0000",
+  "toAmount": "0.9943"
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              CONVERSION
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              CRYPTO
+            </span>
+          ),
+          bgColor: "bg-[#13121C]",
+          textColor: "text-[red]",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- fromCurrency: Moeda de origem (ex.: "cPix").
+- toCurrency: Moeda de destino (ex.: "USDT").
+- amount: Valor a ser convertido em centavos (ex.: 800 = 8.00).
+- simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
+    },
+    {
+      name: "Withdraw Crypto",
+      subtitle: "Saque de Criptomoedas",
+      description:
+        "Solicita o saque de uma quantidade de criptomoeda para um endereço de carteira especificado, com opção de simulação.",
+      method: "POST",
+      url: "https://api.pixonchain.com/api/banking/withdraw-crypto",
+      exampleRequest: `POST https://api.pixonchain.com/api/banking/withdraw-crypto
+{
+  "currency": "USDT",
+  "receiverAddress": "0xaabaafcd77d1828689bf2f196bb4fe6c9e5e2bb7",
+  "amount": 100,
+  "network": "Polygon",
+  "simulation": false
+}`,
+      exampleResponse: `{
+"message": "Withdrawal request submitted successfully",
+"jobId": "2663"
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              WITHDRAWAL
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              CRYPTO
+            </span>
+          ),
+          bgColor: "bg-[#13121C]",
+          textColor: "text-[red]",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- currency: Moeda a ser sacada (ex.: "USDT").
+- receiverAddress: Endereço da carteira de destino.
+- amount: Valor a ser sacado em centavos (ex.: 100 = 1.00).
+- network: Rede blockchain utilizada (ex.: "Polygon").
+- simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
+    },
     {
       name: "Generate QR Code",
       subtitle: "Geração de QR Code",
@@ -579,6 +682,7 @@ const DeveloperSections = () => {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
+
     {
       name: "Get Balance",
       subtitle: "Recuperação de Saldo",
