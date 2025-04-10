@@ -1229,6 +1229,101 @@ const DeveloperSections = () => {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
+    {
+      name: "Get User Wallet",
+      subtitle: "Consulta de Carteira por Tipo de Rede",
+      description: "Recupera a carteira do usuário para um tipo específico de rede blockchain.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/wallet/user-wallet",
+      exampleRequest: `GET https://api.pixonchain.com/api/wallet/user-wallet?networkType=EVM`,
+      exampleResponse: `{
+  "wallet_address": "0xC4F792cB4B259EC3E8a9433550F12028284FF0d4",
+  "network_type": "EVM",
+  "created_at": "2025-03-13T21:31:38.319Z",
+  "updated_at": "2025-03-13T21:31:38.319Z"
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              CRYPTO
+            </span>
+          ),
+          bgColor: "bg-[#13121C]",
+          textColor: "text-[red]",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              WALLET
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `Parâmetros de consulta:
+- networkType: Tipo de rede blockchain (EVM, BTC, Hathor, TRON, etc.)`,
+    },
+    {
+      name: "Get User Wallets",
+      subtitle: "Consulta de Todas as Carteiras do Usuário",
+      description: "Recupera todas as carteiras blockchain do usuário autenticado.",
+      method: "GET",
+      url: "https://api.pixonchain.com/api/wallet/user-wallets",
+      exampleRequest: `GET https://api.pixonchain.com/api/wallet/user-wallets`,
+      exampleResponse: `{
+  "EVM": {
+    "wallet_address": "0xC4F792cB4B259EC3E8a9433550F12028284FF0d4",
+    "created_at": "2025-03-13T21:31:38.319Z",
+    "updated_at": "2025-03-13T21:31:38.319Z"
+  },
+  "BTC": {
+    "wallet_address": "16eBPAHMmMcVshmkRDurPuZwoeCwU2djNy",
+    "created_at": "2025-03-13T01:56:28.663Z",
+    "updated_at": "2025-03-13T01:56:28.663Z"
+  },
+  "Hathor": {
+    "wallet_address": "HGfYRC4rkA4TMCbBsywyNwRS5DdbTyqnVg",
+    "created_at": "2025-03-13T22:13:09.601Z",
+    "updated_at": "2025-03-13T22:13:09.601Z"
+  },
+  "TRON": {
+    "wallet_address": "TXThyYPQ4uSvo92b9y3dDomJj1fPwLqGK7",
+    "created_at": "2025-03-13T22:00:49.432Z",
+    "updated_at": "2025-03-13T22:00:49.432Z"
+  }
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-red-500 text-lg">🔥</span>
+              CRYPTO
+            </span>
+          ),
+          bgColor: "bg-[#13121C]",
+          textColor: "text-[red]",
+        },
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              WALLET
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `Não é necessário enviar parâmetros para esta requisição.`,
+    },
   ]
 
   return (
