@@ -1,4 +1,6 @@
 import "./globals.css";
+import { TenantProvider } from "./context/TenantContext";
+import { TenantUrlProvider } from "./context/TenantUrlContext";
 
 export const metadata = {
   title: "Pix on Chain - A Corretora de Criptomoedas.",
@@ -15,7 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body suppressHydrationWarning={true}>
+        <TenantProvider>
+          <TenantUrlProvider>
+            {children}
+          </TenantUrlProvider>
+        </TenantProvider>
+      </body>
     </html>
   );
 }
