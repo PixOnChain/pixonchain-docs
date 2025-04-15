@@ -1,12 +1,6 @@
 import "./globals.css";
-
-export const metadata = {
-  title: "Pix on Chain - A Corretora de Criptomoedas.",
-  description: "Pix on Chain - tornamos fácil aquilo que parecia difícil.",
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
+import { TenantProvider } from "./context/TenantContext";
+import { TenantUrlProvider } from "./context/TenantUrlContext";
 
 export default function RootLayout({
   children,
@@ -15,7 +9,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body suppressHydrationWarning={true}>
+        <TenantProvider>
+          <TenantUrlProvider>
+            {children}
+          </TenantUrlProvider>
+        </TenantProvider>
+      </body>
     </html>
   );
 }

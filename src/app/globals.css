@@ -4,6 +4,38 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #7747FF;
+  --secondary: #B29EFE;
+  --third: #F8F8F8;
+  --background: #E8E4FF;
+}
+
+/* Classes utilitárias para usar as cores do tema */
+.bg-theme-primary {
+  background-color: var(--primary);
+}
+
+.bg-theme-secondary {
+  background-color: var(--secondary);
+}
+
+.text-theme-primary {
+  color: var(--primary);
+}
+
+.text-theme-secondary {
+  color: var(--secondary);
+}
+
+.border-theme-primary {
+  border-color: var(--primary);
+}
+
+.border-theme-secondary {
+  border-color: var(--secondary);
+}
+
 body {
   font-family: "Saira", sans-serif;
 }

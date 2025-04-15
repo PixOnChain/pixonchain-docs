@@ -11,6 +11,8 @@ import {
   FaShieldAlt,
   FaYoutube,
 } from "react-icons/fa"
+import { useTenant } from './context/TenantContext';
+import { useTenantApiUrl } from "./context/TenantUrlContext";
 
 // const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
@@ -78,142 +80,163 @@ const EventTypeSection: React.FC<EventTypeSectionProps> = ({
   </div>
 )
 
-const eventsData = [
-  {
-    eventId: "6ec9d5f2-f64d-4280-9244-293f3065bd16",
-    eventType: "PAYMENT REQUEST",
-    eventVersion: "1.0",
-    source: "PixOnChain",
-    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    timestamp: "2025-02-16T21:08:33Z",
-    details: {
-      status: "CREATED",
-      value: "15",
-      qrCode:
-        "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
-      currency: "BRLA",
-      idempotencyKey: "4ca54dba-8a22-4fe2-a88f-d7e12db4db34",
-    },
-  },
-  {
-    eventId: "6d2748d1-4826-4393-98a1-652229e4040c",
-    eventType: "PAYMENT",
-    eventVersion: "1.0",
-    source: "PixOnChain",
-    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    timestamp: "2025-02-16T21:09:02Z",
-    details: {
-      status: "QUEUE",
-      paymentPayload: {
-        type: "CHAVE",
-        valor: "1.01",
-        descricao: "Payment for invoice #1234",
-        destinatario: {
-          chave: "13113124719",
-        },
-      },
-      currency: "cPix",
-      idempotencyKey: "09770527-9e89-4cc6-87cb-338fc125286e",
-    },
-  },
-  {
-    eventId: "54158180-b07f-4382-b040-0c400dbadb9e",
-    eventType: "PAYMENT",
-    eventVersion: "1.0",
-    source: "PixOnChain",
-    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    timestamp: "2025-02-16T21:09:06Z",
-    details: {
-      type: "WITHDRAWAL",
-      status: "CONFIRMED",
-      paymentPayload: {
-        type: "CHAVE",
-        valor: "1.01",
-        descricao: "Payment for invoice #1234",
-        destinatario: {
-          chave: "13113124719",
-        },
-      },
-      txId: "7272e5ddae8d488a8457a770d5494987",
-      amount: 0.37,
-      currency: "cPix",
-      endToEndId: "E05491616202502170009052554e019a",
-      eventDate: "2025-02-17T00:09:05.255+00:00",
-      paymentAmount: 0.37,
-      idempotencyKey: "a7d7afce-789b-4da0-bd01-e672ebbfdcbf",
-    },
-  },
-  {
-    eventId: "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
-    eventType: "PAYMENT REQUEST",
-    eventVersion: "1.0",
-    source: "PixOnChain",
-    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    timestamp: "2025-02-16T21:10:53Z",
-    details: {
-      status: "CREATED",
-      value: "1.01",
-      qrCode:
-        "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
-      currency: "cPix",
-      externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      txid: "f56313b59c0f4b9e80a4cc348a775b40",
-      expiration: 3600,
-      network: "Hathor",
-      idempotencyKey: "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f",
-    },
-  },
-  {
-    eventId: "3afacb85-a159-4db3-83fa-fde611bc5325",
-    eventType: "DEPOSIT",
-    eventVersion: "1.0",
-    source: "PixOnChain",
-    userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    timestamp: "2025-02-16T21:30:32Z",
-    details: {
-      amount: 1.01,
-      currency: "cPix",
-      txId: "76ac0d48f96744f88c33b0763be25599",
-      type: "DEPOSIT",
-      status: "COMPLETED",
-      totalAmount: 0.359799,
-      feeAmount: 0.650201,
-      walletAddress: "HS7FMTgjzNw7AYgFPCyK1GLfhzeYUM1L1F",
-      network: "Hathor",
-      hashExplorerUrl:
-        "https://explorer.hathor.network/transaction/00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
-      txHash:
-        "00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
-      idempotencyKey: "66ad2db5-2d5c-4c4c-9391-250387b57883",
-    },
-  },
-]
-
-type EventType = {
-  [key: string]: typeof eventsData
-}
-
-const groupedEvents: EventType = eventsData.reduce(
-  (acc: { [key: string]: typeof eventsData }, event) => {
-    if (!acc[event.eventType]) {
-      acc[event.eventType] = []
-    }
-    acc[event.eventType].push(event)
-    return acc
-  },
-  {}
-)
-
 const DeveloperSections = () => {
+  const { tenantConfig } = useTenant();
+  const apiUrl = useTenantApiUrl();
+
+  const eventsData = [
+    {
+      eventId: "6ec9d5f2-f64d-4280-9244-293f3065bd16",
+      eventType: "PAYMENT REQUEST",
+      eventVersion: "1.0",
+      source: tenantConfig?.docs_source || "",
+      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      timestamp: "2025-02-16T21:08:33Z",
+      details: {
+        status: "CREATED",
+        value: "15",
+        qrCode:
+          "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
+        currency: "BRLA",
+        idempotencyKey: "4ca54dba-8a22-4fe2-a88f-d7e12db4db34",
+      },
+    },
+    {
+      eventId: "6d2748d1-4826-4393-98a1-652229e4040c",
+      eventType: "PAYMENT",
+      eventVersion: "1.0",
+      source: tenantConfig?.docs_source || "",
+      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      timestamp: "2025-02-16T21:09:02Z",
+      details: {
+        status: "QUEUE",
+        paymentPayload: {
+          type: "CHAVE",
+          valor: "1.01",
+          descricao: "Payment for invoice #1234",
+          destinatario: {
+            chave: "13113124719",
+          },
+        },
+        currency: "cPix",
+        idempotencyKey: "09770527-9e89-4cc6-87cb-338fc125286e",
+      },
+    },
+    {
+      eventId: "54158180-b07f-4382-b040-0c400dbadb9e",
+      eventType: "PAYMENT",
+      eventVersion: "1.0",
+      source: tenantConfig?.docs_source || "",
+      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      timestamp: "2025-02-16T21:09:06Z",
+      details: {
+        type: "WITHDRAWAL",
+        status: "CONFIRMED",
+        paymentPayload: {
+          type: "CHAVE",
+          valor: "1.01",
+          descricao: "Payment for invoice #1234",
+          destinatario: {
+            chave: "13113124719",
+          },
+        },
+        txId: "7272e5ddae8d488a8457a770d5494987",
+        amount: 0.37,
+        currency: "cPix",
+        endToEndId: "E05491616202502170009052554e019a",
+        eventDate: "2025-02-17T00:09:05.255+00:00",
+        paymentAmount: 0.37,
+        idempotencyKey: "a7d7afce-789b-4da0-bd01-e672ebbfdcbf",
+      },
+    },
+    {
+      eventId: "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
+      eventType: "PAYMENT REQUEST",
+      eventVersion: "1.0",
+      source: tenantConfig?.docs_source || "",
+      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      timestamp: "2025-02-16T21:10:53Z",
+      details: {
+        status: "CREATED",
+        value: "1.01",
+        qrCode:
+          "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
+        currency: "cPix",
+        externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+        txid: "f56313b59c0f4b9e80a4cc348a775b40",
+        expiration: 3600,
+        network: "Hathor",
+        idempotencyKey: "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f",
+      },
+    },
+    {
+      eventId: "3afacb85-a159-4db3-83fa-fde611bc5325",
+      eventType: "DEPOSIT",
+      eventVersion: "1.0",
+      source: tenantConfig?.docs_source || "",
+      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      timestamp: "2025-02-16T21:30:32Z",
+      details: {
+        amount: 1.01,
+        currency: "cPix",
+        txId: "76ac0d48f96744f88c33b0763be25599",
+        type: "DEPOSIT",
+        status: "COMPLETED",
+        totalAmount: 0.359799,
+        feeAmount: 0.650201,
+        walletAddress: "HS7FMTgjzNw7AYgFPCyK1GLfhzeYUM1L1F",
+        network: "Hathor",
+        hashExplorerUrl:
+          "https://explorer.hathor.network/transaction/00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
+        txHash:
+          "00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
+        idempotencyKey: "66ad2db5-2d5c-4c4c-9391-250387b57883",
+      },
+    },
+    {
+      eventId: "d0fe0227-1641-4cf8-857b-5e0d0d44fc18",
+      eventType: "PAYMENT REQUEST",
+      eventVersion: "1.0",
+      source: tenantConfig?.docs_source || "",
+      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+      timestamp: "2025-02-16T21:12:43Z",
+      details: {
+        status: "CREATED",
+        value: "1.01",
+        qrCode: "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***6304F5F3",
+        currency: "cPix",
+        externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
+        txid: "a5dea817d81b4daa837c80a78fcf2b7d",
+        expiration: 3600,
+        network: "Hathor",
+        idempotencyKey: "a6c2ae82-72dc-4694-8efb-4990953c1cf6",
+      },
+    },
+  ]
+
+  type EventType = {
+    [key: string]: typeof eventsData
+  }
+
+  const groupedEvents: EventType = eventsData.reduce(
+    (acc: { [key: string]: typeof eventsData }, event) => {
+      if (!acc[event.eventType]) {
+        acc[event.eventType] = []
+      }
+      acc[event.eventType].push(event)
+      return acc
+    },
+    {}
+  )
+
   const endpoints = [
     {
       name: "Login",
       subtitle: "Autenticação de Usuário",
       description: "Autentica o usuário e retorna tokens de acesso.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/auth/login",
-      exampleRequest: `POST https://api.pixonchain.com/api/auth/login
-{
+      url: `https://${apiUrl}/api/auth/login`,
+      exampleRequest: `POST https://${apiUrl}/api/auth/login\n{
 "email": "user@example.com",
 "password": "strongpassword123"
 }`,
@@ -245,8 +268,8 @@ const DeveloperSections = () => {
       subtitle: "Registro de Usuário",
       description: "Registra um novo usuário na plataforma.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/auth/signup",
-      exampleRequest: `POST https://api.pixonchain.com/api/auth/signup
+      url: `https://${apiUrl}/api/auth/signup`,
+      exampleRequest: `POST https://${apiUrl}/api/auth/signup
 {
 "fullName": "John Doe",
 "tax_id": "12345678909",
@@ -295,8 +318,8 @@ const DeveloperSections = () => {
       subtitle: "Geração de Chaves de API",
       description: "Gera novas chaves de API para autenticação.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/auth/keys/generate-api-keys",
-      exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/generate-api-keys`,
+      url: `https://${apiUrl}/api/auth/keys/generate-api-keys`,
+      exampleRequest: `POST https://${apiUrl}/api/auth/keys/generate-api-keys`,
       exampleResponse: `{
 "message": "API keys generated successfully",
 "apiKey": "example-api-key",
@@ -337,8 +360,8 @@ const DeveloperSections = () => {
       description:
         "Valida as chaves de API fornecidas para garantir acesso às APIs.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/auth/keys/key-validate",
-      exampleRequest: `POST https://api.pixonchain.com/api/auth/keys/key-validate`,
+      url: `https://${apiUrl}/api/auth/keys/key-validate`,
+      exampleRequest: `POST https://${apiUrl}/api/auth/keys/key-validate`,
       exampleResponse: `{
   "accessToken": "example-access-token"
 }`,
@@ -377,8 +400,8 @@ const DeveloperSections = () => {
       description:
         "Converte um valor de uma moeda de origem para uma moeda de destino, com opção de simulação ou execução real.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/convert",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/convert
+      url: `https://${apiUrl}/api/banking/convert`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/convert
 {
   "fromCurrency": "cPix",
   "toCurrency": "USDT",
@@ -386,7 +409,7 @@ const DeveloperSections = () => {
   "simulation": false
 }`,
       exampleResponse:
-`{
+        `{
   "message": "Conversion successful",
   "fromCurrency": "cPix",
   "toCurrency": "USDT",
@@ -431,8 +454,8 @@ const DeveloperSections = () => {
       description:
         "Solicita o saque de uma quantidade de criptomoeda para um endereço de carteira especificado, com opção de simulação.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/withdraw-crypto",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/withdraw-crypto
+      url: `https://${apiUrl}/api/banking/withdraw-crypto`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/withdraw-crypto
 {
   "currency": "USDT",
   "receiverAddress": "0xaabaafcd77d1828689bf2f196bb4fe6c9e5e2bb7",
@@ -480,8 +503,8 @@ const DeveloperSections = () => {
       subtitle: "Geração de QR Code",
       description: "Gera um QR Code para pagamento via Pix.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/generate-cpix-qrcode",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/generate-cpix-qrcode
+      url: `https://${apiUrl}/api/banking/generate-cpix-qrcode`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/generate-cpix-qrcode
 {
   "value": "0.51"
 }`,
@@ -513,8 +536,8 @@ const DeveloperSections = () => {
       subtitle: "Recuperação de BR Code",
       description: "Recupera os detalhes de um BR Code gerado anteriormente.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/banking/brcodes/:uuid",
-      exampleRequest: `GET https://api.pixonchain.com/api/banking/brcodes/:uuid`,
+      url: `https://${apiUrl}/api/banking/brcodes/:uuid`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/brcodes/:uuid`,
       exampleResponse: `{
   "amount": "0.51",
   "fees": null,
@@ -549,8 +572,8 @@ const DeveloperSections = () => {
       description:
         "Obtém uma cotação para uma transação ou executa uma transação real. Receben valores em USDT diretamente na carteira do usuário.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/quote-transaction",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/quote-transaction
+      url: `https://${apiUrl}/api/banking/quote-transaction`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/quote-transaction
 {
   "value": 601,
   "simulation": true,
@@ -606,8 +629,8 @@ const DeveloperSections = () => {
       subtitle: "Recuperação de Cotação de Transação",
       description: "Recupera os detalhes de uma cotação de transação.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/banking/quote-transaction/:transactionId",
-      exampleRequest: `GET https://api.pixonchain.com/api/banking/quote-transaction/:transactionId`,
+      url: `https://${apiUrl}/api/banking/quote-transaction/:transactionId`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/quote-transaction/:transactionId`,
       exampleResponse: `{
   "depositsLogs": [
     {
@@ -688,8 +711,8 @@ const DeveloperSections = () => {
       subtitle: "Recuperação de Saldo",
       description: "Recupera os saldos de moedas fiduciárias e criptomoedas.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/banking/balance",
-      exampleRequest: `GET https://api.pixonchain.com/api/banking/balance`,
+      url: `https://${apiUrl}/api/banking/balance`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/balance`,
       exampleResponse: `{
   "fiatBalances": [
     {
@@ -746,8 +769,8 @@ const DeveloperSections = () => {
       subtitle: "Processamento de Pagamento via Chave Pix",
       description: "Processa um pagamento utilizando uma chave Pix.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/payment",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
+      url: `https://${apiUrl}/api/banking/payment`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/payment
 {
   "type": "CHAVE",
   "valor": 0.01,
@@ -787,8 +810,8 @@ const DeveloperSections = () => {
       description:
         "Processa um pagamento utilizando um código Pix Copia e Cola.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/payment",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
+      url: `https://${apiUrl}/api/banking/payment`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/payment
 {
   "type": "PIX_COPIA_E_COLA",
   "descricao": "Payment for service subscription",
@@ -825,8 +848,8 @@ const DeveloperSections = () => {
       subtitle: "Processamento de Pagamento via Dados Bancários",
       description: "Processa um pagamento utilizando dados bancários.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/banking/payment",
-      exampleRequest: `POST https://api.pixonchain.com/api/banking/payment
+      url: `https://${apiUrl}/api/banking/payment`,
+      exampleRequest: `POST https://${apiUrl}/api/banking/payment
 {
   "type": "DADOS_BANCARIOS",
   "valor": 0.1,
@@ -870,8 +893,8 @@ const DeveloperSections = () => {
       subtitle: "Recuperação de Extrato",
       description: "Recupera o extrato de transações.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/banking/statement",
-      exampleRequest: `GET https://api.pixonchain.com/api/banking/statement`,
+      url: `https://${apiUrl}/api/banking/statement`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/statement`,
       exampleResponse: `{
   "transactions": [
     {
@@ -914,8 +937,8 @@ const DeveloperSections = () => {
       subtitle: "Verificação de Saúde do Servidor",
       description: "Verifica o status de saúde do servidor.",
       method: "GET",
-      url: "https://api.pixonchain.com/health",
-      exampleRequest: `GET https://api.pixonchain.com/health`,
+      url: `https://${apiUrl}/health`,
+      exampleRequest: `GET https://${apiUrl}/health`,
       exampleResponse: `{
   "status": "OK",
   "service": {
@@ -960,8 +983,8 @@ const DeveloperSections = () => {
       description:
         "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
       method: "POST",
-      url: "https://api.pixonchain.com/api/webhooks",
-      exampleRequest: `POST https://api.pixonchain.com/api/webhooks
+      url: `https://${apiUrl}/api/webhooks`,
+      exampleRequest: `POST https://${apiUrl}/api/webhooks
 {
   "urls": [
     "https://webhook.site/12345678-1234-1234-1234-123456789012"
@@ -1008,8 +1031,8 @@ const DeveloperSections = () => {
       subtitle: "Listagem de Webhooks",
       description: "Lista todos os webhooks cadastrados na plataforma.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/webhooks",
-      exampleRequest: `GET https://api.pixonchain.com/api/webhooks`,
+      url: `https://${apiUrl}/api/webhooks`,
+      exampleRequest: `GET https://${apiUrl}/api/webhooks`,
       exampleResponse: `{
     "success": true,
     "webhooks": [
@@ -1058,8 +1081,8 @@ const DeveloperSections = () => {
       subtitle: "Exclusão de Webhook",
       description: "Exclui um webhook específico com base no ID fornecido.",
       method: "DELETE",
-      url: "https://api.pixonchain.com/api/webhooks/:id",
-      exampleRequest: `DELETE https://api.pixonchain.com/api/webhooks/:id`,
+      url: `https://${apiUrl}/api/webhooks/:id`,
+      exampleRequest: `DELETE https://${apiUrl}/api/webhooks/:id`,
       exampleResponse: `{
   "success": true,
   "webhook": {
@@ -1107,14 +1130,14 @@ const DeveloperSections = () => {
       description:
         "Lista os tipos de eventos que podem ser monitorados via webhooks.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/events",
-      exampleRequest: `GET https://api.pixonchain.com/api/events`,
+      url: `https://${apiUrl}/api/events`,
+      exampleRequest: `GET https://${apiUrl}/api/events`,
       exampleResponse: `[
   {
     "eventId": "6ec9d5f2-f64d-4280-9244-293f3065bd16",
     "eventType": "PAYMENT REQUEST",
     "eventVersion": "1.0",
-    "source": "PixOnChain",
+    "source": ${tenantConfig?.docs_source || ""},
     "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
     "timestamp": "2025-02-16T21:08:33Z",
     "details": {
@@ -1129,7 +1152,7 @@ const DeveloperSections = () => {
     "eventId": "6d2748d1-4826-4393-98a1-652229e4040c",
     "eventType": "PAYMENT",
     "eventVersion": "1.0",
-    "source": "PixOnChain",
+    "source": ${tenantConfig?.docs_source || ""},
     "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
     "timestamp": "2025-02-16T21:09:02Z",
     "details": {
@@ -1150,7 +1173,7 @@ const DeveloperSections = () => {
     "eventId": "54158180-b07f-4382-b040-0c400dbadb9e",
     "eventType": "PAYMENT",
     "eventVersion": "1.0",
-    "source": "PixOnChain",
+    "source": ${tenantConfig?.docs_source || ""},
     "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
     "timestamp": "2025-02-16T21:09:06Z",
     "details": {
@@ -1177,7 +1200,7 @@ const DeveloperSections = () => {
     "eventId": "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
     "eventType": "PAYMENT REQUEST",
     "eventVersion": "1.0",
-    "source": "PixOnChain",
+    "source": ${tenantConfig?.docs_source || ""},
     "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
     "timestamp": "2025-02-16T21:10:53Z",
     "details": {
@@ -1196,7 +1219,7 @@ const DeveloperSections = () => {
     "eventId": "d0fe0227-1641-4cf8-857b-5e0d0d44fc18",
     "eventType": "PAYMENT REQUEST",
     "eventVersion": "1.0",
-    "source": "PixOnChain",
+    "source": ${tenantConfig?.docs_source || ""},
     "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
     "timestamp": "2025-02-16T21:12:43Z",
     "details": {
@@ -1234,8 +1257,8 @@ const DeveloperSections = () => {
       subtitle: "Consulta de Carteira por Tipo de Rede",
       description: "Recupera a carteira do usuário para um tipo específico de rede blockchain.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/wallet/user-wallet",
-      exampleRequest: `GET https://api.pixonchain.com/api/wallet/user-wallet?networkType=EVM`,
+      url: `https://${apiUrl}/api/wallet/user-wallet`,
+      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallet?networkType=EVM`,
       exampleResponse: `{
   "wallet_address": "0xC4F792cB4B259EC3E8a9433550F12028284FF0d4",
   "network_type": "EVM",
@@ -1274,8 +1297,8 @@ const DeveloperSections = () => {
       subtitle: "Consulta de Todas as Carteiras do Usuário",
       description: "Recupera todas as carteiras blockchain do usuário autenticado.",
       method: "GET",
-      url: "https://api.pixonchain.com/api/wallet/user-wallets",
-      exampleRequest: `GET https://api.pixonchain.com/api/wallet/user-wallets`,
+      url: `https://${apiUrl}/api/wallet/user-wallets`,
+      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallets`,
       exampleResponse: `{
   "EVM": {
     "wallet_address": "0xC4F792cB4B259EC3E8a9433550F12028284FF0d4",
@@ -1330,15 +1353,14 @@ const DeveloperSections = () => {
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
       <h1 className="text-2xl font-bold mb-6">📄 Área de Desenvolvedores</h1>
       <p className="text-sm text-gray-400 mb-6 text-center">
-        Explore os endpoints disponíveis para integrar-se à plataforma Pix on
-        Chain.
+        Explore os endpoints disponíveis para integrar-se à plataforma {tenantConfig?.name}.
       </p>
 
       {/* Card de Informações Importantes */}
       <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
         <h2 className="text-lg font-bold mb-3">⚠️ Importante!</h2>
         <p className="text-sm text-gray-300 mb-3">
-          Para utilizar as APIs do Pix on Chain, é necessário obter as
+          Para utilizar as APIs do {tenantConfig?.name}, é necessário obter as
           credenciais de acesso. Entre em contato com nosso suporte para
           solicitar suas credenciais.
         </p>
@@ -1367,7 +1389,7 @@ const DeveloperSections = () => {
           </h3>
           <pre className="bg-gray-900 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
             <code>
-              {`curl -X GET "https://api.pixonchain.com/health" \\\n  -H "x-api-key: `}
+              {`curl -X GET "https://${apiUrl}/health" \\\n  -H "x-api-key: `}
               <span className="text-green-300">SEU_API_KEY</span>
               {`" \\\n  -H "x-secret-key: `}
               <span className="text-green-300">SEU_SECRET_KEY</span>
@@ -1468,6 +1490,7 @@ const DeveloperSections = () => {
           />
         ))}
       </div>
+
     </div>
   )
 }
