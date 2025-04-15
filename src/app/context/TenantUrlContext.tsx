@@ -44,9 +44,9 @@ export function TenantUrlProvider({ children }: { children: React.ReactNode }) {
             const apiUrl = response.data.find((url: TenantUrl) => url.url.startsWith('api.'));
             setApiUrl(apiUrl ? apiUrl.url : null);
 
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Erro ao carregar URLs do tenant:', err);
-            setError(err.message || 'Erro ao carregar URLs');
+            setError(err instanceof Error ? err.message : 'Erro ao carregar URLs');
         } finally {
             setIsLoading(false);
         }

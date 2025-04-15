@@ -58,9 +58,9 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
 
             setTenantConfig(response.data);
 
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Erro ao carregar configurações do tenant:', err);
-            setError(err.message || 'Erro ao carregar configurações');
+            setError(err instanceof Error ? err.message : 'Erro ao carregar configurações');
         } finally {
             setIsLoading(false);
         }
