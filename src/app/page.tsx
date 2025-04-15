@@ -1353,15 +1353,14 @@ const DeveloperSections = () => {
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
       <h1 className="text-2xl font-bold mb-6">📄 Área de Desenvolvedores</h1>
       <p className="text-sm text-gray-400 mb-6 text-center">
-        Explore os endpoints disponíveis para integrar-se à plataforma Pix on
-        Chain.
+        Explore os endpoints disponíveis para integrar-se à plataforma {tenantConfig?.name}.
       </p>
 
       {/* Card de Informações Importantes */}
       <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
         <h2 className="text-lg font-bold mb-3">⚠️ Importante!</h2>
         <p className="text-sm text-gray-300 mb-3">
-          Para utilizar as APIs do Pix on Chain, é necessário obter as
+          Para utilizar as APIs do {tenantConfig?.name}, é necessário obter as
           credenciais de acesso. Entre em contato com nosso suporte para
           solicitar suas credenciais.
         </p>

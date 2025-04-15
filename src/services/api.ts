@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const tenantUrl = typeof window !== 'undefined'
     ? window.location.hostname === 'localhost' || window.location.hostname === 'localhost:3000'
-        ? 'docs.p27pay.com.br'
+        ? 'docs.pixonchain.com'
         : window.location.hostname
     : '';
 

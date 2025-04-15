@@ -70,6 +70,24 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
         loadTenantConfig();
     }, []);
 
+    useEffect(() => {
+        if (tenantConfig) {
+            if (tenantConfig.name) {
+                document.title = tenantConfig.name;
+            }
+            const faviconUrl = tenantConfig.icon_url || tenantConfig.logo_url;
+            if (faviconUrl) {
+                let link = document.querySelector("link[rel*='icon']");
+                if (!link) {
+                    link = document.createElement('link');
+                    link.setAttribute('rel', 'shortcut icon');
+                    document.head.appendChild(link);
+                }
+                link.setAttribute('href', faviconUrl);
+            }
+        }
+    }, [tenantConfig]);
+
     return (
         <TenantContext.Provider
             value={{
