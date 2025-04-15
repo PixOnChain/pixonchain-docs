@@ -1,17 +1,25 @@
 import axios from 'axios';
 
-const tenantUrl = typeof window !== 'undefined'
-    ? window.location.hostname === 'localhost' || window.location.hostname === 'localhost:3000'
-        ? 'docs.pixonchain.com'
-        : window.location.hostname
-    : '';
+const tenantUrl =
+    typeof window !== 'undefined'
+        ? (window.location.hostname === 'localhost' ? 'docs.pixonchain.com' : window.location.hostname)
+        : '';
 
 export { tenantUrl };
 
+const apiUrl =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:30001/'
+        : process.env.NEXT_PUBLIC_API_URL;
+
+if (!apiUrl) {
+    throw new Error('A variável de ambiente NEXT_PUBLIC_API_URL não está definida!');
+}
+
 export const baseApi = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: apiUrl,
     headers: {
         'Content-Type': 'application/json',
-        'Accept': '*/*',
+        Accept: '*/*',
     },
 });
