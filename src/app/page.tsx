@@ -1403,7 +1403,7 @@ const DeveloperSections = () => {
           </p>
         </div>
 
-        <div className="flex justify-center align-center mt-4">
+        {/* <div className="flex justify-center align-center mt-4">
           <a
             href="https://www.youtube.com/watch?v=LSOUfZd930k"
             target="_blank"
@@ -1413,7 +1413,7 @@ const DeveloperSections = () => {
             <FaYoutube className="text-lg" />
             Como obter minhas credenciais
           </a>
-        </div>
+        </div> */}
       </div>
 
       {/* Listagem de Endpoints */}
