@@ -79,4 +79,12 @@ export function useTenantApiUrl() {
         throw new Error('useTenantApiUrl deve ser usado dentro de um TenantUrlProvider');
     }
     return context.apiUrl;
+}
+
+export function useTenantUrl() {
+    const context = useContext(TenantUrlContext);
+    if (!context) {
+        throw new Error('useTenantUrl deve ser usado dentro de um TenantUrlProvider');
+    }
+    return context;
 } 

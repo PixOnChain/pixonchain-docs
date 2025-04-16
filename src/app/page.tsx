@@ -11,7 +11,7 @@ import {
   FaShieldAlt,
 } from "react-icons/fa"
 import { useTenant } from './context/TenantContext';
-import { useTenantApiUrl } from "./context/TenantUrlContext";
+import { useTenantUrl } from "./context/TenantUrlContext";
 
 // const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
@@ -80,8 +80,20 @@ const EventTypeSection: React.FC<EventTypeSectionProps> = ({
 )
 
 const DeveloperSections = () => {
-  const { tenantConfig } = useTenant();
-  const apiUrl = useTenantApiUrl();
+  const { tenantConfig, isLoading: isTenantLoading } = useTenant();
+  const { apiUrl, isLoading: isApiUrlLoading } = useTenantUrl();
+
+  // Loading state while contexts are being loaded
+  if (isTenantLoading || isApiUrlLoading || !tenantConfig || !apiUrl) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+          <p className="text-lg">Carregando documentação...</p>
+        </div>
+      </div>
+    );
+  }
 
   const eventsData = [
     {
