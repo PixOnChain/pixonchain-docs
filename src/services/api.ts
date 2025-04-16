@@ -3,6 +3,7 @@ import axios from 'axios';
 const tenantUrl =
     typeof window !== 'undefined'
         ? (window.location.hostname === 'localhost' ? 'docs.pixonchain.com' : window.location.hostname)
+        // ? (window.location.hostname === 'localhost' ? 'docs.p27pay.com.br' : window.location.hostname)
         : '';
 
 export { tenantUrl };

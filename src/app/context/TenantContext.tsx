@@ -71,21 +71,29 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if (tenantConfig) {
-            if (tenantConfig.name) {
-                document.title = tenantConfig.name;
-            }
-            const faviconUrl = tenantConfig.icon_url || tenantConfig.logo_url;
-            if (faviconUrl) {
-                let link = document.querySelector("link[rel*='icon']");
-                if (!link) {
-                    link = document.createElement('link');
-                    link.setAttribute('rel', 'shortcut icon');
-                    document.head.appendChild(link);
+        const updateFavicon = async () => {
+            if (tenantConfig) {
+                if (tenantConfig.name) {
+                    document.title = tenantConfig.name;
                 }
-                link.setAttribute('href', faviconUrl);
+                try {
+                    const response = await baseApi.get(`/api/whitelabel-config/image/favicon?tenantUrl=${window.location.hostname}`);
+                    const faviconUrl = response.data;
+
+                    let link = document.querySelector("link[rel*='icon']");
+                    if (!link) {
+                        link = document.createElement('link');
+                        link.setAttribute('rel', 'shortcut icon');
+                        document.head.appendChild(link);
+                    }
+                    link.setAttribute('href', faviconUrl);
+                } catch (error) {
+                    console.error('Erro ao carregar favicon:', error);
+                }
             }
-        }
+        };
+
+        updateFavicon();
     }, [tenantConfig]);
 
     return (
