@@ -9,7 +9,6 @@ import {
   FaMoneyBill,
   FaServer,
   FaShieldAlt,
-  FaYoutube,
 } from "react-icons/fa"
 import { useTenant } from './context/TenantContext';
 import { useTenantApiUrl } from "./context/TenantUrlContext";
