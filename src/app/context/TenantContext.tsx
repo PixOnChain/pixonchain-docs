@@ -77,8 +77,11 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
                     document.title = tenantConfig.name;
                 }
                 try {
-                    const response = await baseApi.get(`/api/whitelabel-config/image/favicon?tenantUrl=${window.location.hostname}`);
-                    const faviconUrl = response.data;
+                    const response = await baseApi.get(`/api/whitelabel-config/image/favicon?tenantUrl=${window.location.hostname}`, {
+                        responseType: 'blob'
+                    });
+                    const blob = new Blob([response.data], { type: 'image/png' });
+                    const faviconUrl = URL.createObjectURL(blob);
 
                     let link = document.querySelector("link[rel*='icon']");
                     if (!link) {
@@ -87,6 +90,9 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
                         document.head.appendChild(link);
                     }
                     link.setAttribute('href', faviconUrl);
+
+                    // Limpar a URL do objeto quando o componente for desmontado
+                    return () => URL.revokeObjectURL(faviconUrl);
                 } catch (error) {
                     console.error('Erro ao carregar favicon:', error);
                 }
