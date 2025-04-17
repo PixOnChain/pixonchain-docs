@@ -134,9 +134,6 @@ const ChatPrompt: React.FC = () => {
         content: userMessage
       });
 
-      // Print debug information
-      console.log("Sending request to:", aiEndpoint);
-      console.log("Auth Key (first few chars):", aiAgentAccessKey ? `${aiAgentAccessKey.substring(0, 5)}...` : "Not set");
 
       // Prepare request headers with authorization
       const requestConfig = {
