@@ -29,6 +29,7 @@ interface TenantConfig {
     tenant_telegram_url: string | null;
     tenant_telegram_admin_token: string | null;
     docs_source: string | null;
+    email_suporte: string | null;
 }
 
 interface TenantContextData {

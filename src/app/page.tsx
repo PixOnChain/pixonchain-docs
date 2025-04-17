@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import {
   FaCalendarAlt,
   FaHeartbeat,
@@ -9,9 +9,14 @@ import {
   FaMoneyBill,
   FaServer,
   FaShieldAlt,
+  FaComments,
+  FaTimes
 } from "react-icons/fa"
 import { useTenant } from './context/TenantContext';
 import { useTenantUrl } from "./context/TenantUrlContext";
+import { useLanguage } from "./utils/languageContext";
+import LanguageSelector from "./componentes/LanguageSelector";
+import ChatPrompt from "./componentes/ChatPrompt";
 
 // const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
 
@@ -79,9 +84,12 @@ const EventTypeSection: React.FC<EventTypeSectionProps> = ({
   </div>
 )
 
-const DeveloperSections = () => {
+export default function Home() {
+  const { t } = useLanguage();
   const { tenantConfig, isLoading: isTenantLoading } = useTenant();
   const { apiUrl, isLoading: isApiUrlLoading } = useTenantUrl();
+  const [activeSection, setActiveSection] = useState('developers');
+  const [mobileChat, setMobileChat] = useState(false);
 
   // Loading state while contexts are being loaded
   if (isTenantLoading || isApiUrlLoading || !tenantConfig || !apiUrl) {
@@ -1360,150 +1368,299 @@ const DeveloperSections = () => {
     },
   ]
 
-  return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
-      <h1 className="text-2xl font-bold mb-6">📄 Área de Desenvolvedores</h1>
-      <p className="text-sm text-gray-400 mb-6 text-center">
-        Explore os endpoints disponíveis para integrar-se à plataforma {tenantConfig?.name}.
-      </p>
-
-      {/* Card de Informações Importantes */}
-      <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
-        <h2 className="text-lg font-bold mb-3">⚠️ Importante!</h2>
-        <p className="text-sm text-gray-300 mb-3">
-          Para utilizar as APIs do {tenantConfig?.name}, é necessário obter as
-          credenciais de acesso. Entre em contato com nosso suporte para
-          solicitar suas credenciais.
-        </p>
-        <p className="text-sm text-gray-300 mb-3">
-          As credenciais devem ser enviadas no{" "}
-          <b className="text-[#7747ff]">Header</b> de cada requisição para
-          autenticação e autorização.
-        </p>
-        <p className="text-sm text-gray-300 font-mono bg-gray-700 p-3 rounded-lg">
-          Exemplo de credenciais no Header:
-          <br />
-          <span className="block mt-2">
-            <b className="text-yellow-300">x-api-key</b>:{" "}
-            <span className="text-green-300">********</span>
-          </span>
-          <span className="block">
-            <b className="text-yellow-300">x-secret-key</b>:{" "}
-            <span className="text-green-300">********</span>
-          </span>
-        </p>
-
-        {/* Exemplo com Curl */}
-        <div className="mt-4 bg-gray-700 p-4 rounded-lg">
-          <h3 className="text-md font-bold text-white mb-2">
-            Exemplo com Curl:
-          </h3>
-          <pre className="bg-gray-900 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
-            <code>
-              {`curl -X GET "https://${apiUrl}/health" \\\n  -H "x-api-key: `}
-              <span className="text-green-300">SEU_API_KEY</span>
-              {`" \\\n  -H "x-secret-key: `}
-              <span className="text-green-300">SEU_SECRET_KEY</span>
-              {`"`}
-            </code>
-          </pre>
-          <p className="text-xs text-gray-400 mt-2">
-            Substitua <code className="text-green-300">SEU_API_KEY</code>, e{" "}
-            <code className="text-green-300">SEU_SECRET_KEY</code> pelos valores
-            fornecidos.
-          </p>
-        </div>
-
-        {/* <div className="flex justify-center align-center mt-4">
-          <a
-            href="https://www.youtube.com/watch?v=LSOUfZd930k"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 bg-[#7747ff] text-white font-medium py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
-          >
-            <FaYoutube className="text-lg" />
-            Como obter minhas credenciais
-          </a>
-        </div> */}
-      </div>
-
-      {/* Listagem de Endpoints */}
-      <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg">
-        <div className="space-y-6">
-          {endpoints.map((endpoint, index) => (
-            <div key={index} className="bg-gray-800 rounded-lg p-6 text-left">
-              <h2 className="text-lg font-bold">{endpoint.name}</h2>
-              {endpoint.subtitle && (
-                <p className="text-sm text-gray-400 font-medium mt-1">
-                  {endpoint.subtitle}
-                </p>
-              )}
-              <div className="flex flex-wrap gap-2 mb-3 mt-2">
-                {endpoint.labels?.map((label, labelIndex) => (
-                  <span
-                    key={labelIndex}
-                    className={`flex items-center gap-1 px-2 py-1 text-xs font-bold rounded-full ${label.bgColor} ${label.textColor} w-full sm:w-auto`}
-                  >
-                    {label.text}
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-gray-300 mb-3">
-                {endpoint.description}
+  const DeveloperSections = () => {
+    return (
+      <div className="space-y-8">
+        {/* Introduction Card */}
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 shadow-lg border border-gray-700">
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-white mb-4">{t('welcome_to_api')}</h2>
+              <p className="text-gray-300 mb-4">
+                {t('api_intro_text')}
               </p>
-              <div className="mb-4">
-                <span className="block text-sm text-yellow-300 font-mono break-words">
-                  <b>Method:</b> {endpoint.method}
-                </span>
-                <span className="block text-sm text-yellow-300 font-mono break-words">
-                  <b>URL:</b> {endpoint.url}
-                </span>
+              <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700 mb-4">
+                <h3 className="text-lg font-semibold text-blue-400 mb-2">
+                  <span className="mr-2">🚀</span>
+                  {t('getting_started')}
+                </h3>
+                <ol className="list-decimal list-inside text-gray-300 space-y-2 ml-2">
+                  <li>{t('register_account')}</li>
+                  <li>{t('generate_api_keys')}</li>
+                  <li>{t('integrate_api')}</li>
+                  <li>{t('test_integration')}</li>
+                </ol>
               </div>
-              <details className="mb-3">
-                <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
-                  Exemplo de Requisição
-                </summary>
-                <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                  <code>{endpoint.exampleRequest}</code>
-                </pre>
-              </details>
-              <details className="mb-3">
-                <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
-                  Exemplo de Resposta
-                </summary>
-                <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                  <code>{endpoint.exampleResponse}</code>
-                </pre>
-              </details>
-              {endpoint.bodyExplanation && (
-                <details>
-                  <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
-                    Explicação do Corpo da Requisição
-                  </summary>
-                  <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-                    <code>{endpoint.bodyExplanation}</code>
-                  </pre>
-                </details>
-              )}
             </div>
-          ))}
+            <div className="w-full md:w-64 flex flex-col gap-4">
+              <div className="bg-gray-800/70 rounded-lg p-4 border border-gray-700">
+                <h3 className="text-md font-semibold text-blue-400 mb-2">
+                  <span className="mr-2">ℹ️</span>
+                  {t('api_details')}
+                </h3>
+                <ul className="text-sm text-gray-300 space-y-2">
+                  <li><span className="text-gray-400">{t('base_url')}:</span> {apiUrl}</li>
+                  <li><span className="text-gray-400">{t('version')}:</span> v1</li>
+                  <li><span className="text-gray-400">{t('format')}:</span> JSON</li>
+                  <li><span className="text-gray-400">{t('auth')}:</span> API Key + Secret</li>
+                </ul>
+              </div>
+              <div className="bg-blue-900/30 rounded-lg p-4 border border-blue-800/30">
+                <h3 className="text-md font-semibold text-blue-400 mb-2">
+                  <span className="mr-2">💡</span>
+                  {t('need_help')}
+                </h3>
+                <p className="text-sm text-gray-300 mb-2">
+                  {t('contact_support_text')}
+                </p>
+                <a
+                  href="mailto:support@pixonchain.com"
+                  className="text-blue-400 text-sm hover:text-blue-300 flex items-center"
+                >
+                  {tenantConfig?.email_suporte}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card de Informações Importantes */}
+        <div className="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+          <h2 className="text-xl font-bold mb-4 flex items-center text-white">
+            <span className="text-yellow-400 mr-2">⚠️</span>
+            {t('important')}
+          </h2>
+          <p className="text-gray-300 mb-4">
+            {t('api_credentials_info_full')}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="bg-gray-900 p-5 rounded-lg border border-gray-700">
+              <h3 className="text-lg font-semibold mb-3 text-blue-400">{t('authentication')}</h3>
+              <p className="text-sm text-gray-300 mb-3">
+                {t('header_credentials_info')}
+              </p>
+              <div className="font-mono bg-gray-800 p-4 rounded-lg text-sm">
+                <div className="text-gray-400 mb-1">{t('header_example')}:</div>
+                <div className="flex items-center mb-1">
+                  <span className="text-yellow-300 mr-2">x-api-key:</span>
+                  <span className="text-green-400">********</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-yellow-300 mr-2">x-secret-key:</span>
+                  <span className="text-green-400">********</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-900 p-5 rounded-lg border border-gray-700">
+              <h3 className="text-lg font-semibold mb-3 text-blue-400">{t('curl_example')}</h3>
+              <p className="text-sm text-gray-300 mb-3">
+                {t('curl_example_desc')}
+              </p>
+              <pre className="bg-gray-800 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
+                <code>
+                  {`curl -X GET "https://${apiUrl}/health" \\\n  -H "x-api-key: `}
+                  <span className="text-green-400">{t('your_api_key')}</span>
+                  {`" \\\n  -H "x-secret-key: `}
+                  <span className="text-green-400">{t('your_secret_key')}</span>
+                  {`"`}
+                </code>
+              </pre>
+            </div>
+          </div>
+          <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-800/30">
+            <div className="flex items-start">
+              <span className="text-blue-400 text-xl mr-3 mt-1">💡</span>
+              <div>
+                <h4 className="text-blue-400 font-medium mb-1">{t('security_tip')}</h4>
+                <p className="text-sm text-gray-300">
+                  {t('security_tip_text')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Listagem de Endpoints */}
+        <div className="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+          <h3 className="text-xl font-bold mb-6 text-white">{t('api_endpoints')}</h3>
+          <div className="grid grid-cols-1 gap-6">
+            {endpoints.map((endpoint, index) => (
+              <div
+                key={index}
+                className="bg-gray-900 rounded-lg p-6 border border-gray-700 transition-all hover:border-gray-600"
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                  <div>
+                    <h2 className="text-xl font-bold text-white mb-1">{endpoint.name}</h2>
+                    {endpoint.subtitle && (
+                      <p className="text-gray-400 font-medium">
+                        {endpoint.subtitle}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {endpoint.labels?.map((label, labelIndex) => (
+                      <span
+                        key={labelIndex}
+                        className={`flex items-center px-3 py-1 text-xs font-bold rounded-full ${label.bgColor} ${label.textColor}`}
+                      >
+                        {label.text}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-4 border-l-4 border-blue-500 pl-3 py-1">
+                  {endpoint.description}
+                </p>
+                <div className="bg-gray-800 p-4 rounded-lg mb-4 flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="md:w-48 flex-shrink-0">
+                    <span className="text-sm font-semibold text-blue-400 block mb-1">{t('method')}:</span>
+                    <span className={`inline-block px-3 py-1 rounded-md text-sm font-mono ${endpoint.method === 'GET' ? 'bg-green-900/50 text-green-400' :
+                      endpoint.method === 'POST' ? 'bg-blue-900/50 text-blue-400' :
+                        endpoint.method === 'PUT' ? 'bg-yellow-900/50 text-yellow-400' :
+                          endpoint.method === 'DELETE' ? 'bg-red-900/50 text-red-400' : 'bg-gray-700 text-white'
+                      }`}>
+                      {endpoint.method}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-sm font-semibold text-blue-400 block mb-1">{t('url')}:</span>
+                    <span className="block text-sm text-white font-mono bg-gray-900 p-2 rounded break-all">
+                      {endpoint.url}
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                  <details className="bg-gray-800 rounded-lg overflow-hidden">
+                    <summary className="cursor-pointer p-3 bg-gray-800 hover:bg-gray-750 text-blue-400 hover:text-blue-300 font-medium">
+                      {t('request_example')}
+                    </summary>
+                    <pre className="bg-gray-900 text-gray-300 p-4 text-sm overflow-x-auto border-t border-gray-700">
+                      <code>{endpoint.exampleRequest}</code>
+                    </pre>
+                  </details>
+                  <details className="bg-gray-800 rounded-lg overflow-hidden">
+                    <summary className="cursor-pointer p-3 bg-gray-800 hover:bg-gray-750 text-blue-400 hover:text-blue-300 font-medium">
+                      {t('response_example')}
+                    </summary>
+                    <pre className="bg-gray-900 text-gray-300 p-4 text-sm overflow-x-auto border-t border-gray-700">
+                      <code>{endpoint.exampleResponse}</code>
+                    </pre>
+                  </details>
+                </div>
+                {endpoint.bodyExplanation && (
+                  <details className="bg-gray-800 rounded-lg overflow-hidden">
+                    <summary className="cursor-pointer p-3 bg-gray-800 hover:bg-gray-750 text-blue-400 hover:text-blue-300 font-medium">
+                      {t('request_body_explanation')}
+                    </summary>
+                    <div className="bg-gray-900 text-gray-300 p-4 text-sm border-t border-gray-700">
+                      <code className="whitespace-pre-wrap">{endpoint.bodyExplanation}</code>
+                    </div>
+                  </details>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+    );
+  }
 
-      {/* Listagem de Eventos */}
-      <div className="w-full max-w-md md:max-w-lg lg:max-w-3xl xl:max-w-5xl bg-gray-800 rounded-lg p-6 shadow-lg mt-6">
-        <h2 className="text-2xl font-bold mb-6">📅 Tipos de Events</h2>
-        {Object.keys(groupedEvents).map((type, index) => (
-          <EventTypeSection
-            key={index}
-            events={groupedEvents[type]}
-            type={type}
-          />
-        ))}
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-800 text-white">
+      {/* Header */}
+      <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div className="container mx-auto py-3 px-3 sm:px-6 sm:py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex items-center">
+              <h1 className="text-xl sm:text-2xl font-bold text-blue-400">
+                {tenantConfig.name} <span className="text-white">Docs</span>
+              </h1>
+            </div>
+
+            <nav className="flex flex-wrap items-center gap-2 sm:gap-4">
+              <button
+                onClick={() => setActiveSection('developers')}
+                className={`px-2 py-1 text-sm sm:text-base rounded transition ${activeSection === 'developers' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}
+              >
+                {t('developers')}
+              </button>
+              <button
+                onClick={() => setActiveSection('events')}
+                className={`px-2 py-1 text-sm sm:text-base rounded transition ${activeSection === 'events' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}
+              >
+                {t('events')}
+              </button>
+              <LanguageSelector />
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Main content with sidebar layout */}
+      <div className="flex-1 flex relative">
+        {/* Documentation side - takes remaining space with padding for the fixed sidebar */}
+        <div className="w-full lg:w-2/3 xl:w-3/4 overflow-y-auto pb-16 pt-4 sm:pt-6 px-3 sm:px-6">
+          <div className="container mx-auto max-w-full">
+            {activeSection === 'developers' ? (
+              <section className="bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-400">{t('api_documentation')}</h2>
+                <DeveloperSections />
+              </section>
+            ) : (
+              <section className="bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-400">{t('event_examples')}</h2>
+                <div className="space-y-6">
+                  {Object.entries(groupedEvents).map(([eventType, events]) => (
+                    <EventTypeSection key={eventType} type={eventType} events={events} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+        </div>
+
+        {/* Chat area - fixed to the right side on desktop */}
+        <div className="hidden lg:block lg:w-1/3 xl:w-1/4 fixed top-[4rem] right-0 bottom-0 border-l border-gray-700 bg-gray-800">
+          <div className="h-full">
+            <ChatPrompt />
+          </div>
+        </div>
+
+        {/* Mobile chat toggle button */}
+        <button
+          onClick={() => setMobileChat(true)}
+          className="lg:hidden fixed bottom-6 right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg z-50 animate-pulse-slow"
+          aria-label="Open chat"
+        >
+          <FaComments className="text-lg sm:text-xl" />
+        </button>
+
+        {/* Mobile chat overlay */}
+        {mobileChat && (
+          <div className="lg:hidden fixed inset-0 bg-gray-900/95 z-50 flex flex-col">
+            <div className="bg-gray-800 p-3 sm:p-4 flex justify-between items-center border-b border-gray-700">
+              <h3 className="text-lg sm:text-xl font-bold text-white">{t('ask_question')}</h3>
+              <button
+                onClick={() => setMobileChat(false)}
+                className="text-gray-400 hover:text-white p-2"
+                aria-label="Close chat"
+              >
+                <FaTimes className="text-xl" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <ChatPrompt />
+            </div>
+          </div>
+        )}
       </div>
 
+      <footer className="bg-gray-900 border-t border-gray-700 py-3 sm:py-4 px-4 sm:px-6 text-center text-gray-400">
+        <div className="container mx-auto">
+          <p className="text-sm">&copy; {new Date().getFullYear()} {tenantConfig.name}. {t('all_rights_reserved')}</p>
+        </div>
+      </footer>
     </div>
-  )
+  );
 }
-
-export default DeveloperSections
