@@ -1417,7 +1417,7 @@ export default function Home() {
                   href="mailto:support@pixonchain.com"
                   className="text-blue-400 text-sm hover:text-blue-300 flex items-center"
                 >
-                  support@pixonchain.com
+                  {tenantConfig?.email_suporte}
                 </a>
               </div>
             </div>
