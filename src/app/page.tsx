@@ -1399,7 +1399,7 @@ export default function Home() {
                   {t('api_details')}
                 </h3>
                 <ul className="text-sm text-gray-300 space-y-2">
-                  <li><span className="text-gray-400">{t('base_url')}:</span> api.pixonchain.com</li>
+                  <li><span className="text-gray-400">{t('base_url')}:</span> {apiUrl}</li>
                   <li><span className="text-gray-400">{t('version')}:</span> v1</li>
                   <li><span className="text-gray-400">{t('format')}:</span> JSON</li>
                   <li><span className="text-gray-400">{t('auth')}:</span> API Key + Secret</li>
@@ -1413,8 +1413,8 @@ export default function Home() {
                 <p className="text-sm text-gray-300 mb-2">
                   {t('contact_support_text')}
                 </p>
-                <a 
-                  href="mailto:support@pixonchain.com" 
+                <a
+                  href="mailto:support@pixonchain.com"
                   className="text-blue-400 text-sm hover:text-blue-300 flex items-center"
                 >
                   support@pixonchain.com
@@ -1458,7 +1458,7 @@ export default function Home() {
               </p>
               <pre className="bg-gray-800 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
                 <code>
-                  {`curl -X GET "https://api.pixonchain.com/health" \\\n  -H "x-api-key: `}
+                  {`curl -X GET "https://${apiUrl}/health" \\\n  -H "x-api-key: `}
                   <span className="text-green-400">{t('your_api_key')}</span>
                   {`" \\\n  -H "x-secret-key: `}
                   <span className="text-green-400">{t('your_secret_key')}</span>
@@ -1485,8 +1485,8 @@ export default function Home() {
           <h3 className="text-xl font-bold mb-6 text-white">{t('api_endpoints')}</h3>
           <div className="grid grid-cols-1 gap-6">
             {endpoints.map((endpoint, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-gray-900 rounded-lg p-6 border border-gray-700 transition-all hover:border-gray-600"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -1515,12 +1515,11 @@ export default function Home() {
                 <div className="bg-gray-800 p-4 rounded-lg mb-4 flex flex-col md:flex-row md:items-center gap-4">
                   <div className="md:w-48 flex-shrink-0">
                     <span className="text-sm font-semibold text-blue-400 block mb-1">{t('method')}:</span>
-                    <span className={`inline-block px-3 py-1 rounded-md text-sm font-mono ${
-                      endpoint.method === 'GET' ? 'bg-green-900/50 text-green-400' : 
+                    <span className={`inline-block px-3 py-1 rounded-md text-sm font-mono ${endpoint.method === 'GET' ? 'bg-green-900/50 text-green-400' :
                       endpoint.method === 'POST' ? 'bg-blue-900/50 text-blue-400' :
-                      endpoint.method === 'PUT' ? 'bg-yellow-900/50 text-yellow-400' :
-                      endpoint.method === 'DELETE' ? 'bg-red-900/50 text-red-400' : 'bg-gray-700 text-white'
-                    }`}>
+                        endpoint.method === 'PUT' ? 'bg-yellow-900/50 text-yellow-400' :
+                          endpoint.method === 'DELETE' ? 'bg-red-900/50 text-red-400' : 'bg-gray-700 text-white'
+                      }`}>
                       {endpoint.method}
                     </span>
                   </div>
@@ -1578,15 +1577,15 @@ export default function Home() {
                 {tenantConfig.name} <span className="text-white">Docs</span>
               </h1>
             </div>
-            
+
             <nav className="flex flex-wrap items-center gap-2 sm:gap-4">
-              <button 
+              <button
                 onClick={() => setActiveSection('developers')}
                 className={`px-2 py-1 text-sm sm:text-base rounded transition ${activeSection === 'developers' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}
               >
                 {t('developers')}
               </button>
-              <button 
+              <button
                 onClick={() => setActiveSection('events')}
                 className={`px-2 py-1 text-sm sm:text-base rounded transition ${activeSection === 'events' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}
               >
@@ -1620,29 +1619,29 @@ export default function Home() {
             )}
           </div>
         </div>
-        
+
         {/* Chat area - fixed to the right side on desktop */}
         <div className="hidden lg:block lg:w-1/3 xl:w-1/4 fixed top-[4rem] right-0 bottom-0 border-l border-gray-700 bg-gray-800">
           <div className="h-full">
             <ChatPrompt />
           </div>
         </div>
-        
+
         {/* Mobile chat toggle button */}
-        <button 
+        <button
           onClick={() => setMobileChat(true)}
           className="lg:hidden fixed bottom-6 right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg z-50 animate-pulse-slow"
           aria-label="Open chat"
         >
           <FaComments className="text-lg sm:text-xl" />
         </button>
-        
+
         {/* Mobile chat overlay */}
         {mobileChat && (
           <div className="lg:hidden fixed inset-0 bg-gray-900/95 z-50 flex flex-col">
             <div className="bg-gray-800 p-3 sm:p-4 flex justify-between items-center border-b border-gray-700">
               <h3 className="text-lg sm:text-xl font-bold text-white">{t('ask_question')}</h3>
-              <button 
+              <button
                 onClick={() => setMobileChat(false)}
                 className="text-gray-400 hover:text-white p-2"
                 aria-label="Close chat"

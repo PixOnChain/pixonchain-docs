@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useTenant } from '../context/TenantContext';
 
 type Language = 'en' | 'pt' | 'es';
 
@@ -18,16 +19,21 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('pt');
+  const { tenantConfig } = useTenant();
 
   const t = (key: string, params?: Record<string, string>): string => {
     let text = translationMap[key]?.[language] || key;
-    
+
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
         text = text.replace(`{${paramKey}}`, paramValue);
       });
     }
-    
+
+    if (tenantConfig?.name) {
+      text = text.replace(/PixOnChain/g, tenantConfig.name);
+    }
+
     return text;
   };
 
