@@ -10,7 +10,7 @@ export { tenantUrl };
 
 const apiUrl =
     process.env.NODE_ENV === 'development'
-        ? 'http://localhost:30001/'
+        ? 'http://localhost:3001/'
         : process.env.NEXT_PUBLIC_API_URL;
 
 if (!apiUrl) {
