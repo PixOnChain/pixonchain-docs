@@ -435,39 +435,6 @@ export default function Home() {
 - simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
     },
     {
-      name: "Generate QR Code",
-      subtitle: "Geração de QR Code",
-      description: "Gera um QR Code para pagamento via Pix.",
-      method: "POST",
-      url: `https://${apiUrl}/api/banking/generate-cpix-qrcode`,
-      exampleRequest: `POST https://${apiUrl}/api/banking/generate-cpix-qrcode
-{
-  "value": "0.51"
-}`,
-      exampleResponse: `{
-  "qrCode": "00020126580014br.gov.bcb.pix0136fd276...000530398654040.515802BR5901*60...088803200562070503***6304BEB5",
-  "value": "0.51",
-  "expiration": 3600,
-  "txid": "09a8d6b9b8df46ee9627c55b8d835e80"
-}`,
-      labels: [
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              QR CODE
-            </span>
-          ),
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- value: Valor do pagamento.`,
-    },
-    {
       name: "Get BR Code",
       subtitle: "Recuperação de BR Code",
       description: "Recupera os detalhes de um BR Code gerado anteriormente.",
