@@ -115,8 +115,8 @@ export default function Home() {
         status: "CREATED",
         value: "15",
         qrCode:
-          "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
-        currency: "BRLA",
+          "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Acme Pay Inc.6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
+        currency: "CPIX",
         idempotencyKey: "4ca54dba-8a22-4fe2-a88f-d7e12db4db34",
       },
     },
@@ -179,7 +179,7 @@ export default function Home() {
         status: "CREATED",
         value: "1.01",
         qrCode:
-          "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
+          "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***630466E6",
         currency: "cPix",
         externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
         txid: "f56313b59c0f4b9e80a4cc348a775b40",
@@ -222,7 +222,7 @@ export default function Home() {
       details: {
         status: "CREATED",
         value: "1.01",
-        qrCode: "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***6304F5F3",
+        qrCode: "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***6304F5F3",
         currency: "cPix",
         externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
         txid: "a5dea817d81b4daa837c80a78fcf2b7d",
@@ -446,7 +446,7 @@ export default function Home() {
   "fees": null,
   "network": null,
   "token": null,
-  "qr_code": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancointer.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013FLORIANOPOLIS61088803200562070503***6304BEB5",
+  "qr_code": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancocryptoex.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013CAPITAL_CITY61088803200562070503***6304BEB5",
   "wallet_address": null,
   "created_at": "2025-02-05T21:54:42.883Z",
   "pix_status": "pending",
@@ -478,25 +478,23 @@ export default function Home() {
       url: `https://${apiUrl}/api/banking/quote-transaction`,
       exampleRequest: `POST https://${apiUrl}/api/banking/quote-transaction
 {
-  "value": 601,
-  "simulation": true,
-  "receiverAddress": "0x78f71eA0f0e7d5CEb742963CbdbCb60607bE890C"
+  "value": 800,
+  "simulation": false,
+  "receiverAddress": "0x8a42b961f7ea43589c35832c4e3a2fa1a3c9c6bd"
 }`,
       exampleResponse: `{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbW91bnRCcmwiOiI2LjAxIiwiYW1vdW50VXNkIjoiMC45NyIsImJhc2VGZWUiOiIwIiwiYmFzZVByaWNlIjoiNS43NjM5IiwiY2hhaW4iOiJQb2x5Z29uIiwiZXhwIjoxNzM5Mzc5MTQ0LCJnYXNGZWUiOiIwIiwiaW5wdXRDb2luIjoiQlJMQSIsIm1hcmt1cEZlZSI6IjAiLCJvcGVyYXRpb24iOiJwaXgtdG8tdXNkIiwib3V0cHV0Q29pbiI6IlVTRFQiLCJzdWIiOiIwNWUxOWM0YS02OGQyLTQ3NGMtYTg1Ni1jMmQ4Mzc0YTI2NzYiLCJzdWJhY2NvdW50SWQiOiIiLCJ0b2tlbklkIjoiOTE1ZTNkODAtYjg1Yy00NDMxLWExNTItOWU2Y2EzZDkzNWVhIn0.n7gTXi129JLL_LkxFbuqDz4kBKMprZdQYjtEs2hRGGY",
-  "basePrice": "5.7639",
-  "sub": "05e19c4a-68d2-474c-a856-c2d8374a2676",
-  "operation": "pix-to-usd",
-  "amountBrl": "6.01",
-  "amountUsd": "0.97",
-  "amountToken": "0",
-  "baseFee": "0",
-  "gasFee": "0",
-  "markupFee": "0",
-  "markupToken": "USDT",
-  "inputCoin": "BRLA",
-  "outputCoin": "USDT",
-  "chain": "Polygon"
+  "id": "36fecd02-0af1-4c55-9c67-acd08bd2d187",
+  "uuid": "d1459d07e3a643e3aead579a90c18669",
+  "purchaseFlowId": "d1459d07e3a643e3aead579a90c18669",
+  "due": "2025-04-19T23:38:59.388Z",
+  "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancocryptoex.com.br/spi/pj/v2/ce8e0c7720e7452aaf609f1f2373f91652040000530398654048.005802BR5901*6013CAPITAL_CITY61088803200562070503***6304969A",
+  "receiverAddress": "0x8a42b961f7ea43589c35832c4e3a2fa1a3c9c6bd",
+  "feeAmount": "0.7000",
+  "feePercentage": "1.11",
+  "tradePrice": "5.9566",
+  "totalAmountPreview": "0.9255",
+  "currencyOutput": "USDT",
+  "network": "Polygon"
 }`,
       labels: [
         {
@@ -962,8 +960,8 @@ export default function Home() {
     "details": {
       "status": "CREATED",
       "value": "15",
-      "qrCode": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Brla Digital Ltda6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
-      "currency": "BRLA",
+      "qrCode": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Acme Pay Inc.6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
+      "currency": "CPIX",
       "idempotencyKey": "4ca54dba-8a22-4fe2-a88f-d7e12db4db34"
     }
   },
@@ -1025,7 +1023,7 @@ export default function Home() {
     "details": {
       "status": "CREATED",
       "value": "1.01",
-      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***630466E6",
+      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***630466E6",
       "currency": "cPix",
       "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       "txid": "f56313b59c0f4b9e80a4cc348a775b40",
@@ -1044,7 +1042,7 @@ export default function Home() {
     "details": {
       "status": "CREATED",
       "value": "1.01",
-      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923ETHER_PRIVATE_BANK_LTDA6008CONTAGEM62070503***6304F5F3",
+      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***6304F5F3",
       "currency": "cPix",
       "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       "txid": "a5dea817d81b4daa837c80a78fcf2b7d",
