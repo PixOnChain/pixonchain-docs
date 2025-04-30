@@ -750,6 +750,58 @@ export default function Home() {
 - Nenhum campo necessário.`,
     },
     {
+      name: "Get Transaction by ID",
+      subtitle: "Recuperação de Transação por ID",
+      description: "Recupera os detalhes de uma transação específica pelo seu ID.",
+      method: "GET",
+      url: `https://${apiUrl}/api/banking/transaction/:transactionId`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/transaction/:transactionId`,
+      exampleResponse: `{
+    "id": 123,
+    "transactionId": "123",
+    "transactionUuid": "a1b2c3d4-e5f6-7890-abcd-123456789012",
+    "userId": "user-12345-abcde-67890-fghij",
+    "userName": "JOÃO PEDRO DA SILVA",
+    "type": "WITHDRAWAL",
+    "amount": 10.50,
+    "currency": "cPix",
+    "feePercentage": 0,
+    "feeAmount": 0.50,
+    "status": "COMPLETED",
+    "description": "Transação PIX",
+    "endToEndId": "E12345678920230515030907409ABCD",
+    "creditorName": null,
+    "creditorDocument": "abcd1234-5678-90ef-ghij-klmnopqrstuv",
+    "debtorName": null,
+    "debtorDocument": null,
+    "blockchainHash": null,
+    "tenantId": "tenant-12345-abcde-67890-fghij",
+    "tenantName": "FinTech Demo",
+    "createdAt": "2023-05-15T03:09:33.849Z",
+    "updatedAt": "2023-05-15T06:09:33.966Z",
+    "metadata": null,
+    "feesFromAdmin": 0,
+    "feesFromWhitelabel": 0,
+    "transactionType": null
+}`,
+      labels: [
+        {
+          text: (
+            <span className="flex items-center gap-1 mr-2">
+              <span className="text-green-500 text-lg p-1">
+                <FaMoneyBill className="text-lg text-white" />
+              </span>
+              TRANSACTION
+            </span>
+          ),
+          bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `Parâmetros de rota:
+- transactionId: ID da transação a ser consultada.`,
+    },
+    {
       name: "Health Check",
       subtitle: "Verificação de Saúde do Servidor",
       description: "Verifica o status de saúde do servidor.",
