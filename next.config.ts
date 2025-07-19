@@ -1,5 +1,11 @@
 module.exports = {
+  output: 'export',
+  trailingSlash: true,
+  experimental: {
+    telemetry: false,
+  },
   images: {
+    unoptimized: true,
     domains: ["www.facebook.com"],
     remotePatterns: [
       {

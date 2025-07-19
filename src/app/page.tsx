@@ -275,9 +275,9 @@ x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
 
     // PIX E PAGAMENTOS
     {
-      name: "Obter BR Code",
-      subtitle: "Recuperação de BR Code",
-      description: "Recupera os detalhes de um BR Code gerado anteriormente.",
+      name: "Obter Pix Copia e Cola",
+      subtitle: "Recuperação de Pix Copia e Cola",
+      description: "Recupera os detalhes de um Pix Copia e Colagerado anteriormente.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/brcodes/:uuid`,
       exampleRequest: `GET https://${apiUrl}/api/banking/brcodes/:uuid
@@ -296,7 +296,7 @@ x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
 }`,
       labels: [
         {
-          text: "BR CODE",
+          text: "PIX",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
