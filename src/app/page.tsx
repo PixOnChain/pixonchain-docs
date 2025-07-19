@@ -1,114 +1,20 @@
 "use client"
 
-import React, { useState } from "react"
-import {
-  FaCalendarAlt,
-  FaHeartbeat,
-  FaKey,
-  FaLink,
-  FaMoneyBill,
-  FaServer,
-  FaShieldAlt,
-  FaComments,
-  FaTimes
-} from "react-icons/fa"
-import { useTenant } from './context/TenantContext';
-import { useTenantUrl } from "./context/TenantUrlContext";
-import { useLanguage } from "./utils/languageContext";
-import LanguageSelector from "./componentes/LanguageSelector";
-import ChatPrompt from "./componentes/ChatPrompt";
+import React from "react"
+import { FaBook, FaCode, FaRocket, FaEnvelope, FaShieldAlt, FaMoneyBill, FaHeartbeat, FaServer, FaLink, FaCalendarAlt, FaKey } from "react-icons/fa"
 
-// const allowedCryptos = ['cBRL', 'USDT', 'ETH', 'BTC', 'POL', 'SOL', 'USDC', 'HTR'];
-
-interface EventDetailsProps {
-  event: {
-    eventId: string
-    eventType: string
-    eventVersion: string
-    source: string
-    userId: string
-    timestamp: string
-    details: {
-      status: string
-      value?: string
-      qrCode?: string
-      currency: string
-      idempotencyKey: string
-      easterEgg?: string
-      paymentPayload?: {
-        type: string
-        valor: string
-        descricao: string
-        destinatario: {
-          chave: string
-        }
-      }
-      txId?: string
-      amount?: number
-      endToEndId?: string
-      eventDate?: string
-      paymentAmount?: number
-      externalId?: string
-      txid?: string
-      expiration?: number
-      network?: string
-    }
-  }
-}
-
-interface EventTypeSectionProps {
-  events: EventDetailsProps["event"][]
-  type: string
-}
-
-const EventDetails: React.FC<EventDetailsProps> = ({ event }) => (
-  <details className="mb-3">
-    <summary className="cursor-pointer text-blue-400 hover:text-blue-300">
-      {event.eventType} - {event.details.status}
-    </summary>
-    <pre className="bg-gray-900 text-gray-300 p-2 rounded-lg text-sm mt-2 overflow-x-auto">
-      <code>{JSON.stringify(event, null, 2)}</code>
-    </pre>
-  </details>
-)
-
-const EventTypeSection: React.FC<EventTypeSectionProps> = ({
-  events,
-  type,
-}) => (
-  <div className="mb-6">
-    <h3 className="text-lg font-bold mb-3">{type}</h3>
-    {events.map((event, index) => (
-      <EventDetails key={index} event={event} />
-    ))}
-  </div>
-)
+import Image from "next/image"
 
 export default function Home() {
-  const { t } = useLanguage();
-  const { tenantConfig, isLoading: isTenantLoading } = useTenant();
-  const { apiUrl, isLoading: isApiUrlLoading } = useTenantUrl();
-  const [activeSection, setActiveSection] = useState('developers');
-  const [mobileChat, setMobileChat] = useState(false);
 
-  // Loading state while contexts are being loaded
-  if (isTenantLoading || isApiUrlLoading || !tenantConfig || !apiUrl) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-          <p className="text-lg">Carregando documentação...</p>
-        </div>
-      </div>
-    );
-  }
+  const apiUrl = "uat.pixley.app";
 
   const eventsData = [
     {
       eventId: "6ec9d5f2-f64d-4280-9244-293f3065bd16",
       eventType: "PAYMENT REQUEST",
       eventVersion: "1.0",
-      source: tenantConfig?.docs_source || "",
+      source: "https://uat.pixley.app",
       userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       timestamp: "2025-02-16T21:08:33Z",
       details: {
@@ -124,7 +30,7 @@ export default function Home() {
       eventId: "6d2748d1-4826-4393-98a1-652229e4040c",
       eventType: "PAYMENT",
       eventVersion: "1.0",
-      source: tenantConfig?.docs_source || "",
+      source: "https://uat.pixley.app",
       userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       timestamp: "2025-02-16T21:09:02Z",
       details: {
@@ -145,7 +51,7 @@ export default function Home() {
       eventId: "54158180-b07f-4382-b040-0c400dbadb9e",
       eventType: "PAYMENT",
       eventVersion: "1.0",
-      source: tenantConfig?.docs_source || "",
+      source: "https://uat.pixley.app",
       userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       timestamp: "2025-02-16T21:09:06Z",
       details: {
@@ -172,7 +78,7 @@ export default function Home() {
       eventId: "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
       eventType: "PAYMENT REQUEST",
       eventVersion: "1.0",
-      source: tenantConfig?.docs_source || "",
+      source: "https://uat.pixley.app",
       userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       timestamp: "2025-02-16T21:10:53Z",
       details: {
@@ -192,7 +98,7 @@ export default function Home() {
       eventId: "3afacb85-a159-4db3-83fa-fde611bc5325",
       eventType: "DEPOSIT",
       eventVersion: "1.0",
-      source: tenantConfig?.docs_source || "",
+      source: "https://uat.pixley.app",
       userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       timestamp: "2025-02-16T21:30:32Z",
       details: {
@@ -216,7 +122,7 @@ export default function Home() {
       eventId: "d0fe0227-1641-4cf8-857b-5e0d0d44fc18",
       eventType: "PAYMENT REQUEST",
       eventVersion: "1.0",
-      source: tenantConfig?.docs_source || "",
+      source: "https://uat.pixley.app",
       userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
       timestamp: "2025-02-16T21:12:43Z",
       details: {
@@ -233,56 +139,31 @@ export default function Home() {
     },
   ]
 
-  type EventType = {
-    [key: string]: typeof eventsData
-  }
-
-  const groupedEvents: EventType = eventsData.reduce(
-    (acc: { [key: string]: typeof eventsData }, event) => {
-      if (!acc[event.eventType]) {
-        acc[event.eventType] = []
-      }
-      acc[event.eventType].push(event)
-      return acc
-    },
-    {}
-  )
 
   const endpoints = [
+    // AUTENTICAÇÃO
     {
-      name: "Generate API Keys",
+      name: "Gerar Chaves de API",
       subtitle: "Geração de Chaves de API",
       description: "Gera novas chaves de API para autenticação.",
       method: "POST",
       url: `https://${apiUrl}/api/auth/keys/generate-api-keys`,
-      exampleRequest: `POST https://${apiUrl}/api/auth/keys/generate-api-keys`,
-      exampleResponse: `{
-"message": "API keys generated successfully",
-"apiKey": "example-api-key",
-"secretKey": "example-secret-key"
+      exampleRequest: `POST https://${apiUrl}/api/auth/keys/generate-api-keys
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
+            exampleResponse: `{
+  "message": "API keys generated successfully",
+  "apiKey": "a1b2c3d4-e5f6-7890-abcd-123456789012",
+  "secretKey": "f8e7d6c5b4a398765432109876543210abcdef1234567890abcdef1234567890"
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <FaKey className="text-lg text-white" />
-              </span>
-              API KEYS
-            </span>
-          ),
+          text: "API KEYS",
           bgColor: "bg-[#7747FF]",
           textColor: "text-white",
         },
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-yellow-500 text-lg p-1">
-                <FaShieldAlt className="text-lg text-white" />
-              </span>
-              SECURITY
-            </span>
-          ),
+          text: "SECURITY",
           bgColor: "bg-[#3b82f6]",
           textColor: "text-white",
         },
@@ -291,38 +172,25 @@ export default function Home() {
 - Nenhum campo necessário.`,
     },
     {
-      name: "Key Validation",
+      name: "Validação de Chaves",
       subtitle: "Validação de Chaves de API",
-      description:
-        "Valida as chaves de API fornecidas para garantir acesso às APIs.",
+      description: "Valida as chaves de API fornecidas para garantir acesso às APIs.",
       method: "POST",
       url: `https://${apiUrl}/api/auth/keys/key-validate`,
-      exampleRequest: `POST https://${apiUrl}/api/auth/keys/key-validate`,
+      exampleRequest: `POST https://${apiUrl}/api/auth/keys/key-validate
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
-  "accessToken": "example-access-token"
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <FaKey className="text-lg text-white" />
-              </span>
-              API KEYS
-            </span>
-          ),
+          text: "API KEYS",
           bgColor: "bg-[#7747FF]",
           textColor: "text-white",
         },
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-yellow-500 text-lg p-1">
-                <FaShieldAlt className="text-lg text-white" />
-              </span>
-              SECURITY
-            </span>
-          ),
+          text: "SECURITY",
           bgColor: "bg-[#3b82f6]",
           textColor: "text-white",
         },
@@ -330,22 +198,24 @@ export default function Home() {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
+
+    // CONVERSÕES E CRIPTOMOEDAS
     {
-      name: "Convert Currency",
+      name: "Converter Moeda",
       subtitle: "Conversão de Moedas",
-      description:
-        "Converte um valor de uma moeda de origem para uma moeda de destino, com opção de simulação ou execução real.",
+      description: "Converte um valor de uma moeda de origem para uma moeda de destino, com opção de simulação ou execução real.",
       method: "POST",
       url: `https://${apiUrl}/api/banking/convert`,
       exampleRequest: `POST https://${apiUrl}/api/banking/convert
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
 {
   "fromCurrency": "cPix",
   "toCurrency": "USDT",
   "amount": 800,
   "simulation": false
 }`,
-      exampleResponse:
-        `{
+      exampleResponse: `{
   "message": "Conversion successful",
   "fromCurrency": "cPix",
   "toCurrency": "USDT",
@@ -356,26 +226,9 @@ export default function Home() {
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              CONVERSION
-            </span>
-          ),
+          text: "CONVERSION",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              CRYPTO
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
         },
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
@@ -385,16 +238,17 @@ export default function Home() {
 - simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
     },
     {
-      name: "Withdraw Crypto",
+      name: "Sacar Criptomoeda",
       subtitle: "Saque de Criptomoedas",
-      description:
-        "Solicita o saque de uma quantidade de criptomoeda para um endereço de carteira especificado, com opção de simulação.",
+      description: "Solicita o saque de uma quantidade de criptomoeda para um endereço de carteira especificado, com opção de simulação.",
       method: "POST",
       url: `https://${apiUrl}/api/banking/withdraw-crypto`,
       exampleRequest: `POST https://${apiUrl}/api/banking/withdraw-crypto
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
 {
   "currency": "USDT",
-  "receiverAddress": "0xaabaafcd77d1828689bf2f196bb4fe6c9e5e2bb7",
+  "receiverAddress": "0x1234567890abcdef1234567890abcdef12345678",
   "amount": 100,
   "network": "Polygon",
   "simulation": false
@@ -405,27 +259,11 @@ export default function Home() {
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              WITHDRAWAL
-            </span>
-          ),
+          text: "WITHDRAWAL",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              CRYPTO
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
-        },
+    
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - currency: Moeda a ser sacada (ex.: "USDT").
@@ -434,13 +272,17 @@ export default function Home() {
 - network: Rede blockchain utilizada (ex.: "Polygon").
 - simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
     },
+
+    // PIX E PAGAMENTOS
     {
-      name: "Get BR Code",
+      name: "Obter BR Code",
       subtitle: "Recuperação de BR Code",
       description: "Recupera os detalhes de um BR Code gerado anteriormente.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/brcodes/:uuid`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/brcodes/:uuid`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/brcodes/:uuid
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
   "amount": "0.51",
   "fees": null,
@@ -454,14 +296,7 @@ export default function Home() {
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              BR CODE
-            </span>
-          ),
+          text: "BR CODE",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
@@ -470,135 +305,63 @@ export default function Home() {
 - Nenhum campo necessário.`,
     },
     {
-      name: "Crypto Transaction (Pix to USDT)",
+      name: "Transação Cripto (Pix para USDT)",
       subtitle: "Cotação e Execução de Transação Pix para USDT",
-      description:
-        "Obtém uma cotação para uma transação ou executa uma transação real. Receben valores em USDT diretamente na carteira do usuário.",
+      description: "Obtém uma cotação para uma transação ou executa uma transação real. Receben valores em USDT diretamente na carteira do usuário.",
       method: "POST",
       url: `https://${apiUrl}/api/banking/quote-transaction`,
       exampleRequest: `POST https://${apiUrl}/api/banking/quote-transaction
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
 {
   "value": 800,
   "simulation": false,
-  "receiverAddress": "0x8a42b961f7ea43589c35832c4e3a2fa1a3c9c6bd"
+  "receiverAddress": "0x9876543210fedcba9876543210fedcba98765432"
 }`,
       exampleResponse: `{
   "id": "36fecd02-0af1-4c55-9c67-acd08bd2d187",
   "uuid": "d1459d07e3a643e3aead579a90c18669",
-  "purchaseFlowId": "d1459d07e3a643e3aead579a90c18669",
-  "due": "2025-04-19T23:38:59.388Z",
-  "qrCode": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancocryptoex.com.br/spi/pj/v2/ce8e0c7720e7452aaf609f1f2373f91652040000530398654048.005802BR5901*6013CAPITAL_CITY61088803200562070503***6304969A",
-  "receiverAddress": "0x8a42b961f7ea43589c35832c4e3a2fa1a3c9c6bd",
-  "feeAmount": "0.7000",
-  "feePercentage": "1.11",
-  "tradePrice": "5.9566",
-  "totalAmountPreview": "0.9255",
-  "currencyOutput": "USDT",
-  "network": "Polygon"
+  "value": 800,
+  "receiverAddress": "0x9876543210fedcba9876543210fedcba98765432",
+  "status": "pending",
+  "created_at": "2025-02-16T21:10:53Z",
+  "updated_at": "2025-02-16T21:10:53Z"
 }`,
       labels: [
+  
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              HOT
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              CRYPTO
-            </span>
-          ),
+          text: "CONVERSION",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- value: Valor da transação.
-- simulation: Booleano indicando se é uma simulação. Se for false, a transação será processada.
-- receiverAddress: Endereço do destinatário.`,
+- value: Valor em centavos a ser convertido (ex.: 800 = 8.00).
+- simulation: Booleano indicando se é uma simulação (true) ou execução real (false).
+- receiverAddress: Endereço da carteira de destino para receber USDT.`,
     },
     {
-      name: "Get Crypto Transaction",
-      subtitle: "Recuperação de Cotação de Transação",
-      description: "Recupera os detalhes de uma cotação de transação.",
+      name: "Obter Cotação de Transação",
+      subtitle: "Consulta de Cotação de Transação",
+      description: "Recupera os detalhes de uma cotação de transação específica.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/quote-transaction/:transactionId`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/quote-transaction/:transactionId`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/quote-transaction/:transactionId
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
-  "depositsLogs": [
-    {
-      "id": "72760ed0-3f06-4955-a5f3-f8491dc5f5c1",
-      "chain": "Polygon",
-      "walletAddress": "0xAAbAAfCD77d1828689BF2f196Bb4fE6C9e5e2bb7",
-      "receiverAddress": "0xAAbAAfCD77d1828689BF2f196Bb4fE6C9e5e2bb7",
-      "coin": "USDT",
-      "amountBrl": 600,
-      "amountUsd": 97,
-      "taxId": "12345678901",
-      "due": "2025-02-11T21:01:28.101093Z",
-      "createdAt": "2025-02-11T20:56:28.101122Z",
-      "status": "PAID",
-      "updatedAt": "2025-02-11T20:56:54.614427Z",
-      "payerName": "Nome Fictício",
-      "referenceLabel": "P2Ut3puGLdbZb",
-      "externalId": "7ad1bec0585e48138c05ebfd3a78753c",
-      "pixToUsdOps": [
-        {
-          "id": "0d1ac23f-a362-4b1f-831f-b050c43c15d5",
-          "brlaAmount": 600,
-          "usdAmount": 97,
-          "coin": "USDT",
-          "createdAt": "2025-02-11T20:56:54.654908Z",
-          "smartContractOps": [
-            {
-              "id": "04f4040a-22f6-4645-911a-736be1d9dbea",
-              "operationName": "PIX-TO-USD",
-              "posted": true,
-              "tx": "0x67870297b28ec8730432d3f3498ff3cb656f1916cddc884967d620dedf67b64b",
-              "notPostedReason": "",
-              "createdAt": "2025-02-11T20:56:54.719537Z",
-              "isRetry": false,
-              "feedback": {
-                "id": "81d4dafd-31e4-4c63-a17c-e16d31037015",
-                "success": true,
-                "errorMsg": "",
-                "createdAt": "2025-02-11T20:56:58Z"
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "id": "36fecd02-0af1-4c55-9c67-acd08bd2d187",
+  "uuid": "d1459d07e3a643e3aead579a90c18669",
+  "value": 800,
+  "receiverAddress": "0x9876543210fedcba9876543210fedcba98765432",
+  "status": "completed",
+  "created_at": "2025-02-16T21:10:53Z",
+  "updated_at": "2025-02-16T21:11:02Z"
 }`,
       labels: [
+
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              HOT
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              CRYPTO
-            </span>
-          ),
+          text: "CONVERSION",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
@@ -607,57 +370,29 @@ export default function Home() {
 - Nenhum campo necessário.`,
     },
 
+    // SALDOS E EXTRATOS
     {
-      name: "Get Balance",
+      name: "Obter Saldo",
       subtitle: "Recuperação de Saldo",
       description: "Recupera os saldos de moedas fiduciárias e criptomoedas.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/balance`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/balance`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/balance
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
-  "fiatBalances": [
-    {
-      "currency": "cBRL",
-      "balance": 317.63905
-    }
-  ],
-  "cryptoBalances": [
-    {
-      "currency": "BTC",
-      "balance": 0
-    },
-    {
-      "currency": "ETH",
-      "balance": 0
-    },
-    {
-      "currency": "HTR",
-      "balance": 0
-    },
-    {
-      "currency": "POLY",
-      "balance": 0
-    },
-    {
-      "currency": "USDC",
-      "balance": 0
-    },
-    {
-      "currency": "USDT",
-      "balance": 0
-    }
-  ]
+  "fiat": {
+    "BRL": "100.50",
+    "USD": "25.00"
+  },
+  "crypto": {
+    "USDT": "0.00",
+    "BTC": "0.0001"
+  }
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              BALANCE
-            </span>
-          ),
+          text: "BALANCE",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
@@ -666,82 +401,69 @@ export default function Home() {
 - Nenhum campo necessário.`,
     },
     {
-      name: "Process Payment (CHAVE)",
-      subtitle: "Processamento de Pagamento via Chave Pix",
-      description: "Processa um pagamento utilizando uma chave Pix.",
+      name: "Pagamento",
+      subtitle: "Pagamento",
+      description: "Realiza um pagamento via chave PIX.",
       method: "POST",
       url: `https://${apiUrl}/api/banking/payment`,
       exampleRequest: `POST https://${apiUrl}/api/banking/payment
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
 {
   "type": "CHAVE",
-  "valor": 0.01,
+  "valor": "1.01",
   "descricao": "Payment for invoice #1234",
   "destinatario": {
-    "chave": "CHAVE_PIX_AQUI"
+    "chave": "12345678901"
   }
 }`,
       exampleResponse: `{
-  "status": "success",
   "message": "Payment processed successfully",
-  "transactionId": "txn_1234567890"
+  "transactionId": "abc123",
+  "status": "completed"
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              PAYMENT
-            </span>
-          ),
+          text: "PAYMENT",
           bgColor: "bg-[#00cc66]",
+          textColor: "text-white",
+        },
+        {
+          text: "BANKING",
+          bgColor: "bg-[#3b82f6]",
           textColor: "text-white",
         },
       ],
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- type: Tipo de pagamento (CHAVE).
-- valor: Valor do pagamento.
+- type: Tipo de pagamento (ex.: "CHAVE").
+- valor: Valor a ser pago (ex.: "1.01").
 - descricao: Descrição do pagamento.
-- destinatario: Objeto contendo a chave Pix do destinatário.`,
+- destinatario: Objeto com a chave do destinatário.`,
     },
     {
-      name: "Get Statement",
+      name: "Obter Extrato",
       subtitle: "Recuperação de Extrato",
       description: "Recupera o extrato de transações.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/statement`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/statement`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/statement
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
   "transactions": [
     {
-      "transaction_id": "0076a43e-69e3-44d3-aa4d-950e27d2f0ec",
-      "status": "COMPLETED",
-      "amount": "100.00",
-      "currency": "cBRL",
-      "end_to_end_id": null,
-      "created_at": "2025-02-09T01:42:06.898Z",
-      "creditor_name": null,
-      "creditor_document": null,
-      "debtor_name": null,
-      "debtor_document": null
-    },
-    // ...more transactions...
-  ],
-  "total": 9,
-  "page": 1,
-  "limit": 10
+      "id": "123",
+      "type": "payment",
+      "amount": "10.50",
+      "currency": "BRL",
+      "status": "completed",
+      "created_at": "2025-02-16T21:10:53Z"
+    }
+  ]
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              STATEMENT
-            </span>
-          ),
+          text: "STATEMENT",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
@@ -750,194 +472,29 @@ export default function Home() {
 - Nenhum campo necessário.`,
     },
     {
-      name: "Get Transaction by ID",
-      subtitle: "Recuperação de Transação por ID",
-      description: "Recupera os detalhes de uma transação específica pelo seu ID.",
+      name: "Obter Transação",
+      subtitle: "Consulta de Transação",
+      description: "Recupera os detalhes de uma transação específica.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/transaction/:transactionId`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/transaction/:transactionId`,
+      exampleRequest: `GET https://${apiUrl}/api/banking/transaction/:transactionId
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
-    "id": 123,
-    "transactionId": "123",
-    "transactionUuid": "a1b2c3d4-e5f6-7890-abcd-123456789012",
-    "userId": "user-12345-abcde-67890-fghij",
-    "userName": "JOÃO PEDRO DA SILVA",
-    "type": "WITHDRAWAL",
-    "amount": 10.50,
-    "currency": "cPix",
-    "feePercentage": 0,
-    "feeAmount": 0.50,
-    "status": "COMPLETED",
-    "description": "Transação PIX",
-    "endToEndId": "E12345678920230515030907409ABCD",
-    "creditorName": null,
-    "creditorDocument": "abcd1234-5678-90ef-ghij-klmnopqrstuv",
-    "debtorName": null,
-    "debtorDocument": null,
-    "blockchainHash": null,
-    "tenantId": "tenant-12345-abcde-67890-fghij",
-    "tenantName": "FinTech Demo",
-    "createdAt": "2023-05-15T03:09:33.849Z",
-    "updatedAt": "2023-05-15T06:09:33.966Z",
-    "metadata": null,
-    "feesFromAdmin": 0,
-    "feesFromWhitelabel": 0,
-    "transactionType": null
+  "id": "123",
+  "type": "payment",
+  "amount": "10.50",
+  "currency": "BRL",
+  "status": "completed",
+  "created_at": "2025-02-16T21:10:53Z",
+      "details": {
+      "description": "Payment for invoice #1234",
+      "recipient": "12345678901"
+    }
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              TRANSACTION
-            </span>
-          ),
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `Parâmetros de rota:
-- transactionId: ID da transação a ser consultada.`,
-    },
-    {
-      name: "Health Check",
-      subtitle: "Verificação de Saúde do Servidor",
-      description: "Verifica o status de saúde do servidor.",
-      method: "GET",
-      url: `https://${apiUrl}/health`,
-      exampleRequest: `GET https://${apiUrl}/health`,
-      exampleResponse: `{
-  "status": "OK",
-  "service": {
-    "name": "pix-on-chain",
-    "version": "1.0.1"
-  },
-  "uptime": 2468.431,
-  "timestamp": "2025-01-19T18:46:06.751Z"
-}`,
-      labels: [
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaHeartbeat className="text-lg text-white" />
-              </span>
-              HEALTH
-            </span>
-          ),
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-blue-500 text-lg p-1">
-                <FaServer className="text-lg text-white" />
-              </span>
-              SERVER
-            </span>
-          ),
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-    {
-      name: "Add Webhook",
-      subtitle: "Adição de Webhook",
-      description:
-        "Adiciona um novo webhook para monitoramento de eventos na plataforma.",
-      method: "POST",
-      url: `https://${apiUrl}/api/webhooks`,
-      exampleRequest: `POST https://${apiUrl}/api/webhooks
-{
-  "urls": [
-    "https://webhook.site/12345678-1234-1234-1234-123456789012"
-  ]
-}`,
-      exampleResponse: `{
-  "success": true,
-  "id": "webhook-id",
-  "urls": [
-    "https://webhook.site/12345678-1234-1234-1234-123456789012"
-  ]
-}`,
-      labels: [
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <FaLink className="text-lg text-white" />
-              </span>
-              WEBHOOK
-            </span>
-          ),
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-blue-500 text-lg p-1">
-                <FaCalendarAlt className="text-lg text-white" />
-              </span>
-              EVENTS
-            </span>
-          ),
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- urls: Lista de URLs do webhook.`,
-    },
-    {
-      name: "List all Webhooks",
-      subtitle: "Listagem de Webhooks",
-      description: "Lista todos os webhooks cadastrados na plataforma.",
-      method: "GET",
-      url: `https://${apiUrl}/api/webhooks`,
-      exampleRequest: `GET https://${apiUrl}/api/webhooks`,
-      exampleResponse: `{
-    "success": true,
-    "webhooks": [
-        {
-            "id": "cf38411a-8638-4243-8ea6-ac9bea6e7c60",
-            "user_id": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-            "urls": [
-                "https://webhook.site/8ea591c7-0786-4e81-9cdb-872ebadb6e82"
-            ],
-            "created_at": "2025-02-17T00:07:10.694Z",
-            "updated_at": "2025-02-17T00:07:10.694Z"
-        }
-    ]
-}`,
-      labels: [
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <FaLink className="text-lg text-white" />
-              </span>
-              WEBHOOK
-            </span>
-          ),
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-blue-500 text-lg p-1">
-                <FaCalendarAlt className="text-lg text-white" />
-              </span>
-              EVENTS
-            </span>
-          ),
+          text: "TRANSACTION",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
@@ -945,215 +502,27 @@ export default function Home() {
       bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
 - Nenhum campo necessário.`,
     },
+
+    // CARTEIRAS
     {
-      name: "Delete Webhook",
-      subtitle: "Exclusão de Webhook",
-      description: "Exclui um webhook específico com base no ID fornecido.",
-      method: "DELETE",
-      url: `https://${apiUrl}/api/webhooks/:id`,
-      exampleRequest: `DELETE https://${apiUrl}/api/webhooks/:id`,
-      exampleResponse: `{
-  "success": true,
-  "webhook": {
-    "id": 1,
-    "user_id": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "urls": [
-      "https://webhook.site/f9927649-cfde-4507-b648-94f2371defca"
-    ],
-    "created_at": "2025-02-16T20:05:43.956Z",
-    "updated_at": "2025-02-16T20:05:43.956Z"
-  }
-}`,
-      labels: [
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <FaLink className="text-lg text-white" />
-              </span>
-              WEBHOOK
-            </span>
-          ),
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-blue-500 text-lg p-1">
-                <FaCalendarAlt className="text-lg text-white" />
-              </span>
-              EVENTS
-            </span>
-          ),
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-    {
-      name: "Event Types",
-      subtitle: "Tipos de Events",
-      description:
-        "Lista os tipos de eventos que podem ser monitorados via webhooks.",
-      method: "GET",
-      url: `https://${apiUrl}/api/events`,
-      exampleRequest: `GET https://${apiUrl}/api/events`,
-      exampleResponse: `[
-  {
-    "eventId": "6ec9d5f2-f64d-4280-9244-293f3065bd16",
-    "eventType": "PAYMENT REQUEST",
-    "eventVersion": "1.0",
-    "source": ${tenantConfig?.docs_source || ""},
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:08:33Z",
-    "details": {
-      "status": "CREATED",
-      "value": "15",
-      "qrCode": "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Acme Pay Inc.6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
-      "currency": "CPIX",
-      "idempotencyKey": "4ca54dba-8a22-4fe2-a88f-d7e12db4db34"
-    }
-  },
-  {
-    "eventId": "6d2748d1-4826-4393-98a1-652229e4040c",
-    "eventType": "PAYMENT",
-    "eventVersion": "1.0",
-    "source": ${tenantConfig?.docs_source || ""},
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:09:02Z",
-    "details": {
-      "status": "QUEUE",
-      "paymentPayload": {
-        "type": "CHAVE",
-        "valor": "1.01",
-        "descricao": "Payment for invoice #1234",
-        "destinatario": {
-          "chave": "13113124719"
-        }
-      },
-      "currency": "cPix",
-      "idempotencyKey": "09770527-9e89-4cc6-87cb-338fc125286e"
-    }
-  },
-  {
-    "eventId": "54158180-b07f-4382-b040-0c400dbadb9e",
-    "eventType": "PAYMENT",
-    "eventVersion": "1.0",
-    "source": ${tenantConfig?.docs_source || ""},
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:09:06Z",
-    "details": {
-      "type": "WITHDRAWAL",
-      "status": "CONFIRMED",
-      "paymentPayload": {
-        "type": "CHAVE",
-        "valor": "1.01",
-        "descricao": "Payment for invoice #1234",
-        "destinatario": {
-          "chave": "13113124719"
-        }
-      },
-      "txId": "7272e5ddae8d488a8457a770d5494987",
-      "amount": 0.37,
-      "currency": "cPix",
-      "endToEndId": "E05491616202502170009052554e019a",
-      "eventDate": "2025-02-17T00:09:05.255+00:00",
-      "paymentAmount": 0.37,
-      "idempotencyKey": "a7d7afce-789b-4da0-bd01-e672ebbfdcbf"
-    }
-  },
-  {
-    "eventId": "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
-    "eventType": "PAYMENT REQUEST",
-    "eventVersion": "1.0",
-    "source": ${tenantConfig?.docs_source || ""},
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:10:53Z",
-    "details": {
-      "status": "CREATED",
-      "value": "1.01",
-      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***630466E6",
-      "currency": "cPix",
-      "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      "txid": "f56313b59c0f4b9e80a4cc348a775b40",
-      "expiration": 3600,
-      "network": "Hathor",
-      "idempotencyKey": "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f"
-    }
-  },
-  {
-    "eventId": "d0fe0227-1641-4cf8-857b-5e0d0d44fc18",
-    "eventType": "PAYMENT REQUEST",
-    "eventVersion": "1.0",
-    "source": ${tenantConfig?.docs_source || ""},
-    "userId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-    "timestamp": "2025-02-16T21:12:43Z",
-    "details": {
-      "status": "CREATED",
-      "value": "1.01",
-      "qrCode": "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***6304F5F3",
-      "currency": "cPix",
-      "externalId": "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      "txid": "a5dea817d81b4daa837c80a78fcf2b7d",
-      "expiration": 3600,
-      "network": "Hathor",
-      "idempotencyKey": "a6c2ae82-72dc-4694-8efb-4990953c1cf6"
-    }
-  }
-]`,
-      labels: [
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-purple-500 text-lg p-1">
-                <FaLink className="text-lg text-white" />
-              </span>
-              WEBHOOKS
-            </span>
-          ),
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-    {
-      name: "Get User Wallet",
+      name: "Obter Carteira do Usuário",
       subtitle: "Consulta de Carteira por Tipo de Rede",
       description: "Recupera a carteira do usuário para um tipo específico de rede blockchain.",
       method: "GET",
       url: `https://${apiUrl}/api/wallet/user-wallet`,
-      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallet?networkType=EVM`,
+      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallet?networkType=EVM
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
-  "wallet_address": "0xC4F792cB4B259EC3E8a9433550F12028284FF0d4",
+  "wallet_address": "0x1234567890abcdef1234567890abcdef12345678",
   "network_type": "EVM",
   "created_at": "2025-03-13T21:31:38.319Z",
   "updated_at": "2025-03-13T21:31:38.319Z"
 }`,
       labels: [
+   
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              CRYPTO
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              WALLET
-            </span>
-          ),
+          text: "WALLET",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
@@ -1162,355 +531,290 @@ export default function Home() {
 - networkType: Tipo de rede blockchain (EVM, BTC, Hathor, TRON, etc.)`,
     },
     {
-      name: "Get User Wallets",
+      name: "Obter Carteiras do Usuário",
       subtitle: "Consulta de Todas as Carteiras do Usuário",
       description: "Recupera todas as carteiras blockchain do usuário autenticado.",
       method: "GET",
       url: `https://${apiUrl}/api/wallet/user-wallets`,
-      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallets`,
+      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallets
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       exampleResponse: `{
   "EVM": {
-    "wallet_address": "0xC4F792cB4B259EC3E8a9433550F12028284FF0d4",
+    "wallet_address": "0x1234567890abcdef1234567890abcdef12345678",
     "created_at": "2025-03-13T21:31:38.319Z",
     "updated_at": "2025-03-13T21:31:38.319Z"
   },
   "BTC": {
-    "wallet_address": "16eBPAHMmMcVshmkRDurPuZwoeCwU2djNy",
+    "wallet_address": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
     "created_at": "2025-03-13T01:56:28.663Z",
     "updated_at": "2025-03-13T01:56:28.663Z"
   },
   "Hathor": {
-    "wallet_address": "HGfYRC4rkA4TMCbBsywyNwRS5DdbTyqnVg",
+    "wallet_address": "HThi8YqGqKjvK8K8K8K8K8K8K8K8K8K8K8K8K8",
     "created_at": "2025-03-13T22:13:09.601Z",
     "updated_at": "2025-03-13T22:13:09.601Z"
   },
   "TRON": {
-    "wallet_address": "TXThyYPQ4uSvo92b9y3dDomJj1fPwLqGK7",
+    "wallet_address": "TQn9Y2khDD95J42FQtQTdwVVRqKqJqKqKqK",
     "created_at": "2025-03-13T22:00:49.432Z",
     "updated_at": "2025-03-13T22:00:49.432Z"
   }
 }`,
       labels: [
         {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-red-500 text-lg">🔥</span>
-              CRYPTO
-            </span>
-          ),
-          bgColor: "bg-[#13121C]",
-          textColor: "text-[red]",
-        },
-        {
-          text: (
-            <span className="flex items-center gap-1 mr-2">
-              <span className="text-green-500 text-lg p-1">
-                <FaMoneyBill className="text-lg text-white" />
-              </span>
-              WALLET
-            </span>
-          ),
+          text: "WALLET",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
       ],
       bodyExplanation: `Não é necessário enviar parâmetros para esta requisição.`,
     },
+
+    // SISTEMA
+    {
+      name: "Verificar Saúde",
+      subtitle: "Verificação de Saúde do Servidor",
+      description: "Verifica o status de saúde do servidor.",
+      method: "GET",
+      url: `https://${apiUrl}/health`,
+      exampleRequest: `GET https://${apiUrl}/health
+x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
+x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
+      exampleResponse: `{
+  "status": "healthy",
+  "timestamp": "2025-02-16T21:10:53Z",
+  "version": "1.0.0"
+}`,
+      labels: [
+        {
+          text: "HEALTH",
+          bgColor: "bg-[#10b981]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
+- Nenhum campo necessário.`,
+    },
   ]
 
-  const DeveloperSections = () => {
-    return (
-      <div className="space-y-8">
-        {/* Introduction Card */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 shadow-lg border border-gray-700">
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-white mb-4">{t('welcome_to_api')}</h2>
-              <p className="text-gray-300 mb-4">
-                {t('api_intro_text')}
-              </p>
-              <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700 mb-4">
-                <h3 className="text-lg font-semibold text-blue-400 mb-2">
-                  <span className="mr-2">🚀</span>
-                  {t('getting_started')}
-                </h3>
-                <ol className="list-decimal list-inside text-gray-300 space-y-2 ml-2">
-                  <li>{t('register_account')}</li>
-                  <li>{t('generate_api_keys')}</li>
-                  <li>{t('integrate_api')}</li>
-                  <li>{t('test_integration')}</li>
-                </ol>
-              </div>
-            </div>
-            <div className="w-full md:w-64 flex flex-col gap-4">
-              <div className="bg-gray-800/70 rounded-lg p-4 border border-gray-700">
-                <h3 className="text-md font-semibold text-blue-400 mb-2">
-                  <span className="mr-2">ℹ️</span>
-                  {t('api_details')}
-                </h3>
-                <ul className="text-sm text-gray-300 space-y-2">
-                  <li><span className="text-gray-400">{t('base_url')}:</span> {apiUrl}</li>
-                  <li><span className="text-gray-400">{t('version')}:</span> v1</li>
-                  <li><span className="text-gray-400">{t('format')}:</span> JSON</li>
-                  <li><span className="text-gray-400">{t('auth')}:</span> API Key + Secret</li>
-                </ul>
-              </div>
-              <div className="bg-blue-900/30 rounded-lg p-4 border border-blue-800/30">
-                <h3 className="text-md font-semibold text-blue-400 mb-2">
-                  <span className="mr-2">💡</span>
-                  {t('need_help')}
-                </h3>
-                <p className="text-sm text-gray-300 mb-2">
-                  {t('contact_support_text')}
-                </p>
-                <a
-                  href="mailto:support@pixonchain.com"
-                  className="text-blue-400 text-sm hover:text-blue-300 flex items-center"
-                >
-                  {tenantConfig?.email_suporte}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Card de Informações Importantes */}
-        <div className="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-          <h2 className="text-xl font-bold mb-4 flex items-center text-white">
-            <span className="text-yellow-400 mr-2">⚠️</span>
-            {t('important')}
-          </h2>
-          <p className="text-gray-300 mb-4">
-            {t('api_credentials_info_full')}
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div className="bg-gray-900 p-5 rounded-lg border border-gray-700">
-              <h3 className="text-lg font-semibold mb-3 text-blue-400">{t('authentication')}</h3>
-              <p className="text-sm text-gray-300 mb-3">
-                {t('header_credentials_info')}
-              </p>
-              <div className="font-mono bg-gray-800 p-4 rounded-lg text-sm">
-                <div className="text-gray-400 mb-1">{t('header_example')}:</div>
-                <div className="flex items-center mb-1">
-                  <span className="text-yellow-300 mr-2">x-api-key:</span>
-                  <span className="text-green-400">********</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-yellow-300 mr-2">x-secret-key:</span>
-                  <span className="text-green-400">********</span>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gray-900 p-5 rounded-lg border border-gray-700">
-              <h3 className="text-lg font-semibold mb-3 text-blue-400">{t('curl_example')}</h3>
-              <p className="text-sm text-gray-300 mb-3">
-                {t('curl_example_desc')}
-              </p>
-              <pre className="bg-gray-800 text-gray-300 p-3 rounded-lg text-sm overflow-x-auto">
-                <code>
-                  {`curl -X GET "https://${apiUrl}/health" \\\n  -H "x-api-key: `}
-                  <span className="text-green-400">{t('your_api_key')}</span>
-                  {`" \\\n  -H "x-secret-key: `}
-                  <span className="text-green-400">{t('your_secret_key')}</span>
-                  {`"`}
-                </code>
-              </pre>
-            </div>
-          </div>
-          <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-800/30">
-            <div className="flex items-start">
-              <span className="text-blue-400 text-xl mr-3 mt-1">💡</span>
-              <div>
-                <h4 className="text-blue-400 font-medium mb-1">{t('security_tip')}</h4>
-                <p className="text-sm text-gray-300">
-                  {t('security_tip_text')}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Listagem de Endpoints */}
-        <div className="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-          <h3 className="text-xl font-bold mb-6 text-white">{t('api_endpoints')}</h3>
-          <div className="grid grid-cols-1 gap-6">
-            {endpoints.map((endpoint, index) => (
-              <div
-                key={index}
-                className="bg-gray-900 rounded-lg p-6 border border-gray-700 transition-all hover:border-gray-600"
-              >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                  <div>
-                    <h2 className="text-xl font-bold text-white mb-1">{endpoint.name}</h2>
-                    {endpoint.subtitle && (
-                      <p className="text-gray-400 font-medium">
-                        {endpoint.subtitle}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {endpoint.labels?.map((label, labelIndex) => (
-                      <span
-                        key={labelIndex}
-                        className={`flex items-center px-3 py-1 text-xs font-bold rounded-full ${label.bgColor} ${label.textColor}`}
-                      >
-                        {label.text}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-gray-300 mb-4 border-l-4 border-blue-500 pl-3 py-1">
-                  {endpoint.description}
-                </p>
-                <div className="bg-gray-800 p-4 rounded-lg mb-4 flex flex-col md:flex-row md:items-center gap-4">
-                  <div className="md:w-48 flex-shrink-0">
-                    <span className="text-sm font-semibold text-blue-400 block mb-1">{t('method')}:</span>
-                    <span className={`inline-block px-3 py-1 rounded-md text-sm font-mono ${endpoint.method === 'GET' ? 'bg-green-900/50 text-green-400' :
-                      endpoint.method === 'POST' ? 'bg-blue-900/50 text-blue-400' :
-                        endpoint.method === 'PUT' ? 'bg-yellow-900/50 text-yellow-400' :
-                          endpoint.method === 'DELETE' ? 'bg-red-900/50 text-red-400' : 'bg-gray-700 text-white'
-                      }`}>
-                      {endpoint.method}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-sm font-semibold text-blue-400 block mb-1">{t('url')}:</span>
-                    <span className="block text-sm text-white font-mono bg-gray-900 p-2 rounded break-all">
-                      {endpoint.url}
-                    </span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-                  <details className="bg-gray-800 rounded-lg overflow-hidden">
-                    <summary className="cursor-pointer p-3 bg-gray-800 hover:bg-gray-750 text-blue-400 hover:text-blue-300 font-medium">
-                      {t('request_example')}
-                    </summary>
-                    <pre className="bg-gray-900 text-gray-300 p-4 text-sm overflow-x-auto border-t border-gray-700">
-                      <code>{endpoint.exampleRequest}</code>
-                    </pre>
-                  </details>
-                  <details className="bg-gray-800 rounded-lg overflow-hidden">
-                    <summary className="cursor-pointer p-3 bg-gray-800 hover:bg-gray-750 text-blue-400 hover:text-blue-300 font-medium">
-                      {t('response_example')}
-                    </summary>
-                    <pre className="bg-gray-900 text-gray-300 p-4 text-sm overflow-x-auto border-t border-gray-700">
-                      <code>{endpoint.exampleResponse}</code>
-                    </pre>
-                  </details>
-                </div>
-                {endpoint.bodyExplanation && (
-                  <details className="bg-gray-800 rounded-lg overflow-hidden">
-                    <summary className="cursor-pointer p-3 bg-gray-800 hover:bg-gray-750 text-blue-400 hover:text-blue-300 font-medium">
-                      {t('request_body_explanation')}
-                    </summary>
-                    <div className="bg-gray-900 text-gray-300 p-4 text-sm border-t border-gray-700">
-                      <code className="whitespace-pre-wrap">{endpoint.bodyExplanation}</code>
-                    </div>
-                  </details>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col min-h-screen bg-gray-800 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-saira">
       {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
-        <div className="container mx-auto py-3 px-3 sm:px-6 sm:py-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-slate-200/50 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex justify-between items-center h-20">
             <div className="flex items-center">
-              <h1 className="text-xl sm:text-2xl font-bold text-blue-400">
-                {tenantConfig.name} <span className="text-white">Docs</span>
-              </h1>
+              <Image
+                src="/pixley_logo.svg"
+                alt="Pixley Logo"
+                width={84}
+                height={84}
+                className="mr-3"
+              />
             </div>
-
-            <nav className="flex flex-wrap items-center gap-2 sm:gap-4">
-              <button
-                onClick={() => setActiveSection('developers')}
-                className={`px-2 py-1 text-sm sm:text-base rounded transition ${activeSection === 'developers' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}
-              >
-                {t('developers')}
-              </button>
-              <button
-                onClick={() => setActiveSection('events')}
-                className={`px-2 py-1 text-sm sm:text-base rounded transition ${activeSection === 'events' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}
-              >
-                {t('events')}
-              </button>
-              <LanguageSelector />
-            </nav>
           </div>
         </div>
       </header>
 
-      {/* Main content with sidebar layout */}
-      <div className="flex-1 flex relative">
-        {/* Documentation side - takes remaining space with padding for the fixed sidebar */}
-        <div className="w-full lg:w-2/3 xl:w-3/4 overflow-y-auto pb-16 pt-4 sm:pt-6 px-3 sm:px-6">
-          <div className="container mx-auto max-w-full">
-            {activeSection === 'developers' ? (
-              <section className="bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-400">{t('api_documentation')}</h2>
-                <DeveloperSections />
-              </section>
-            ) : (
-              <section className="bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-400">{t('event_examples')}</h2>
-                <div className="space-y-6">
-                  {Object.entries(groupedEvents).map(([eventType, events]) => (
-                    <EventTypeSection key={eventType} type={eventType} events={events} />
-                  ))}
+      {/* Main Content */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+
+        {/* API Reference Section */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Referência da API</h2>
+            <p className="text-slate-600">Documentação completa dos endpoints disponíveis</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6">
+              <h4 className="text-lg font-semibold text-slate-800 mb-4 flex items-center">
+                <FaCode className="w-5 h-5 mr-2 text-purple-600" />
+                Base URL
+              </h4>
+              <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
+                https://uat.pixley.app
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6">
+              <h4 className="text-lg font-semibold text-slate-800 mb-4 flex items-center">
+                <FaShieldAlt className="w-5 h-5 mr-2 text-purple-600" />
+                Autenticação
+              </h4>
+              <p className="text-slate-600 mb-4 text-sm">
+                Inclua suas credenciais no header:
+              </p>
+              <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
+                <div>X-API-Key: SEU_API_KEY</div>
+                <div>X-Secret-Key: SEU_SECRET_KEY</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Detailed Endpoints */}
+          <div className="space-y-8">
+            {endpoints.map((endpoint, index) => (
+              <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
+                                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                    <div>
+                      <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{endpoint.name}</h4>
+                      <p className="text-slate-600 text-sm sm:text-base">{endpoint.subtitle}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                        {endpoint.labels.map((label, labelIndex) => (
+                          <span
+                            key={labelIndex}
+                            className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
+                          >
+                            {label.text}
+                          </span>
+                        ))}
+                      </div>
                 </div>
-              </section>
-            )}
+                
+                <p className="text-slate-700 mb-6 leading-relaxed">{endpoint.description}</p>
+                
+                                                    <div className="space-y-6">
+                  <div>
+                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                      <FaCode className="w-4 h-4 mr-2 text-purple-600" />
+                      Requisição
+                    </h5>
+                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                      <div className="mb-4">
+                        <span className="text-purple-600 font-semibold">{endpoint.method}</span> 
+                        <span className="text-slate-700 break-all"> {endpoint.url}</span>
+                      </div>
+                      {endpoint.exampleRequest && endpoint.exampleRequest.includes('{') && (
+                        <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                          <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleRequest.split('\n').slice(1).join('\n')}</pre>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                      <FaRocket className="w-4 h-4 mr-2 text-purple-600" />
+                      Resposta
+                    </h5>
+                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                      <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleResponse}</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                                  {endpoint.bodyExplanation && (
+                    <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100">
+                                              <h6 className="font-semibold text-slate-800 mb-3 flex items-center">
+                          <FaBook className="w-4 h-4 mr-2 text-purple-600" />
+                          Campos do Corpo da Requisição
+                        </h6>
+                      <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{endpoint.bodyExplanation}</p>
+                    </div>
+                  )}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Chat area - fixed to the right side on desktop */}
-        <div className="hidden lg:block lg:w-1/3 xl:w-1/4 fixed top-[4rem] right-0 bottom-0 border-l border-gray-700 bg-gray-800">
-          <div className="h-full">
-            <ChatPrompt />
+        {/* Quick Start Section */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Primeiros Passos</h2>
+            <p className="text-slate-600">Comece a integrar em 3 passos simples</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <span className="text-2xl font-bold text-white">1</span>
+              </div>
+              <h4 className="text-lg font-semibold text-slate-800 mb-3">Obtenha credenciais</h4>
+              <p className="text-slate-600 mb-4 text-sm leading-relaxed">
+                Entre em contato para obter suas chaves de API.
+              </p>
+                              <a 
+                  href="mailto:support@pixley.app" 
+                  className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors"
+                >
+                <FaEnvelope className="w-4 h-4 mr-2" />
+                Solicitar credenciais
+              </a>
+            </div>
+
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <span className="text-2xl font-bold text-white">2</span>
+              </div>
+              <h4 className="text-lg font-semibold text-slate-800 mb-3">Teste a API</h4>
+              <p className="text-slate-600 mb-4 text-sm leading-relaxed">
+                Use os exemplos para testar sua integração.
+              </p>
+              <div className="bg-slate-100 rounded-xl p-3 font-mono text-xs">
+                curl -X POST https://uat.pixley.app/payments
+              </div>
+            </div>
+
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <span className="text-2xl font-bold text-white">3</span>
+              </div>
+              <h4 className="text-lg font-semibold text-slate-800 mb-3">Configure webhooks</h4>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Configure webhooks para receber notificações em tempo real.
+              </p>
+            </div>
           </div>
         </div>
+      </main>
 
-        {/* Mobile chat toggle button */}
-        <button
-          onClick={() => setMobileChat(true)}
-          className="lg:hidden fixed bottom-6 right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg z-50 animate-pulse-slow"
-          aria-label="Open chat"
-        >
-          <FaComments className="text-lg sm:text-xl" />
-        </button>
-
-        {/* Mobile chat overlay */}
-        {mobileChat && (
-          <div className="lg:hidden fixed inset-0 bg-gray-900/95 z-50 flex flex-col">
-            <div className="bg-gray-800 p-3 sm:p-4 flex justify-between items-center border-b border-gray-700">
-              <h3 className="text-lg sm:text-xl font-bold text-white">{t('ask_question')}</h3>
-              <button
-                onClick={() => setMobileChat(false)}
-                className="text-gray-400 hover:text-white p-2"
-                aria-label="Close chat"
-              >
-                <FaTimes className="text-xl" />
-              </button>
+      {/* Footer */}
+      <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/50 mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <div className="text-center">
+            <div className="flex items-center justify-center mb-6">
+              <Image
+                src="/pixley_logo.svg"
+                alt="Pixley Logo"
+                width={48}
+                height={48}
+                className="mr-3"
+              />
+              <span className="text-xl font-semibold text-slate-800">Pixley</span>
             </div>
-            <div className="flex-1 overflow-hidden">
-              <ChatPrompt />
+            <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
+            <p className="text-sm text-slate-500 mb-8">uat.pixley.app</p>
+            
+            <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
+              <div className="text-left">
+                <h4 className="font-semibold text-slate-800 mb-3">Corporate Address</h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  30 N Gould St Ste R Sheridan,<br />
+                  WY 82801, Wyoming, MI, United States.
+                </p>
+              </div>
+              
+              <div className="text-left">
+                <h4 className="font-semibold text-slate-800 mb-3">Contact Us</h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  <a href="tel:+1-321-352-3332" className="hover:text-purple-600 transition-colors block mb-1">
+                    +1-(321)-352-3332
+                  </a>
+                  <a href="mailto:contact@pixley.app" className="hover:text-purple-600 transition-colors block">
+                    contact@pixley.app
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
-        )}
-      </div>
-
-      <footer className="bg-gray-900 border-t border-gray-700 py-3 sm:py-4 px-4 sm:px-6 text-center text-gray-400">
-        <div className="container mx-auto">
-          <p className="text-sm">&copy; {new Date().getFullYear()} {tenantConfig.name}. {t('all_rights_reserved')}</p>
         </div>
       </footer>
     </div>
-  );
-}
+  )
+} 

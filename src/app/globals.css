@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 :root {
-  --primary: #7747FF;
-  --secondary: #B29EFE;
+  --primary: #6F38F5;
+  --secondary: #A855F7;
   --third: #F8F8F8;
-  --background: #E8E4FF;
+  --background: #FAF5FF;
 }
 
 /* Classes utilitárias para usar as cores do tema */
@@ -38,6 +38,7 @@
 
 body {
   font-family: "Saira", sans-serif;
+  background-color: var(--background);
 }
 
 /* Markdown content styling */

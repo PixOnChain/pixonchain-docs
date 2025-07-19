@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pixley Documentation & Login
+
+This is a [Next.js](https://nextjs.org) project for Pixley's documentation and authentication system, bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Features
+
+- **Minimalist Login Page**: Clean, modern login interface with Pixley branding
+- **API Documentation**: Comprehensive documentation for Pixley's APIs
+- **Multi-language Support**: English, Portuguese, and Spanish
+- **Responsive Design**: Works on all devices
+- **Purple Color Scheme**: Consistent branding with clean colors
+- **Saira Font**: Modern typography throughout the application
 
 ## Getting Started
 

@@ -1,8 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { baseApi } from '@/services/api';
-import { useTenant } from './TenantContext';
 
 interface TenantUrl {
     id: string;
@@ -16,47 +14,35 @@ interface TenantUrlContextData {
     apiUrl: string | null; // URL da API filtrada
     isLoading: boolean;
     error: string | null;
-    reloadTenantUrls: () => Promise<void>;
+    reloadTenantUrls: () => void;
 }
 
 const TenantUrlContext = createContext<TenantUrlContextData>({} as TenantUrlContextData);
 
 export function TenantUrlProvider({ children }: { children: React.ReactNode }) {
-    const { tenantConfig } = useTenant();
     const [tenantUrls, setTenantUrls] = useState<TenantUrl[]>([]);
     const [apiUrl, setApiUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const loadTenantUrls = async () => {
-        if (!tenantConfig?.id) return;
-
-        try {
-            setIsLoading(true);
-            setError(null);
-
-            const response = await baseApi.get(`/api/whitelabel-config/tenant-urls?tenantId=${tenantConfig.id}`);
-
-            // Salva todas as URLs
-            setTenantUrls(response.data);
-
-            // Filtra e salva a URL da API (que começa com 'api')
-            const apiUrl = response.data.find((url: TenantUrl) => url.url.startsWith('api.'));
-            setApiUrl(apiUrl ? apiUrl.url : null);
-
-        } catch (err: unknown) {
-            console.error('Erro ao carregar URLs do tenant:', err);
-            setError(err instanceof Error ? err.message : 'Erro ao carregar URLs');
-        } finally {
-            setIsLoading(false);
-        }
+    const loadTenantUrls = () => {
+        setIsLoading(true);
+        
+        // Always use Pixley API URL
+        setApiUrl('uat.pixley.app');
+        setTenantUrls([{
+            id: 'pixley-api',
+            url: 'uat.pixley.app',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()    
+        }]);
+        
+        setIsLoading(false);
     };
 
     useEffect(() => {
-        if (tenantConfig?.id) {
-            loadTenantUrls();
-        }
-    }, [tenantConfig?.id]); // Recarrega quando o ID do tenant mudar
+        loadTenantUrls();
+    }, []); // Load once on mount
 
     return (
         <TenantUrlContext.Provider

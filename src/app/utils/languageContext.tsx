@@ -30,9 +30,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       });
     }
 
-    if (tenantConfig?.name) {
-      text = text.replace(/PixOnChain/g, tenantConfig.name);
-    }
+    text = text.replace(/PixOnChain/g, 'Pixley');
 
     return text;
   };
@@ -92,21 +90,6 @@ const translationMap: Record<string, Record<Language, string>> = {
     es: 'Endpoints de la API',
   },
   // Main content
-  'ask_question': {
-    en: 'Ask a Question',
-    pt: 'Faça uma Pergunta',
-    es: 'Haga una Pregunta',
-  },
-  'chat_placeholder': {
-    en: 'Type your question about our APIs or integration...',
-    pt: 'Digite sua dúvida sobre nossas APIs ou integração...',
-    es: 'Escriba su pregunta sobre nuestras APIs o integración...',
-  },
-  'send': {
-    en: 'Send',
-    pt: 'Enviar',
-    es: 'Enviar',
-  },
   'language': {
     en: 'Language',
     pt: 'Idioma',
@@ -194,9 +177,9 @@ const translationMap: Record<string, Record<Language, string>> = {
   },
   // Add more translations as needed
   'welcome_to_api': {
-    en: 'Welcome to the PixOnChain API',
-    pt: 'Bem-vindo à API do PixOnChain',
-    es: 'Bienvenido a la API de PixOnChain',
+    en: 'Welcome to the Pixley API',
+    pt: 'Bem-vindo à API do Pixley',
+    es: 'Bienvenido a la API de Pixley',
   },
   'api_intro_text': {
     en: 'Our API allows you to integrate cryptocurrency payments and blockchain technology into your applications. Get started quickly with our comprehensive documentation.',

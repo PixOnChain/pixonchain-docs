@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { baseApi, tenantUrl } from '@/services/api';
 
 interface TenantConfig {
     primary_color: string;
@@ -36,7 +35,7 @@ interface TenantContextData {
     tenantConfig: TenantConfig | null;
     isLoading: boolean;
     error: string | null;
-    reloadTenantConfig: () => Promise<void>;
+    reloadTenantConfig: () => void;
 }
 
 const TenantContext = createContext<TenantContextData>({} as TenantContextData);
@@ -46,25 +45,41 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const loadTenantConfig = async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-
-            const response = await baseApi.get(`/api/whitelabel-config/?tenantUrl=${tenantUrl}`);
-
-            if (response.data && response.data.docs_source) {
-                window.localStorage.setItem('docs_source', response.data.docs_source);
-            }
-
-            setTenantConfig(response.data);
-
-        } catch (err: unknown) {
-            console.error('Erro ao carregar configurações do tenant:', err);
-            setError(err instanceof Error ? err.message : 'Erro ao carregar configurações');
-        } finally {
-            setIsLoading(false);
-        }
+    const loadTenantConfig = () => {
+        setIsLoading(true);
+        
+        // Always use Pixley configuration
+        const pixleyConfig: TenantConfig = {
+            primary_color: '#6F38F5',
+            secondary_color: '#A855F7',
+            third_color: '#F8F8F8',
+            background_color: '#FAF5FF',
+            id: 'pixley',
+            name: 'Pixley',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            stripe_customer_id: null,
+            logo_url: null,
+            icon_url: null,
+            black_color: '#000000',
+            white_color: '#ffffff',
+            background_color_a: '#FAF5FF',
+            background_color_b: '#F3E8FF',
+            component_background_a: '#ffffff',
+            component_background_b: '#f8fafc',
+            support_number: null,
+            hover_background: '#F3E8FF',
+            app_url: 'https://uat.pixley.app',
+            tenant_telegram_bot: null,
+            tenant_telegram_username: null,
+            tenant_telegram_url: null,
+            tenant_telegram_admin_token: null,
+            docs_source: 'pixley',
+            email_suporte: 'support@pixley.app'
+        };
+        
+        setTenantConfig(pixleyConfig);
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -72,35 +87,9 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        const updateFavicon = async () => {
-            if (tenantConfig) {
-                if (tenantConfig.name) {
-                    document.title = tenantConfig.name;
-                }
-                try {
-                    const response = await baseApi.get(`/api/whitelabel-config/image/favicon?tenantUrl=${window.location.hostname}`, {
-                        responseType: 'blob'
-                    });
-                    const blob = new Blob([response.data], { type: 'image/png' });
-                    const faviconUrl = URL.createObjectURL(blob);
-
-                    let link = document.querySelector("link[rel*='icon']");
-                    if (!link) {
-                        link = document.createElement('link');
-                        link.setAttribute('rel', 'shortcut icon');
-                        document.head.appendChild(link);
-                    }
-                    link.setAttribute('href', faviconUrl);
-
-                    // Limpar a URL do objeto quando o componente for desmontado
-                    return () => URL.revokeObjectURL(faviconUrl);
-                } catch (error) {
-                    console.error('Erro ao carregar favicon:', error);
-                }
-            }
-        };
-
-        updateFavicon();
+        if (tenantConfig) {
+            document.title = tenantConfig.name;
+        }
     }, [tenantConfig]);
 
     return (
