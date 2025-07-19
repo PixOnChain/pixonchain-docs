@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FaBook, FaCode, FaRocket, FaEnvelope, FaShieldAlt, FaMoneyBill, FaHeartbeat, FaServer, FaLink, FaCalendarAlt, FaKey } from "react-icons/fa"
+import { FaBook, FaCode, FaRocket, FaEnvelope, FaShieldAlt } from "react-icons/fa"
 
 import Image from "next/image"
 
@@ -9,135 +9,7 @@ export default function Home() {
 
   const apiUrl = "uat.pixley.app";
 
-  const eventsData = [
-    {
-      eventId: "6ec9d5f2-f64d-4280-9244-293f3065bd16",
-      eventType: "PAYMENT REQUEST",
-      eventVersion: "1.0",
-      source: "https://uat.pixley.app",
-      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      timestamp: "2025-02-16T21:08:33Z",
-      details: {
-        status: "CREATED",
-        value: "15",
-        qrCode:
-          "00020126580014br.gov.bcb.pix0136fd276f0c-9945-49b9-aab9-4a2ff48ad72b520400005303986540515.005802BR5917Acme Pay Inc.6009Sao Paulo622505210000Ki7ad1bec0585e4816304E7CF",
-        currency: "CPIX",
-        idempotencyKey: "4ca54dba-8a22-4fe2-a88f-d7e12db4db34",
-      },
-    },
-    {
-      eventId: "6d2748d1-4826-4393-98a1-652229e4040c",
-      eventType: "PAYMENT",
-      eventVersion: "1.0",
-      source: "https://uat.pixley.app",
-      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      timestamp: "2025-02-16T21:09:02Z",
-      details: {
-        status: "QUEUE",
-        paymentPayload: {
-          type: "CHAVE",
-          valor: "1.01",
-          descricao: "Payment for invoice #1234",
-          destinatario: {
-            chave: "13113124719",
-          },
-        },
-        currency: "cPix",
-        idempotencyKey: "09770527-9e89-4cc6-87cb-338fc125286e",
-      },
-    },
-    {
-      eventId: "54158180-b07f-4382-b040-0c400dbadb9e",
-      eventType: "PAYMENT",
-      eventVersion: "1.0",
-      source: "https://uat.pixley.app",
-      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      timestamp: "2025-02-16T21:09:06Z",
-      details: {
-        type: "WITHDRAWAL",
-        status: "CONFIRMED",
-        paymentPayload: {
-          type: "CHAVE",
-          valor: "1.01",
-          descricao: "Payment for invoice #1234",
-          destinatario: {
-            chave: "13113124719",
-          },
-        },
-        txId: "7272e5ddae8d488a8457a770d5494987",
-        amount: 0.37,
-        currency: "cPix",
-        endToEndId: "E05491616202502170009052554e019a",
-        eventDate: "2025-02-17T00:09:05.255+00:00",
-        paymentAmount: 0.37,
-        idempotencyKey: "a7d7afce-789b-4da0-bd01-e672ebbfdcbf",
-      },
-    },
-    {
-      eventId: "2a1ed281-4d3e-4890-bdd4-f3759b04e73b",
-      eventType: "PAYMENT REQUEST",
-      eventVersion: "1.0",
-      source: "https://uat.pixley.app",
-      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      timestamp: "2025-02-16T21:10:53Z",
-      details: {
-        status: "CREATED",
-        value: "1.01",
-        qrCode:
-          "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/ba55e02b-6fef-48b5-9873-3edbfc646b4b5204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***630466E6",
-        currency: "cPix",
-        externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-        txid: "f56313b59c0f4b9e80a4cc348a775b40",
-        expiration: 3600,
-        network: "Hathor",
-        idempotencyKey: "87a2d30b-db3d-4aa5-9112-3fe29c02cb0f",
-      },
-    },
-    {
-      eventId: "3afacb85-a159-4db3-83fa-fde611bc5325",
-      eventType: "DEPOSIT",
-      eventVersion: "1.0",
-      source: "https://uat.pixley.app",
-      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      timestamp: "2025-02-16T21:30:32Z",
-      details: {
-        amount: 1.01,
-        currency: "cPix",
-        txId: "76ac0d48f96744f88c33b0763be25599",
-        type: "DEPOSIT",
-        status: "COMPLETED",
-        totalAmount: 0.359799,
-        feeAmount: 0.650201,
-        walletAddress: "HS7FMTgjzNw7AYgFPCyK1GLfhzeYUM1L1F",
-        network: "Hathor",
-        hashExplorerUrl:
-          "https://explorer.hathor.network/transaction/00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
-        txHash:
-          "00002016e957cf21de12560b464325f440e3f90b2957602d0576a863566f3664",
-        idempotencyKey: "66ad2db5-2d5c-4c4c-9391-250387b57883",
-      },
-    },
-    {
-      eventId: "d0fe0227-1641-4cf8-857b-5e0d0d44fc18",
-      eventType: "PAYMENT REQUEST",
-      eventVersion: "1.0",
-      source: "https://uat.pixley.app",
-      userId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-      timestamp: "2025-02-16T21:12:43Z",
-      details: {
-        status: "CREATED",
-        value: "1.01",
-        qrCode: "00020126870014br.gov.bcb.pix2565pix.creditag.com.br/qr/v3/at/98ad8638-54a0-47e5-a906-391bb5b073f85204000053039865802BR5923VIRTUAL_FINANCE_CORP6008CONTAGEM62070503***6304F5F3",
-        currency: "cPix",
-        externalId: "7ad1bec0-585e-4813-8c05-ebfd3a78753c",
-        txid: "a5dea817d81b4daa837c80a78fcf2b7d",
-        expiration: 3600,
-        network: "Hathor",
-        idempotencyKey: "a6c2ae82-72dc-4694-8efb-4990953c1cf6",
-      },
-    },
-  ]
+
 
 
   const endpoints = [
@@ -277,7 +149,7 @@ x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
     {
       name: "Obter Pix Copia e Cola",
       subtitle: "Recuperação de Pix Copia e Cola",
-      description: "Recupera os detalhes de um Pix Copia e Colagerado anteriormente.",
+      description: "Recupera os detalhes de um Pix Copia e Cola gerado anteriormente.",
       method: "GET",
       url: `https://${apiUrl}/api/banking/brcodes/:uuid`,
       exampleRequest: `GET https://${apiUrl}/api/banking/brcodes/:uuid
