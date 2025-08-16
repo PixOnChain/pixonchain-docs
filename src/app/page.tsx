@@ -20,7 +20,8 @@ export default function Home() {
       exampleRequest: `POST https://${apiUrl}/trade/off-ramp?simulation=false
 Authorization: Bearer <your-jwt-token>
 x-user-id: <user-id>
-x-tenant-id: <tenant-id>
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>
 {
   "source_currency": "USDT",
   "source_amount": 50.00,
@@ -57,7 +58,8 @@ x-tenant-id: <tenant-id>
       bodyExplanation: `Headers obrigatórios:
 • Authorization: Bearer <token>
 • x-user-id: <user-id>
-• x-tenant-id: <tenant-id> (opcional)
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
 
 Query Parameters:
 • simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
@@ -82,7 +84,8 @@ Campos do corpo da requisição:
       exampleRequest: `POST https://${apiUrl}/trade/on-ramp?simulation=false
 Authorization: Bearer <your-jwt-token>
 x-user-id: <user-id>
-x-tenant-id: <tenant-id>
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>
 {
   "source_currency": "BRL",
   "source_amount": 100.00,
@@ -117,7 +120,6 @@ x-tenant-id: <tenant-id>
       bodyExplanation: `Headers obrigatórios:
 • Authorization: Bearer <token>
 • x-user-id: <user-id>
-• x-tenant-id: <tenant-id> (opcional)
 
 Query Parameters:
 • simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
@@ -138,7 +140,8 @@ Campos do corpo da requisição:
       exampleRequest: `GET https://${apiUrl}/trade/on-ramp/{transactionId}
 Authorization: Bearer <your-jwt-token>
 x-user-id: <user-id>
-x-tenant-id: <tenant-id>`,
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>`,
       exampleResponse: `{
   "qrCode": {
     "id": "qr-123",
@@ -174,7 +177,8 @@ x-tenant-id: <tenant-id>`,
       bodyExplanation: `Headers obrigatórios:
 • Authorization: Bearer <token>
 • x-user-id: <user-id>
-• x-tenant-id: <tenant-id> (opcional)
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
 
 Path Parameters:
 • transactionId: ID da transação a ser consultada
@@ -189,7 +193,9 @@ Observação:
       method: "GET",
       url: `https://${apiUrl}/api/users/me/limits`,
       exampleRequest: `GET https://${apiUrl}/api/users/me/limits
-x-user-id: <user-id>`,
+x-user-id: <user-id>
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>`,
       exampleResponse: `{
   "dailyLimits": {
     "amount": 1000.00,
@@ -234,6 +240,8 @@ x-user-id: <user-id>`,
       ],
       bodyExplanation: `Headers obrigatórios:
 • x-user-id: <user-id>
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
 
 Observação:
 • Nenhum parâmetro adicional necessário`,
@@ -367,7 +375,7 @@ Observação:
             <h2 className="text-3xl font-bold text-slate-900 mb-4">API Documentation - Pixley Crypto Transactions</h2>
             <p className="text-slate-600">Esta documentação descreve os principais endpoints da API do sistema Pixley Crypto Transactions.</p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6">
               <h4 className="text-lg font-semibold text-slate-800 mb-4 flex items-center">
@@ -385,12 +393,17 @@ Observação:
                 Autenticação
               </h4>
               <p className="text-slate-600 mb-4 text-sm">
-                Todos os endpoints requerem autenticação via JWT token:
+                Todos os endpoints requerem autenticação via JWT token e credenciais de API:
               </p>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
                 <div>Authorization: Bearer &lt;your-jwt-token&gt;</div>
                 <div>x-user-id: &lt;user-id&gt;</div>
+                <div>x-api-key: &lt;your-api-key&gt;</div>
+                <div>x-secret-key: &lt;your-secret-key&gt;</div>
               </div>
+              <p className="text-slate-500 mt-3 text-xs">
+                💡 As credenciais de API (API key e Secret key) devem ser obtidas através do nosso suporte.
+              </p>
             </div>
           </div>
 
@@ -404,146 +417,7 @@ Observação:
                     <p className="text-slate-600 text-sm sm:text-base">{endpoint.subtitle}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                      {endpoint.labels.map((label, labelIndex) => (
-                        <span
-                          key={labelIndex}
-                          className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
-                        >
-                          {label.text}
-                        </span>
-                      ))}
-                    </div>
-              </div>
-              
-              <p className="text-slate-700 mb-6 leading-relaxed">{endpoint.description}</p>
-              
-              <div className="space-y-6">
-                <div>
-                  <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
-                    <FaCode className="w-4 h-4 mr-2 text-purple-600" />
-                    Requisição
-                  </h5>
-                  <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
-                    <div className="mb-4">
-                      <span className="text-purple-600 font-semibold">{endpoint.method}</span> 
-                      <span className="text-slate-700 break-all"> {endpoint.url}</span>
-                    </div>
-                    {endpoint.exampleRequest && endpoint.exampleRequest.includes('{') && (
-                      <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleRequest.split('\n').slice(1).join('\n')}</pre>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
-                    <FaRocket className="w-4 h-4 mr-2 text-purple-600" />
-                    Resposta
-                  </h5>
-                  <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
-                    <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleResponse}</pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {endpoint.bodyExplanation && (
-                <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100">
-                  <h6 className="font-semibold text-slate-800 mb-4 flex items-center">
-                    <FaBook className="w-4 h-4 mr-2 text-purple-600" />
-                    Parâmetros da Requisição
-                  </h6>
-                  <div className="space-y-4">
-                    {endpoint.bodyExplanation.split('\n\n').map((section, sectionIndex) => {
-                      const lines = section.split('\n');
-                      const title = lines[0];
-                      const items = lines.slice(1);
-                      
-                      return (
-                        <div key={sectionIndex} className="bg-white/60 rounded-lg p-4 border border-purple-200/50">
-                          <h7 className="font-semibold text-slate-800 text-sm mb-3 block">{title}</h7>
-                          <div className="space-y-2">
-                            {items.map((item, itemIndex) => {
-                              if (item.trim().startsWith('•')) {
-                                const [param, ...descParts] = item.replace('•', '').trim().split(':');
-                                const description = descParts.join(':').trim();
-                                return (
-                                  <div key={itemIndex} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-                                    <code className="text-purple-700 bg-purple-100 px-2 py-1 rounded text-xs font-medium shrink-0">
-                                      {param.trim()}
-                                    </code>
-                                    <span className="text-slate-600 text-sm leading-relaxed">{description}</span>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }).filter(Boolean)}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Webhooks Section */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Webhooks</h2>
-            <p className="text-slate-600">O sistema envia notificações via webhook para eventos importantes. Todos os webhooks são enviados via POST com assinatura HMAC-SHA256 no header X-Signature.</p>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Eventos Suportados</h3>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
-                <h4 className="font-semibold text-green-800 mb-2">DEPOSIT</h4>
-                <p className="text-green-700 text-sm">Quando um depósito é recebido</p>
-              </div>
-              <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
-                <h4 className="font-semibold text-orange-800 mb-2">WITHDRAWAL</h4>
-                <p className="text-orange-700 text-sm">Quando um saque é processado</p>
-              </div>
-              <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200">
-                <h4 className="font-semibold text-purple-800 mb-2">PAYMENT REQUEST</h4>
-                <p className="text-purple-700 text-sm">Quando uma solicitação de pagamento é criada</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Estrutura Base do Webhook</h3>
-            <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
-              <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{`{
-  "eventId": "evt_123e4567-e89b-12d3-a456-426614174000",
-  "eventType": "DEPOSIT",
-  "userId": "456e7890-e89b-12d3-a456-426614174000",
-  "timestamp": "2024-01-15T10:30:00Z",
-  "data": {
-    // Dados específicos do evento
-  }
-}`}</pre>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Exemplos de Webhooks</h3>
-            {webhookExamples.map((webhook, index) => (
-              <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-                  <div>
-                    <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{webhook.name}</h4>
-                    <p className="text-slate-600 text-sm sm:text-base">{webhook.description}</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {webhook.labels.map((label, labelIndex) => (
+                    {endpoint.labels.map((label, labelIndex) => (
                       <span
                         key={labelIndex}
                         className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
@@ -553,66 +427,205 @@ Observação:
                     ))}
                   </div>
                 </div>
-                
-                <div>
-                  <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
-                    <FaCode className="w-4 h-4 mr-2 text-purple-600" />
-                    Exemplo de Payload
-                  </h5>
-                  <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
-                    <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{webhook.example}</pre>
+
+                <p className="text-slate-700 mb-6 leading-relaxed">{endpoint.description}</p>
+
+                <div className="space-y-6">
+                  <div>
+                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                      <FaCode className="w-4 h-4 mr-2 text-purple-600" />
+                      Requisição
+                    </h5>
+                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                      <div className="mb-4">
+                        <span className="text-purple-600 font-semibold">{endpoint.method}</span>
+                        <span className="text-slate-700 break-all"> {endpoint.url}</span>
+                      </div>
+                      {endpoint.exampleRequest && endpoint.exampleRequest.includes('{') && (
+                        <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                          <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleRequest.split('\n').slice(1).join('\n')}</pre>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                      <FaRocket className="w-4 h-4 mr-2 text-purple-600" />
+                      Resposta
+                    </h5>
+                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                      <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleResponse}</pre>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {endpoint.bodyExplanation && (
+                  <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100">
+                    <h6 className="font-semibold text-slate-800 mb-4 flex items-center">
+                      <FaBook className="w-4 h-4 mr-2 text-purple-600" />
+                      Parâmetros da Requisição
+                    </h6>
+                    <div className="space-y-4">
+                      {endpoint.bodyExplanation.split('\n\n').map((section, sectionIndex) => {
+                        const lines = section.split('\n');
+                        const title = lines[0];
+                        const items = lines.slice(1);
+
+                        return (
+                          <div key={sectionIndex} className="bg-white/60 rounded-lg p-4 border border-purple-200/50">
+                            <h2 className="font-semibold text-slate-800 text-sm mb-3 block">{title}</h2>
+                            <div className="space-y-2">
+                              {items.map((item, itemIndex) => {
+                                if (item.trim().startsWith('•')) {
+                                  const [param, ...descParts] = item.replace('•', '').trim().split(':');
+                                  const description = descParts.join(':').trim();
+                                  return (
+                                    <div key={itemIndex} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                                      <code className="text-purple-700 bg-purple-100 px-2 py-1 rounded text-xs font-medium shrink-0">
+                                        {param.trim()}
+                                      </code>
+                                      <span className="text-slate-600 text-sm leading-relaxed">{description}</span>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }).filter(Boolean)}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
-        </div>
-      </div>
-    </main>
 
-    {/* Footer */}
-    <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/50 mt-16">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="text-center">
-          <div className="flex items-center justify-center mb-6">
-            <Image
-              src="/pixley_logo.svg"
-              alt="Pixley Logo"
-              width={48}
-              height={48}
-              className="mr-3"
-            />
-            <span className="text-xl font-semibold text-slate-800">Pixley</span>
-          </div>
-          <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
-          <p className="text-sm text-slate-500 mb-8">uat.pixley.app</p>
-          
-          <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
-            <div className="text-left">
-              <h4 className="font-semibold text-slate-800 mb-3">Corporate Address</h4>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                30 N Gould St Ste R Sheridan,<br />
-                WY 82801, Wyoming, MI, United States.
-              </p>
+          {/* Webhooks Section */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">Webhooks</h2>
+              <p className="text-slate-600">O sistema envia notificações via webhook para eventos importantes. Todos os webhooks são enviados via POST com assinatura HMAC-SHA256 no header X-Signature.</p>
             </div>
-            
-            <div className="text-left">
-              <h4 className="font-semibold text-slate-800 mb-3">Contact Us</h4>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                <a href="tel:+1-321-352-3332" className="hover:text-purple-600 transition-colors block mb-1">
-                  +1-(321)-352-3332
-                </a>
-                <a href="mailto:contact@pixley.app" className="hover:text-purple-600 transition-colors block">
-                  contact@pixley.app
-                </a>
-              </p>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Eventos Suportados</h3>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                  <h4 className="font-semibold text-green-800 mb-2">DEPOSIT</h4>
+                  <p className="text-green-700 text-sm">Quando um depósito é recebido</p>
+                </div>
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
+                  <h4 className="font-semibold text-orange-800 mb-2">WITHDRAWAL</h4>
+                  <p className="text-orange-700 text-sm">Quando um saque é processado</p>
+                </div>
+                <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200">
+                  <h4 className="font-semibold text-purple-800 mb-2">PAYMENT REQUEST</h4>
+                  <p className="text-purple-700 text-sm">Quando uma solicitação de pagamento é criada</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Estrutura Base do Webhook</h3>
+              <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                  <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{`{
+  "eventId": "evt_123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "DEPOSIT",
+  "userId": "456e7890-e89b-12d3-a456-426614174000",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "data": {
+    // Dados específicos do evento
+  }
+}`}</pre>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Exemplos de Webhooks</h3>
+              {webhookExamples.map((webhook, index) => (
+                <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                    <div>
+                      <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{webhook.name}</h4>
+                      <p className="text-slate-600 text-sm sm:text-base">{webhook.description}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {webhook.labels.map((label, labelIndex) => (
+                        <span
+                          key={labelIndex}
+                          className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
+                        >
+                          {label.text}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                      <FaCode className="w-4 h-4 mr-2 text-purple-600" />
+                      Exemplo de Payload
+                    </h5>
+                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                      <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{webhook.example}</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-    </footer>
-  </div>
-)
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/50 mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <div className="text-center">
+            <div className="flex items-center justify-center mb-6">
+              <Image
+                src="/pixley_logo.svg"
+                alt="Pixley Logo"
+                width={48}
+                height={48}
+                className="mr-3"
+              />
+              <span className="text-xl font-semibold text-slate-800">Pixley</span>
+            </div>
+            <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
+            <p className="text-sm text-slate-500 mb-8">uat.pixley.app</p>
+
+            <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
+              <div className="text-left">
+                <h4 className="font-semibold text-slate-800 mb-3">Corporate Address</h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  30 N Gould St Ste R Sheridan,<br />
+                  WY 82801, Wyoming, MI, United States.
+                </p>
+              </div>
+
+              <div className="text-left">
+                <h4 className="font-semibold text-slate-800 mb-3">Contact Us</h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  <a href="tel:+1-321-352-3332" className="hover:text-purple-600 transition-colors block mb-1">
+                    +1-(321)-352-3332
+                  </a>
+                  <a href="mailto:contact@pixley.app" className="hover:text-purple-600 transition-colors block">
+                    contact@pixley.app
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
 }
