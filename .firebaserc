@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "pixley-api-docs"
-  }
-} 
+  },
+  "targets": {
+    "pixley-api-docs": {
+      "hosting": {
+        "docs-pixley": [
+          "docs-pixley"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

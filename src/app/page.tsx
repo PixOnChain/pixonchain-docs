@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { FaBook, FaCode, FaRocket, FaEnvelope, FaShieldAlt } from "react-icons/fa"
+import { FaBook, FaCode, FaRocket, FaShieldAlt } from "react-icons/fa"
 
 import Image from "next/image"
 
@@ -9,464 +9,333 @@ export default function Home() {
 
   const apiUrl = "uat.pixley.app";
 
-
-
-
   const endpoints = [
-    // AUTENTICAÇÃO
+    // TRADE ENDPOINTS
     {
-      name: "Gerar Chaves de API",
-      subtitle: "Geração de Chaves de API",
-      description: "Gera novas chaves de API para autenticação.",
+      name: "Off-Ramp (Saque Crypto para PIX)",
+      subtitle: "Processa transação off-ramp",
+      description: "Processa uma transação off-ramp (saque de crypto para PIX)",
       method: "POST",
-      url: `https://${apiUrl}/api/auth/keys/generate-api-keys`,
-      exampleRequest: `POST https://${apiUrl}/api/auth/keys/generate-api-keys
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-            exampleResponse: `{
-  "message": "API keys generated successfully",
-  "apiKey": "a1b2c3d4-e5f6-7890-abcd-123456789012",
-  "secretKey": "f8e7d6c5b4a398765432109876543210abcdef1234567890abcdef1234567890"
-}`,
-      labels: [
-        {
-          text: "API KEYS",
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-        {
-          text: "SECURITY",
-          bgColor: "bg-[#3b82f6]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-    {
-      name: "Validação de Chaves",
-      subtitle: "Validação de Chaves de API",
-      description: "Valida as chaves de API fornecidas para garantir acesso às APIs.",
-      method: "POST",
-      url: `https://${apiUrl}/api/auth/keys/key-validate`,
-      exampleRequest: `POST https://${apiUrl}/api/auth/keys/key-validate
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-}`,
-      labels: [
-        {
-          text: "API KEYS",
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-        {
-          text: "SECURITY",
-          bgColor: "bg-[#3b82f6]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-
-    // CONVERSÕES E CRIPTOMOEDAS
-    {
-      name: "Converter Moeda",
-      subtitle: "Conversão de Moedas",
-      description: "Converte um valor de uma moeda de origem para uma moeda de destino, com opção de simulação ou execução real.",
-      method: "POST",
-      url: `https://${apiUrl}/api/banking/convert`,
-      exampleRequest: `POST https://${apiUrl}/api/banking/convert
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
+      url: `https://${apiUrl}/trade/off-ramp`,
+      exampleRequest: `POST https://${apiUrl}/trade/off-ramp?simulation=false
+Authorization: Bearer <your-jwt-token>
+x-user-id: <user-id>
+x-tenant-id: <tenant-id>
 {
-  "fromCurrency": "cPix",
-  "toCurrency": "USDT",
-  "amount": 800,
-  "simulation": false
-}`,
-      exampleResponse: `{
-  "message": "Conversion successful",
-  "fromCurrency": "cPix",
-  "toCurrency": "USDT",
-  "price": "5.9491",
-  "feeAmount": "0.7000",
-  "fromAmount": "8.0000",
-  "toAmount": "0.9943"
-}`,
-      labels: [
-        {
-          text: "CONVERSION",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- fromCurrency: Moeda de origem (ex.: "cPix").
-- toCurrency: Moeda de destino (ex.: "USDT").
-- amount: Valor a ser convertido em centavos (ex.: 800 = 8.00).
-- simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
-    },
-    {
-      name: "Sacar Criptomoeda",
-      subtitle: "Saque de Criptomoedas",
-      description: "Solicita o saque de uma quantidade de criptomoeda para um endereço de carteira especificado, com opção de simulação.",
-      method: "POST",
-      url: `https://${apiUrl}/api/banking/withdraw-crypto`,
-      exampleRequest: `POST https://${apiUrl}/api/banking/withdraw-crypto
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
-{
-  "currency": "USDT",
-  "receiverAddress": "0x1234567890abcdef1234567890abcdef12345678",
-  "amount": 100,
+  "source_currency": "USDT",
+  "source_amount": 50.00,
+  "target_currency": "PIX",
+  "pix_key": "user@example.com",
+  "pix_key_type": "email",
+  "recipient_name": "João Silva",
+  "recipient_document": "12345678901",
   "network": "Polygon",
-  "simulation": false
+  "externalId": "ext-withdrawal-123"
 }`,
       exampleResponse: `{
-"message": "Withdrawal request submitted successfully",
-"jobId": "2663"
+  "withdrawal_id": "withdrawal_1234567890_abc123",
+  "status": "processing",
+  "source_currency": "USDT",
+  "source_amount": 50.00,
+  "target_currency": "PIX",
+  "estimated_amount_received": 49.00,
+  "estimated_completion": "2024-01-15T10:30:00Z",
+  "message": "Withdrawal is being processed. Blockchain operations have been queued and PIX transfer will be initiated shortly."
 }`,
       labels: [
         {
-          text: "WITHDRAWAL",
-          bgColor: "bg-[#00cc66]",
+          text: "OFF-RAMP",
+          bgColor: "bg-[#7747FF]",
           textColor: "text-white",
         },
-    
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- currency: Moeda a ser sacada (ex.: "USDT").
-- receiverAddress: Endereço da carteira de destino.
-- amount: Valor a ser sacado em centavos (ex.: 100 = 1.00).
-- network: Rede blockchain utilizada (ex.: "Polygon").
-- simulation: Booleano indicando se é uma simulação (true) ou execução real (false).`,
-    },
-
-    // PIX E PAGAMENTOS
-    {
-      name: "Obter Pix Copia e Cola",
-      subtitle: "Recuperação de Pix Copia e Cola",
-      description: "Recupera os detalhes de um Pix Copia e Cola gerado anteriormente.",
-      method: "GET",
-      url: `https://${apiUrl}/api/banking/brcodes/:uuid`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/brcodes/:uuid
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "amount": "0.51",
-  "fees": null,
-  "network": null,
-  "token": null,
-  "qr_code": "00020101021226930014BR.GOV.BCB.PIX2571spi-qrcode.bancocryptoex.com.br/spi/pj/v2/a050b96223b54048a80a2ad57afbd2ed52040000530398654040.515802BR5901*6013CAPITAL_CITY61088803200562070503***6304BEB5",
-  "wallet_address": null,
-  "created_at": "2025-02-05T21:54:42.883Z",
-  "pix_status": "pending",
-  "tx_hash": null
-}`,
-      labels: [
         {
           text: "PIX",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
       ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
+      bodyExplanation: `Headers obrigatórios:
+• Authorization: Bearer <token>
+• x-user-id: <user-id>
+• x-tenant-id: <tenant-id> (opcional)
+
+Query Parameters:
+• simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
+
+Campos do corpo da requisição:
+• source_currency: Moeda de origem (ex.: "USDT")
+• source_amount: Valor a ser sacado
+• target_currency: "PIX"
+• pix_key: Chave PIX do destinatário
+• pix_key_type: Tipo da chave PIX ("email", "cpf", etc.)
+• recipient_name: Nome do destinatário
+• recipient_document: Documento do destinatário
+• network: Rede blockchain (ex.: "Polygon")
+• externalId: ID externo da transação`,
     },
     {
-      name: "Transação Cripto (Pix para USDT)",
-      subtitle: "Cotação e Execução de Transação Pix para USDT",
-      description: "Obtém uma cotação para uma transação ou executa uma transação real. Receben valores em USDT diretamente na carteira do usuário.",
+      name: "On-Ramp (Compra Crypto com PIX)",
+      subtitle: "Processa transação on-ramp",
+      description: "Processa uma transação on-ramp (compra de crypto com PIX)",
       method: "POST",
-      url: `https://${apiUrl}/api/banking/quote-transaction`,
-      exampleRequest: `POST https://${apiUrl}/api/banking/quote-transaction
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
+      url: `https://${apiUrl}/trade/on-ramp`,
+      exampleRequest: `POST https://${apiUrl}/trade/on-ramp?simulation=false
+Authorization: Bearer <your-jwt-token>
+x-user-id: <user-id>
+x-tenant-id: <tenant-id>
 {
-  "value": 800,
-  "simulation": false,
-  "receiverAddress": "0x9876543210fedcba9876543210fedcba98765432"
+  "source_currency": "BRL",
+  "source_amount": 100.00,
+  "target_currency": "USDT",
+  "wallet_address": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
+  "network": "Polygon"
 }`,
       exampleResponse: `{
-  "id": "36fecd02-0af1-4c55-9c67-acd08bd2d187",
-  "uuid": "d1459d07e3a643e3aead579a90c18669",
-  "value": 800,
-  "receiverAddress": "0x9876543210fedcba9876543210fedcba98765432",
+  "id": "trade-123",
   "status": "pending",
-  "created_at": "2025-02-16T21:10:53Z",
-  "updated_at": "2025-02-16T21:10:53Z"
-}`,
-      labels: [
-  
-        {
-          text: "CONVERSION",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- value: Valor em centavos a ser convertido (ex.: 800 = 8.00).
-- simulation: Booleano indicando se é uma simulação (true) ou execução real (false).
-- receiverAddress: Endereço da carteira de destino para receber USDT.`,
-    },
-    {
-      name: "Obter Cotação de Transação",
-      subtitle: "Consulta de Cotação de Transação",
-      description: "Recupera os detalhes de uma cotação de transação específica.",
-      method: "GET",
-      url: `https://${apiUrl}/api/banking/quote-transaction/:transactionId`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/quote-transaction/:transactionId
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "id": "36fecd02-0af1-4c55-9c67-acd08bd2d187",
-  "uuid": "d1459d07e3a643e3aead579a90c18669",
-  "value": 800,
-  "receiverAddress": "0x9876543210fedcba9876543210fedcba98765432",
-  "status": "completed",
-  "created_at": "2025-02-16T21:10:53Z",
-  "updated_at": "2025-02-16T21:11:02Z"
-}`,
-      labels: [
-
-        {
-          text: "CONVERSION",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-
-    // SALDOS E EXTRATOS
-    {
-      name: "Obter Saldo",
-      subtitle: "Recuperação de Saldo",
-      description: "Recupera os saldos de moedas fiduciárias e criptomoedas.",
-      method: "GET",
-      url: `https://${apiUrl}/api/banking/balance`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/balance
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "fiat": {
-    "BRL": "100.50",
-    "USD": "25.00"
-  },
-  "crypto": {
-    "USDT": "0.00",
-    "BTC": "0.0001"
-  }
+  "qr_code": "00020126580014br.gov.bcb.pix...",
+  "source_currency": "BRL",
+  "source_amount": 100.00,
+  "target_currency": "USDT",
+  "target_amount": 18.52,
+  "wallet_address": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
+  "network": "Polygon",
+  "created_at": "2024-01-15T10:30:00Z"
 }`,
       labels: [
         {
-          text: "BALANCE",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-    {
-      name: "Pagamento",
-      subtitle: "Pagamento",
-      description: "Realiza um pagamento via chave PIX.",
-      method: "POST",
-      url: `https://${apiUrl}/api/banking/payment`,
-      exampleRequest: `POST https://${apiUrl}/api/banking/payment
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6
-{
-  "type": "CHAVE",
-  "valor": "1.01",
-  "descricao": "Payment for invoice #1234",
-  "destinatario": {
-    "chave": "12345678901"
-  }
-}`,
-      exampleResponse: `{
-  "message": "Payment processed successfully",
-  "transactionId": "abc123",
-  "status": "completed"
-}`,
-      labels: [
-        {
-          text: "PAYMENT",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-        {
-          text: "BANKING",
+          text: "ON-RAMP",
           bgColor: "bg-[#3b82f6]",
           textColor: "text-white",
         },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- type: Tipo de pagamento (ex.: "CHAVE").
-- valor: Valor a ser pago (ex.: "1.01").
-- descricao: Descrição do pagamento.
-- destinatario: Objeto com a chave do destinatário.`,
-    },
-    {
-      name: "Obter Extrato",
-      subtitle: "Recuperação de Extrato",
-      description: "Recupera o extrato de transações.",
-      method: "GET",
-      url: `https://${apiUrl}/api/banking/statement`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/statement
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "transactions": [
-    {
-      "id": "123",
-      "type": "payment",
-      "amount": "10.50",
-      "currency": "BRL",
-      "status": "completed",
-      "created_at": "2025-02-16T21:10:53Z"
-    }
-  ]
-}`,
-      labels: [
         {
-          text: "STATEMENT",
+          text: "PIX",
           bgColor: "bg-[#00cc66]",
           textColor: "text-white",
         },
       ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
-    {
-      name: "Obter Transação",
-      subtitle: "Consulta de Transação",
-      description: "Recupera os detalhes de uma transação específica.",
-      method: "GET",
-      url: `https://${apiUrl}/api/banking/transaction/:transactionId`,
-      exampleRequest: `GET https://${apiUrl}/api/banking/transaction/:transactionId
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "id": "123",
-  "type": "payment",
-  "amount": "10.50",
-  "currency": "BRL",
-  "status": "completed",
-  "created_at": "2025-02-16T21:10:53Z",
-      "details": {
-      "description": "Payment for invoice #1234",
-      "recipient": "12345678901"
-    }
-}`,
-      labels: [
-        {
-          text: "TRANSACTION",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
-    },
+      bodyExplanation: `Headers obrigatórios:
+• Authorization: Bearer <token>
+• x-user-id: <user-id>
+• x-tenant-id: <tenant-id> (opcional)
 
-    // CARTEIRAS
-    {
-      name: "Obter Carteira do Usuário",
-      subtitle: "Consulta de Carteira por Tipo de Rede",
-      description: "Recupera a carteira do usuário para um tipo específico de rede blockchain.",
-      method: "GET",
-      url: `https://${apiUrl}/api/wallet/user-wallet`,
-      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallet?networkType=EVM
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "wallet_address": "0x1234567890abcdef1234567890abcdef12345678",
-  "network_type": "EVM",
-  "created_at": "2025-03-13T21:31:38.319Z",
-  "updated_at": "2025-03-13T21:31:38.319Z"
-}`,
-      labels: [
-   
-        {
-          text: "WALLET",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `Parâmetros de consulta:
-- networkType: Tipo de rede blockchain (EVM, BTC, Hathor, TRON, etc.)`,
+Query Parameters:
+• simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
+
+Campos do corpo da requisição:
+• source_currency: "BRL"
+• source_amount: Valor em BRL a ser convertido
+• target_currency: Moeda de destino (ex.: "USDT")
+• wallet_address: Endereço da carteira de destino
+• network: Rede blockchain (ex.: "Polygon")`,
     },
     {
-      name: "Obter Carteiras do Usuário",
-      subtitle: "Consulta de Todas as Carteiras do Usuário",
-      description: "Recupera todas as carteiras blockchain do usuário autenticado.",
+      name: "Buscar Transação On-Ramp",
+      subtitle: "Consulta detalhes de transação",
+      description: "Busca detalhes de uma transação on-ramp específica",
       method: "GET",
-      url: `https://${apiUrl}/api/wallet/user-wallets`,
-      exampleRequest: `GET https://${apiUrl}/api/wallet/user-wallets
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
+      url: `https://${apiUrl}/trade/on-ramp/{transactionId}`,
+      exampleRequest: `GET https://${apiUrl}/trade/on-ramp/{transactionId}
+Authorization: Bearer <your-jwt-token>
+x-user-id: <user-id>
+x-tenant-id: <tenant-id>`,
       exampleResponse: `{
-  "EVM": {
-    "wallet_address": "0x1234567890abcdef1234567890abcdef12345678",
-    "created_at": "2025-03-13T21:31:38.319Z",
-    "updated_at": "2025-03-13T21:31:38.319Z"
-  },
-  "BTC": {
-    "wallet_address": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-    "created_at": "2025-03-13T01:56:28.663Z",
-    "updated_at": "2025-03-13T01:56:28.663Z"
-  },
-  "Hathor": {
-    "wallet_address": "HThi8YqGqKjvK8K8K8K8K8K8K8K8K8K8K8K8K8",
-    "created_at": "2025-03-13T22:13:09.601Z",
-    "updated_at": "2025-03-13T22:13:09.601Z"
-  },
-  "TRON": {
-    "wallet_address": "TQn9Y2khDD95J42FQtQTdwVVRqKqJqKqKqK",
-    "created_at": "2025-03-13T22:00:49.432Z",
-    "updated_at": "2025-03-13T22:00:49.432Z"
+  "qrCode": {
+    "id": "qr-123",
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "qr_code": "00020126580014br.gov.bcb.pix...",
+    "source_currency": "cPix",
+    "source_amount": 100.00,
+    "target_currency": "USDT",
+    "target_amount": 18.52,
+    "network": "Polygon",
+    "wallet_address": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
+    "fees": 5.00,
+    "pix_status": "pending",
+    "trade_price": 5.40,
+    "net_amount": 95.00,
+    "updated_at": "2024-01-15T10:30:00Z",
+    "tx_hash": "0xabc123...",
+    "explorer_url": "https://polygonscan.com/tx/0xabc123..."
   }
 }`,
       labels: [
         {
-          text: "WALLET",
-          bgColor: "bg-[#00cc66]",
+          text: "ON-RAMP",
+          bgColor: "bg-[#3b82f6]",
           textColor: "text-white",
         },
-      ],
-      bodyExplanation: `Não é necessário enviar parâmetros para esta requisição.`,
-    },
-
-    // SISTEMA
-    {
-      name: "Verificar Saúde",
-      subtitle: "Verificação de Saúde do Servidor",
-      description: "Verifica o status de saúde do servidor.",
-      method: "GET",
-      url: `https://${apiUrl}/health`,
-      exampleRequest: `GET https://${apiUrl}/health
-x-api-key: 94b0f31b-b740-4735-af0f-5e841f32c457
-x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
-      exampleResponse: `{
-  "status": "healthy",
-  "timestamp": "2025-02-16T21:10:53Z",
-  "version": "1.0.0"
-}`,
-      labels: [
         {
-          text: "HEALTH",
+          text: "QUERY",
           bgColor: "bg-[#10b981]",
           textColor: "text-white",
         },
       ],
-      bodyExplanation: `O corpo da requisição deve conter os seguintes campos:
-- Nenhum campo necessário.`,
+      bodyExplanation: `Headers obrigatórios:
+• Authorization: Bearer <token>
+• x-user-id: <user-id>
+• x-tenant-id: <tenant-id> (opcional)
+
+Path Parameters:
+• transactionId: ID da transação a ser consultada
+
+Observação:
+• Este endpoint não requer corpo da requisição`,
+    },
+    {
+      name: "Consultar Limites do Usuário",
+      subtitle: "Limites e uso atual",
+      description: "Permite que usuários autenticados consultem seus próprios limites e uso atual",
+      method: "GET",
+      url: `https://${apiUrl}/api/users/me/limits`,
+      exampleRequest: `GET https://${apiUrl}/api/users/me/limits
+x-user-id: <user-id>`,
+      exampleResponse: `{
+  "dailyLimits": {
+    "amount": 1000.00,
+    "count": 10,
+    "active": true
+  },
+  "monthlyLimits": {
+    "amount": 30000.00,
+    "count": 100,
+    "active": true
+  },
+  "dailyUsage": {
+    "amount": 250.00,
+    "count": 3
+  },
+  "monthlyUsage": {
+    "amount": 5500.00,
+    "count": 25
+  },
+  "remainingLimits": {
+    "daily": {
+      "amount": 750.00,
+      "count": 7
+    },
+    "monthly": {
+      "amount": 24500.00,
+      "count": 75
+    }
+  }
+}`,
+      labels: [
+        {
+          text: "LIMITS",
+          bgColor: "bg-[#f59e0b]",
+          textColor: "text-white",
+        },
+        {
+          text: "USER",
+          bgColor: "bg-[#8b5cf6]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `Headers obrigatórios:
+• x-user-id: <user-id>
+
+Observação:
+• Nenhum parâmetro adicional necessário`,
+    },
+  ]
+
+  const webhookExamples = [
+    {
+      name: "Webhook - Evento DEPOSIT",
+      description: "Exemplo de webhook enviado quando um depósito é recebido",
+      example: `{
+  "eventId": "evt_123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "DEPOSIT",
+  "userId": "456e7890-e89b-12d3-a456-426614174000",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "data": {
+    "transactionId": "txn_789abc123def456",
+    "amount": "100.00",
+    "currency": "BRL",
+    "status": "completed",
+    "pix_key": "user@example.com",
+    "sender_name": "João Silva",
+    "sender_document": "12345678901"
+  }
+}`,
+      labels: [
+        {
+          text: "WEBHOOK",
+          bgColor: "bg-[#ef4444]",
+          textColor: "text-white",
+        },
+        {
+          text: "DEPOSIT",
+          bgColor: "bg-[#10b981]",
+          textColor: "text-white",
+        },
+      ],
+    },
+    {
+      name: "Webhook - Evento WITHDRAWAL",
+      description: "Exemplo de webhook enviado quando um saque é processado",
+      example: `{
+  "eventId": "evt_456e7890-e89b-12d3-a456-426614174001",
+  "eventType": "WITHDRAWAL",
+  "userId": "456e7890-e89b-12d3-a456-426614174000",
+  "timestamp": "2024-01-15T10:35:00Z",
+  "data": {
+    "withdrawal_id": "withdrawal_1234567890_abc123",
+    "status": "completed",
+    "source_currency": "USDT",
+    "source_amount": 50.00,
+    "target_currency": "PIX",
+    "amount_received": 49.00,
+    "tx_hash": "0xabc123def456...",
+    "network": "Polygon",
+    "pix_key": "user@example.com",
+    "recipient_name": "João Silva"
+  }
+}`,
+      labels: [
+        {
+          text: "WEBHOOK",
+          bgColor: "bg-[#ef4444]",
+          textColor: "text-white",
+        },
+        {
+          text: "WITHDRAWAL",
+          bgColor: "bg-[#f59e0b]",
+          textColor: "text-white",
+        },
+      ],
+    },
+    {
+      name: "Webhook - Evento PAYMENT REQUEST",
+      description: "Exemplo de webhook enviado quando uma solicitação de pagamento é criada",
+      example: `{
+  "eventId": "evt_789abc12-e89b-12d3-a456-426614174002",
+  "eventType": "PAYMENT_REQUEST",
+  "userId": "456e7890-e89b-12d3-a456-426614174000",
+  "timestamp": "2024-01-15T10:40:00Z",
+  "data": {
+    "payment_request_id": "pr_123456789",
+    "amount": "250.00",
+    "currency": "BRL",
+    "status": "pending",
+    "qr_code": "00020126580014br.gov.bcb.pix...",
+    "expires_at": "2024-01-15T11:40:00Z",
+    "description": "Pagamento de serviços"
+  }
+}`,
+      labels: [
+        {
+          text: "WEBHOOK",
+          bgColor: "bg-[#ef4444]",
+          textColor: "text-white",
+        },
+        {
+          text: "PAYMENT",
+          bgColor: "bg-[#8b5cf6]",
+          textColor: "text-white",
+        },
+      ],
     },
   ]
 
@@ -492,12 +361,11 @@ x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
-
         {/* API Reference Section */}
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Referência da API</h2>
-            <p className="text-slate-600">Documentação completa dos endpoints disponíveis</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">API Documentation - Pixley Crypto Transactions</h2>
+            <p className="text-slate-600">Esta documentação descreve os principais endpoints da API do sistema Pixley Crypto Transactions.</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -517,11 +385,11 @@ x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
                 Autenticação
               </h4>
               <p className="text-slate-600 mb-4 text-sm">
-                Inclua suas credenciais no header:
+                Todos os endpoints requerem autenticação via JWT token:
               </p>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
-                <div>X-API-Key: SEU_API_KEY</div>
-                <div>X-Secret-Key: SEU_SECRET_KEY</div>
+                <div>Authorization: Bearer &lt;your-jwt-token&gt;</div>
+                <div>x-user-id: &lt;user-id&gt;</div>
               </div>
             </div>
           </div>
@@ -530,163 +398,221 @@ x-secret-key: b7e24c4d2e8956c153c3d0bada964842109f279e1f5b77687b050ae4ce3071e6`,
           <div className="space-y-8">
             {endpoints.map((endpoint, index) => (
               <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
-                                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-                    <div>
-                      <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{endpoint.name}</h4>
-                      <p className="text-slate-600 text-sm sm:text-base">{endpoint.subtitle}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                        {endpoint.labels.map((label, labelIndex) => (
-                          <span
-                            key={labelIndex}
-                            className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
-                          >
-                            {label.text}
-                          </span>
-                        ))}
-                      </div>
-                </div>
-                
-                <p className="text-slate-700 mb-6 leading-relaxed">{endpoint.description}</p>
-                
-                                                    <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
                   <div>
-                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
-                      <FaCode className="w-4 h-4 mr-2 text-purple-600" />
-                      Requisição
-                    </h5>
-                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
-                      <div className="mb-4">
-                        <span className="text-purple-600 font-semibold">{endpoint.method}</span> 
-                        <span className="text-slate-700 break-all"> {endpoint.url}</span>
-                      </div>
-                      {endpoint.exampleRequest && endpoint.exampleRequest.includes('{') && (
-                        <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                          <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleRequest.split('\n').slice(1).join('\n')}</pre>
-                        </div>
-                      )}
-                    </div>
+                    <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{endpoint.name}</h4>
+                    <p className="text-slate-600 text-sm sm:text-base">{endpoint.subtitle}</p>
                   </div>
-                  
-                  <div>
-                    <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
-                      <FaRocket className="w-4 h-4 mr-2 text-purple-600" />
-                      Resposta
-                    </h5>
-                    <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                  <div className="flex flex-wrap gap-2">
+                      {endpoint.labels.map((label, labelIndex) => (
+                        <span
+                          key={labelIndex}
+                          className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
+                        >
+                          {label.text}
+                        </span>
+                      ))}
+                    </div>
+              </div>
+              
+              <p className="text-slate-700 mb-6 leading-relaxed">{endpoint.description}</p>
+              
+              <div className="space-y-6">
+                <div>
+                  <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                    <FaCode className="w-4 h-4 mr-2 text-purple-600" />
+                    Requisição
+                  </h5>
+                  <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                    <div className="mb-4">
+                      <span className="text-purple-600 font-semibold">{endpoint.method}</span> 
+                      <span className="text-slate-700 break-all"> {endpoint.url}</span>
+                    </div>
+                    {endpoint.exampleRequest && endpoint.exampleRequest.includes('{') && (
                       <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleResponse}</pre>
+                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleRequest.split('\n').slice(1).join('\n')}</pre>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
                 
-                                  {endpoint.bodyExplanation && (
-                    <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100">
-                                              <h6 className="font-semibold text-slate-800 mb-3 flex items-center">
-                          <FaBook className="w-4 h-4 mr-2 text-purple-600" />
-                          Campos do Corpo da Requisição
-                        </h6>
-                      <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{endpoint.bodyExplanation}</p>
+                <div>
+                  <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                    <FaRocket className="w-4 h-4 mr-2 text-purple-600" />
+                    Resposta
+                  </h5>
+                  <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                    <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleResponse}</pre>
                     </div>
-                  )}
+                  </div>
+                </div>
+              </div>
+              
+              {endpoint.bodyExplanation && (
+                <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100">
+                  <h6 className="font-semibold text-slate-800 mb-4 flex items-center">
+                    <FaBook className="w-4 h-4 mr-2 text-purple-600" />
+                    Parâmetros da Requisição
+                  </h6>
+                  <div className="space-y-4">
+                    {endpoint.bodyExplanation.split('\n\n').map((section, sectionIndex) => {
+                      const lines = section.split('\n');
+                      const title = lines[0];
+                      const items = lines.slice(1);
+                      
+                      return (
+                        <div key={sectionIndex} className="bg-white/60 rounded-lg p-4 border border-purple-200/50">
+                          <h7 className="font-semibold text-slate-800 text-sm mb-3 block">{title}</h7>
+                          <div className="space-y-2">
+                            {items.map((item, itemIndex) => {
+                              if (item.trim().startsWith('•')) {
+                                const [param, ...descParts] = item.replace('•', '').trim().split(':');
+                                const description = descParts.join(':').trim();
+                                return (
+                                  <div key={itemIndex} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                                    <code className="text-purple-700 bg-purple-100 px-2 py-1 rounded text-xs font-medium shrink-0">
+                                      {param.trim()}
+                                    </code>
+                                    <span className="text-slate-600 text-sm leading-relaxed">{description}</span>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }).filter(Boolean)}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Webhooks Section */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Webhooks</h2>
+            <p className="text-slate-600">O sistema envia notificações via webhook para eventos importantes. Todos os webhooks são enviados via POST com assinatura HMAC-SHA256 no header X-Signature.</p>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-slate-900 mb-4">Eventos Suportados</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                <h4 className="font-semibold text-green-800 mb-2">DEPOSIT</h4>
+                <p className="text-green-700 text-sm">Quando um depósito é recebido</p>
+              </div>
+              <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
+                <h4 className="font-semibold text-orange-800 mb-2">WITHDRAWAL</h4>
+                <p className="text-orange-700 text-sm">Quando um saque é processado</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200">
+                <h4 className="font-semibold text-purple-800 mb-2">PAYMENT REQUEST</h4>
+                <p className="text-purple-700 text-sm">Quando uma solicitação de pagamento é criada</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-slate-900 mb-4">Estrutura Base do Webhook</h3>
+            <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+              <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{`{
+  "eventId": "evt_123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "DEPOSIT",
+  "userId": "456e7890-e89b-12d3-a456-426614174000",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "data": {
+    // Dados específicos do evento
+  }
+}`}</pre>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            <h3 className="text-xl font-bold text-slate-900 mb-4">Exemplos de Webhooks</h3>
+            {webhookExamples.map((webhook, index) => (
+              <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                  <div>
+                    <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{webhook.name}</h4>
+                    <p className="text-slate-600 text-sm sm:text-base">{webhook.description}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {webhook.labels.map((label, labelIndex) => (
+                      <span
+                        key={labelIndex}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium ${label.bgColor} ${label.textColor} shadow-sm`}
+                      >
+                        {label.text}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="font-semibold text-slate-800 mb-3 flex items-center">
+                    <FaCode className="w-4 h-4 mr-2 text-purple-600" />
+                    Exemplo de Payload
+                  </h5>
+                  <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
+                    <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{webhook.example}</pre>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
+    </main>
 
-        {/* Quick Start Section */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Primeiros Passos</h2>
-            <p className="text-slate-600">Comece a integrar em 3 passos simples</p>
+    {/* Footer */}
+    <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/50 mt-16">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="text-center">
+          <div className="flex items-center justify-center mb-6">
+            <Image
+              src="/pixley_logo.svg"
+              alt="Pixley Logo"
+              width={48}
+              height={48}
+              className="mr-3"
+            />
+            <span className="text-xl font-semibold text-slate-800">Pixley</span>
           </div>
+          <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
+          <p className="text-sm text-slate-500 mb-8">uat.pixley.app</p>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl font-bold text-white">1</span>
-              </div>
-              <h4 className="text-lg font-semibold text-slate-800 mb-3">Obtenha credenciais</h4>
-              <p className="text-slate-600 mb-4 text-sm leading-relaxed">
-                Entre em contato para obter suas chaves de API.
-              </p>
-                              <a 
-                  href="mailto:support@pixley.app" 
-                  className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors"
-                >
-                <FaEnvelope className="w-4 h-4 mr-2" />
-                Solicitar credenciais
-              </a>
-            </div>
-
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl font-bold text-white">2</span>
-              </div>
-              <h4 className="text-lg font-semibold text-slate-800 mb-3">Teste a API</h4>
-              <p className="text-slate-600 mb-4 text-sm leading-relaxed">
-                Use os exemplos para testar sua integração.
-              </p>
-              <div className="bg-slate-100 rounded-xl p-3 font-mono text-xs">
-                curl -X POST https://uat.pixley.app/payments
-              </div>
-            </div>
-
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-2xl font-bold text-white">3</span>
-              </div>
-              <h4 className="text-lg font-semibold text-slate-800 mb-3">Configure webhooks</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Configure webhooks para receber notificações em tempo real.
+          <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
+            <div className="text-left">
+              <h4 className="font-semibold text-slate-800 mb-3">Corporate Address</h4>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                30 N Gould St Ste R Sheridan,<br />
+                WY 82801, Wyoming, MI, United States.
               </p>
             </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/50 mt-16">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-6">
-              <Image
-                src="/pixley_logo.svg"
-                alt="Pixley Logo"
-                width={48}
-                height={48}
-                className="mr-3"
-              />
-              <span className="text-xl font-semibold text-slate-800">Pixley</span>
-            </div>
-            <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
-            <p className="text-sm text-slate-500 mb-8">uat.pixley.app</p>
             
-            <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
-              <div className="text-left">
-                <h4 className="font-semibold text-slate-800 mb-3">Corporate Address</h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  30 N Gould St Ste R Sheridan,<br />
-                  WY 82801, Wyoming, MI, United States.
-                </p>
-              </div>
-              
-              <div className="text-left">
-                <h4 className="font-semibold text-slate-800 mb-3">Contact Us</h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  <a href="tel:+1-321-352-3332" className="hover:text-purple-600 transition-colors block mb-1">
-                    +1-(321)-352-3332
-                  </a>
-                  <a href="mailto:contact@pixley.app" className="hover:text-purple-600 transition-colors block">
-                    contact@pixley.app
-                  </a>
-                </p>
-              </div>
+            <div className="text-left">
+              <h4 className="font-semibold text-slate-800 mb-3">Contact Us</h4>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                <a href="tel:+1-321-352-3332" className="hover:text-purple-600 transition-colors block mb-1">
+                  +1-(321)-352-3332
+                </a>
+                <a href="mailto:contact@pixley.app" className="hover:text-purple-600 transition-colors block">
+                  contact@pixley.app
+                </a>
+              </p>
             </div>
           </div>
         </div>
-      </footer>
-    </div>
-  )
-} 
+      </div>
+    </footer>
+  </div>
+)
+}

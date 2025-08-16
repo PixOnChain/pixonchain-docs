@@ -43,7 +43,7 @@ const TenantContext = createContext<TenantContextData>({} as TenantContextData);
 export function TenantProvider({ children }: { children: React.ReactNode }) {
     const [tenantConfig, setTenantConfig] = useState<TenantConfig | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error] = useState<string | null>(null);
 
     const loadTenantConfig = () => {
         setIsLoading(true);
@@ -69,7 +69,7 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
             component_background_b: '#f8fafc',
             support_number: null,
             hover_background: '#F3E8FF',
-            app_url: 'https://uat.pixley.app',
+            app_url: 'https://crypto.pixley.app',
             tenant_telegram_bot: null,
             tenant_telegram_username: null,
             tenant_telegram_url: null,
@@ -112,4 +112,4 @@ export function useTenant() {
         throw new Error('useTenant deve ser usado dentro de um TenantProvider');
     }
     return context;
-}
+} 

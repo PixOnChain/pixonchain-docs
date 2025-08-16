@@ -12,13 +12,13 @@ module.exports = {
       },
     ],
   },
-  webpack: (config: import('webpack').Configuration) => {
-    if (config.module && config.module.rules) {
-      config.module.rules.push({
-        test: /\.node$/,
-        use: "node-loader",
-      });
-    }
-    return config;
-  },
+  // webpack: (config: import('webpack').Configuration) => {
+  //   if (config.module && config.module.rules) {
+  //     config.module.rules.push({
+  //       test: /\.node$/,
+  //       use: "node-loader",
+  //     });
+  //   }
+  //   return config;
+  // },
 };
