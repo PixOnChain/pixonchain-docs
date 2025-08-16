@@ -7,7 +7,7 @@ import Image from "next/image"
 
 export default function Home() {
 
-  const apiUrl = "uat.pixley.app";
+  const apiUrl = "crypto.sandbox.pixley.app";
 
   const endpoints = [
     // TRADE ENDPOINTS
@@ -18,8 +18,6 @@ export default function Home() {
       method: "POST",
       url: `https://${apiUrl}/trade/off-ramp`,
       exampleRequest: `POST https://${apiUrl}/trade/off-ramp?simulation=false
-Authorization: Bearer <your-jwt-token>
-x-user-id: <user-id>
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>
 {
@@ -57,7 +55,6 @@ x-secret-key: <your-secret-key>
       ],
       bodyExplanation: `Headers obrigatórios:
 • Authorization: Bearer <token>
-• x-user-id: <user-id>
 • x-api-key: <your-api-key>
 • x-secret-key: <your-secret-key>
 
@@ -82,8 +79,6 @@ Campos do corpo da requisição:
       method: "POST",
       url: `https://${apiUrl}/trade/on-ramp`,
       exampleRequest: `POST https://${apiUrl}/trade/on-ramp?simulation=false
-Authorization: Bearer <your-jwt-token>
-x-user-id: <user-id>
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>
 {
@@ -119,7 +114,6 @@ x-secret-key: <your-secret-key>
       ],
       bodyExplanation: `Headers obrigatórios:
 • Authorization: Bearer <token>
-• x-user-id: <user-id>
 
 Query Parameters:
 • simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
@@ -138,8 +132,6 @@ Campos do corpo da requisição:
       method: "GET",
       url: `https://${apiUrl}/trade/on-ramp/{transactionId}`,
       exampleRequest: `GET https://${apiUrl}/trade/on-ramp/{transactionId}
-Authorization: Bearer <your-jwt-token>
-x-user-id: <user-id>
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>`,
       exampleResponse: `{
@@ -176,7 +168,6 @@ x-secret-key: <your-secret-key>`,
       ],
       bodyExplanation: `Headers obrigatórios:
 • Authorization: Bearer <token>
-• x-user-id: <user-id>
 • x-api-key: <your-api-key>
 • x-secret-key: <your-secret-key>
 
@@ -193,7 +184,6 @@ Observação:
       method: "GET",
       url: `https://${apiUrl}/api/users/me/limits`,
       exampleRequest: `GET https://${apiUrl}/api/users/me/limits
-x-user-id: <user-id>
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>`,
       exampleResponse: `{
@@ -239,7 +229,6 @@ x-secret-key: <your-secret-key>`,
         },
       ],
       bodyExplanation: `Headers obrigatórios:
-• x-user-id: <user-id>
 • x-api-key: <your-api-key>
 • x-secret-key: <your-secret-key>
 
@@ -383,7 +372,7 @@ Observação:
                 Base URL
               </h4>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
-                https://uat.pixley.app
+                https://crypto.sandbox.pixley.app
               </div>
             </div>
 
@@ -396,8 +385,6 @@ Observação:
                 Todos os endpoints requerem autenticação via JWT token e credenciais de API:
               </p>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
-                <div>Authorization: Bearer &lt;your-jwt-token&gt;</div>
-                <div>x-user-id: &lt;user-id&gt;</div>
                 <div>x-api-key: &lt;your-api-key&gt;</div>
                 <div>x-secret-key: &lt;your-secret-key&gt;</div>
               </div>
@@ -600,7 +587,7 @@ Observação:
               <span className="text-xl font-semibold text-slate-800">Pixley</span>
             </div>
             <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
-            <p className="text-sm text-slate-500 mb-8">uat.pixley.app</p>
+            <p className="text-sm text-slate-500 mb-8">crypto.sandbox.pixley.app</p>
 
             <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
               <div className="text-left">

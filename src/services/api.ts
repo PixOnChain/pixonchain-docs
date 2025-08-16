@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const tenantUrl =
     typeof window !== 'undefined'
-        ? (window.location.hostname === 'localhost' ? 'uat.pixley.app' : window.location.hostname)
+        ? (window.location.hostname === 'localhost' ? 'crypto.sandbox.pixley.app' : window.location.hostname)
         : '';
 
 export { tenantUrl };
