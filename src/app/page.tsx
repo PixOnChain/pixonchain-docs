@@ -16,8 +16,8 @@ export default function Home() {
       subtitle: "Processa transação off-ramp",
       description: "Processa uma transação off-ramp (saque de crypto para PIX)",
       method: "POST",
-      url: `https://${apiUrl}/trade/off-ramp`,
-      exampleRequest: `POST https://${apiUrl}/trade/off-ramp?simulation=false
+      url: `https://${apiUrl}/api/trade/off-ramp`,
+      exampleRequest: `POST https://${apiUrl}/api/trade/off-ramp?simulation=false
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>
 {
@@ -77,8 +77,8 @@ Campos do corpo da requisição:
       subtitle: "Processa transação on-ramp",
       description: "Processa uma transação on-ramp (compra de crypto com PIX)",
       method: "POST",
-      url: `https://${apiUrl}/trade/on-ramp`,
-      exampleRequest: `POST https://${apiUrl}/trade/on-ramp?simulation=false
+      url: `https://${apiUrl}/api/trade/on-ramp`,
+      exampleRequest: `POST https://${apiUrl}/api/trade/on-ramp?simulation=false
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>
 {
@@ -130,8 +130,8 @@ Campos do corpo da requisição:
       subtitle: "Consulta detalhes de transação",
       description: "Busca detalhes de uma transação on-ramp específica",
       method: "GET",
-      url: `https://${apiUrl}/trade/on-ramp/{transactionId}`,
-      exampleRequest: `GET https://${apiUrl}/trade/on-ramp/{transactionId}
+      url: `https://${apiUrl}/api/trade/on-ramp/{transactionId}`,
+      exampleRequest: `GET https://${apiUrl}/api/trade/on-ramp/{transactionId}
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>`,
       exampleResponse: `{
@@ -182,8 +182,8 @@ Observação:
       subtitle: "Limites e uso atual",
       description: "Permite que usuários autenticados consultem seus próprios limites e uso atual",
       method: "GET",
-      url: `https://${apiUrl}/api/users/me/limits`,
-      exampleRequest: `GET https://${apiUrl}/api/users/me/limits
+      url: `https://${apiUrl}/api/api/users/me/limits`,
+      exampleRequest: `GET https://${apiUrl}/api/api/users/me/limits
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>`,
       exampleResponse: `{
