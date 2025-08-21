@@ -130,8 +130,8 @@ Campos do corpo da requisição:
       subtitle: "Consulta detalhes de transação",
       description: "Busca detalhes de uma transação on-ramp específica",
       method: "GET",
-      url: `https://${apiUrl}/api/trade/on-ramp/{transactionId}`,
-      exampleRequest: `GET https://${apiUrl}/api/trade/on-ramp/{transactionId}
+      url: `https://${apiUrl}/api/transactions/:transactionId`,
+      exampleRequest: `GET https://${apiUrl}/api/transactions/{transactionId}
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>`,
       exampleResponse: `{
