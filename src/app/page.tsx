@@ -6,10 +6,218 @@ import { FaBook, FaCode, FaRocket, FaShieldAlt } from "react-icons/fa"
 import Image from "next/image"
 
 export default function Home() {
-
-  const apiUrl = "crypto.sandbox.pixley.app";
+  const apiUrl = "crypto.sandbox.pixley.app"
 
   const endpoints = [
+    {
+      name: "Registro de Usuário",
+      subtitle: "Endpoint público para registro de novos usuários",
+      description:
+        "Permite o registro público de novos usuários no sistema Pixley Crypto Transactions, com suporte completo para upload de arquivos durante o processo de cadastro.",
+      method: "POST",
+      url: `https://${apiUrl}/api/signup`,
+      exampleRequest: `POST https://${apiUrl}/api/signup
+Content-Type: multipart/form-data
+
+{
+  "name": "João Silva",
+  "email": "joao.silva@example.com",
+  "password": "MinhaSenh@123!",
+  "user_type": "user",
+  "document_number": "123.456.789-00",
+  "files": ["documento.pdf", "foto.jpg"]
+}`,
+      exampleResponse: `{
+  "message": "User registered successfully",
+  "user": {
+    "user_id": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "João Silva",
+    "email": "joao.silva@example.com",
+    "user_type": "user",
+    "document_number": "123.456.789-00",
+    "is_active": true,
+    "created_at": "2024-01-15T10:30:00Z"
+  },
+  "files": [
+    {
+      "fileId": "456e7890-e89b-12d3-a456-426614174001",
+      "filename": "document_123e4567.pdf",
+      "originalFilename": "documento.pdf",
+      "mimetype": "application/pdf",
+      "size": 1048576,
+      "uploadedAt": "2024-01-15T10:30:00Z"
+    }
+  ],
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}`,
+      labels: [
+        {
+          text: "REGISTRO",
+          bgColor: "bg-[#10b981]",
+          textColor: "text-white",
+        },
+        {
+          text: "UPLOAD",
+          bgColor: "bg-[#f59e0b]",
+          textColor: "text-white",
+        },
+        {
+          text: "PÚBLICO",
+          bgColor: "bg-[#3b82f6]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `📋 CAMPOS OBRIGATÓRIOS:
+• name: Nome completo do usuário (2-100 caracteres)
+• email: Email único do usuário (formato válido)
+• password: Senha do usuário (mínimo 8 caracteres)
+• user_type: Tipo de usuário (user, admin, super_admin)
+• document_number: Número do documento (CPF, CNPJ, etc.)
+
+📁 CAMPOS OPCIONAIS:
+• files: Arquivos para upload (máximo 10 arquivos, 10MB cada)
+
+📤 UPLOAD DE ARQUIVOS:
+• Tipos aceitos: PDF, PNG, JPG/JPEG
+• Tamanho máximo: 10MB por arquivo
+• Quantidade máxima: 10 arquivos por requisição
+• Content-Type: multipart/form-data
+
+🔐 SEGURANÇA:
+• Hash automático de senhas usando bcrypt
+• Validação rigorosa de tipos de arquivo
+• Token JWT retornado para autenticação imediata
+• Endpoint público (não requer autenticação prévia)
+
+✨ FUNCIONALIDADES:
+• Upload simultâneo de arquivos durante o registro
+• Processamento automático de documentos
+• Criação imediata do usuário com arquivos vinculados
+• Retorno de token para acesso imediato ao sistema`,
+    },
+    // BOLETO ENDPOINTS
+    {
+      name: "Pagamento de Boleto",
+      subtitle: "Processa pagamento de boleto",
+      description:
+        "Processa o pagamento de um boleto através da fila de processamento assíncrono",
+      method: "POST",
+      url: `https://${apiUrl}/api/boletos/pay`,
+      exampleRequest: `POST https://${apiUrl}/api/boletos/pay
+Authorization: Bearer {seu_token_jwt}
+Content-Type: application/json
+
+{
+  "codBarraLinhaDigitavel": "34191790010104351004791020150008291070026000",
+  "valorPagar": 260.00,
+  "dataVencimento": "2024-12-31"
+}`,
+      exampleResponse: `{
+  "success": true,
+  "message": "Boleto adicionado à fila de processamento",
+  "boleto": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "txId": "34191790010104351004791020150008291070026000",
+    "nominalValue": 260.00,
+    "dueDate": "2024-12-31",
+    "status": "PENDING",
+    "transactionId": "tx_123456789",
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  "queueInfo": {
+    "jobId": "job_987654321",
+    "position": 1
+  }
+}`,
+      labels: [
+        {
+          text: "BOLETO",
+          bgColor: "bg-[#f59e0b]",
+          textColor: "text-white",
+        },
+        {
+          text: "PAGAMENTO",
+          bgColor: "bg-[#ef4444]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `Headers obrigatórios:
+• Authorization: Bearer {seu_token_jwt}
+
+Campos da requisição:
+• codBarraLinhaDigitavel: Código de barras ou linha digitável do boleto (obrigatório)
+• valorPagar: Valor a ser pago (opcional - será extraído do código se não fornecido)
+• dataVencimento: Data de vencimento no formato YYYY-MM-DD (opcional)
+
+Status disponíveis:
+• PENDING: Boleto criado, aguardando pagamento
+• PAID: Boleto pago com sucesso
+• EXPIRED: Boleto vencido
+• CANCELLED: Boleto cancelado
+
+🔄 Processamento Assíncrono:
+• Os pagamentos são processados via fila (boletoPaymentQueue)
+• Retorna informações da posição na fila
+• Status atualizado automaticamente após processamento`,
+    },
+    {
+      name: "Listar Boletos do Usuário",
+      subtitle: "Lista boletos do usuário autenticado",
+      description:
+        "Lista os boletos do usuário autenticado com filtros e paginação",
+      method: "GET",
+      url: `https://${apiUrl}/api/boletos`,
+      exampleRequest: `GET https://${apiUrl}/api/boletos?page=1&limit=10&status=PENDING
+Authorization: Bearer {seu_token_jwt}`,
+      exampleResponse: `{
+  "boletos": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "txId": "34191790010104351004791020150008291070026000",
+      "nominalValue": 260.00,
+      "dueDate": "2024-12-31",
+      "status": "PENDING",
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-15T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 5,
+    "totalPages": 1,
+    "hasNext": false,
+    "hasPrev": false
+  }
+}`,
+      labels: [
+        {
+          text: "BOLETO",
+          bgColor: "bg-[#f59e0b]",
+          textColor: "text-white",
+        },
+        {
+          text: "CONSULTA",
+          bgColor: "bg-[#10b981]",
+          textColor: "text-white",
+        },
+      ],
+      bodyExplanation: `Headers obrigatórios:
+• Authorization: Bearer {seu_token_jwt}
+
+Parâmetros de Query (opcionais):
+• page: Número da página (padrão: 1)
+• limit: Itens por página (padrão: 20)
+• status: Filtrar por status (PENDING, PAID, EXPIRED, CANCELLED)
+• startDate: Data inicial (YYYY-MM-DD)
+• endDate: Data final (YYYY-MM-DD)
+
+🔍 Funcionalidades:
+• Paginação automática
+• Filtros por status e período
+• Acesso apenas aos boletos do usuário autenticado
+• Informações completas de cada boleto`,
+    },
     // TRADE ENDPOINTS
     {
       name: "Off-Ramp (Saque Crypto para PIX)",
@@ -180,7 +388,8 @@ Observação:
     {
       name: "Consultar Limites do Usuário",
       subtitle: "Limites e uso atual",
-      description: "Permite que usuários autenticados consultem seus próprios limites e uso atual",
+      description:
+        "Permite que usuários autenticados consultem seus próprios limites e uso atual",
       method: "GET",
       url: `https://${apiUrl}/api/api/users/me/limits`,
       exampleRequest: `GET https://${apiUrl}/api/api/users/me/limits
@@ -305,7 +514,8 @@ Observação:
     },
     {
       name: "Webhook - Evento PAYMENT REQUEST",
-      description: "Exemplo de webhook enviado quando uma solicitação de pagamento é criada",
+      description:
+        "Exemplo de webhook enviado quando uma solicitação de pagamento é criada",
       example: `{
   "eventId": "evt_789abc12-e89b-12d3-a456-426614174002",
   "eventType": "PAYMENT_REQUEST",
@@ -357,12 +567,16 @@ Observação:
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-
         {/* API Reference Section */}
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">API Documentation - Pixley Crypto Transactions</h2>
-            <p className="text-slate-600">Esta documentação descreve os principais endpoints da API do sistema Pixley Crypto Transactions.</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              API Documentation - Pixley Crypto Transactions
+            </h2>
+            <p className="text-slate-600">
+              Esta documentação descreve os principais endpoints da API do
+              sistema Pixley Crypto Transactions.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -382,26 +596,36 @@ Observação:
                 Autenticação
               </h4>
               <p className="text-slate-600 mb-4 text-sm">
-                Todos os endpoints requerem autenticação via JWT token e credenciais de API:
+                Todos os endpoints requerem autenticação via JWT token e
+                credenciais de API:
               </p>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
                 <div>x-api-key: &lt;your-api-key&gt;</div>
                 <div>x-secret-key: &lt;your-secret-key&gt;</div>
               </div>
               <p className="text-slate-500 mt-3 text-xs">
-                💡 As credenciais de API (API key e Secret key) devem ser obtidas através do nosso suporte.
+                💡 As credenciais de API (API key e Secret key) devem ser
+                obtidas através do nosso suporte.
               </p>
             </div>
           </div>
 
           {/* Detailed Endpoints */}
           <div className="space-y-8">
+            {/* All Endpoints */}
             {endpoints.map((endpoint, index) => (
-              <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
+              <div
+                key={index}
+                className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300"
+              >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
                   <div>
-                    <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{endpoint.name}</h4>
-                    <p className="text-slate-600 text-sm sm:text-base">{endpoint.subtitle}</p>
+                    <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
+                      {endpoint.name}
+                    </h4>
+                    <p className="text-slate-600 text-sm sm:text-base">
+                      {endpoint.subtitle}
+                    </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {endpoint.labels.map((label, labelIndex) => (
@@ -415,7 +639,9 @@ Observação:
                   </div>
                 </div>
 
-                <p className="text-slate-700 mb-6 leading-relaxed">{endpoint.description}</p>
+                <p className="text-slate-700 mb-6 leading-relaxed">
+                  {endpoint.description}
+                </p>
 
                 <div className="space-y-6">
                   <div>
@@ -425,14 +651,25 @@ Observação:
                     </h5>
                     <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
                       <div className="mb-4">
-                        <span className="text-purple-600 font-semibold">{endpoint.method}</span>
-                        <span className="text-slate-700 break-all"> {endpoint.url}</span>
+                        <span className="text-purple-600 font-semibold">
+                          {endpoint.method}
+                        </span>
+                        <span className="text-slate-700 break-all">
+                          {" "}
+                          {endpoint.url}
+                        </span>
                       </div>
-                      {endpoint.exampleRequest && endpoint.exampleRequest.includes('{') && (
-                        <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                          <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleRequest.split('\n').slice(1).join('\n')}</pre>
-                        </div>
-                      )}
+                      {endpoint.exampleRequest &&
+                        endpoint.exampleRequest.includes("{") && (
+                          <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
+                            <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">
+                              {endpoint.exampleRequest
+                                .split("\n")
+                                .slice(1)
+                                .join("\n")}
+                            </pre>
+                          </div>
+                        )}
                     </div>
                   </div>
 
@@ -443,7 +680,9 @@ Observação:
                     </h5>
                     <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
                       <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{endpoint.exampleResponse}</pre>
+                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">
+                          {endpoint.exampleResponse}
+                        </pre>
                       </div>
                     </div>
                   </div>
@@ -456,34 +695,53 @@ Observação:
                       Parâmetros da Requisição
                     </h6>
                     <div className="space-y-4">
-                      {endpoint.bodyExplanation.split('\n\n').map((section, sectionIndex) => {
-                        const lines = section.split('\n');
-                        const title = lines[0];
-                        const items = lines.slice(1);
+                      {endpoint.bodyExplanation
+                        .split("\n\n")
+                        .map((section, sectionIndex) => {
+                          const lines = section.split("\n")
+                          const title = lines[0]
+                          const items = lines.slice(1)
 
-                        return (
-                          <div key={sectionIndex} className="bg-white/60 rounded-lg p-4 border border-purple-200/50">
-                            <h2 className="font-semibold text-slate-800 text-sm mb-3 block">{title}</h2>
-                            <div className="space-y-2">
-                              {items.map((item, itemIndex) => {
-                                if (item.trim().startsWith('•')) {
-                                  const [param, ...descParts] = item.replace('•', '').trim().split(':');
-                                  const description = descParts.join(':').trim();
-                                  return (
-                                    <div key={itemIndex} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-                                      <code className="text-purple-700 bg-purple-100 px-2 py-1 rounded text-xs font-medium shrink-0">
-                                        {param.trim()}
-                                      </code>
-                                      <span className="text-slate-600 text-sm leading-relaxed">{description}</span>
-                                    </div>
-                                  );
-                                }
-                                return null;
-                              }).filter(Boolean)}
+                          return (
+                            <div
+                              key={sectionIndex}
+                              className="bg-white/60 rounded-lg p-4 border border-purple-200/50"
+                            >
+                              <h2 className="font-semibold text-slate-800 text-sm mb-3 block">
+                                {title}
+                              </h2>
+                              <div className="space-y-2">
+                                {items
+                                  .map((item, itemIndex) => {
+                                    if (item.trim().startsWith("•")) {
+                                      const [param, ...descParts] = item
+                                        .replace("•", "")
+                                        .trim()
+                                        .split(":")
+                                      const description = descParts
+                                        .join(":")
+                                        .trim()
+                                      return (
+                                        <div
+                                          key={itemIndex}
+                                          className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3"
+                                        >
+                                          <code className="text-purple-700 bg-purple-100 px-2 py-1 rounded text-xs font-medium shrink-0">
+                                            {param.trim()}
+                                          </code>
+                                          <span className="text-slate-600 text-sm leading-relaxed">
+                                            {description}
+                                          </span>
+                                        </div>
+                                      )
+                                    }
+                                    return null
+                                  })
+                                  .filter(Boolean)}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          )
+                        })}
                     </div>
                   </div>
                 )}
@@ -494,30 +752,50 @@ Observação:
           {/* Webhooks Section */}
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-4">Webhooks</h2>
-              <p className="text-slate-600">O sistema envia notificações via webhook para eventos importantes. Todos os webhooks são enviados via POST com assinatura HMAC-SHA256 no header X-Signature.</p>
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                Webhooks
+              </h2>
+              <p className="text-slate-600">
+                O sistema envia notificações via webhook para eventos
+                importantes. Todos os webhooks são enviados via POST com
+                assinatura HMAC-SHA256 no header X-Signature.
+              </p>
             </div>
 
             <div className="mb-8">
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Eventos Suportados</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">
+                Eventos Suportados
+              </h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
                   <h4 className="font-semibold text-green-800 mb-2">DEPOSIT</h4>
-                  <p className="text-green-700 text-sm">Quando um depósito é recebido</p>
+                  <p className="text-green-700 text-sm">
+                    Quando um depósito é recebido
+                  </p>
                 </div>
                 <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
-                  <h4 className="font-semibold text-orange-800 mb-2">WITHDRAWAL</h4>
-                  <p className="text-orange-700 text-sm">Quando um saque é processado</p>
+                  <h4 className="font-semibold text-orange-800 mb-2">
+                    WITHDRAWAL
+                  </h4>
+                  <p className="text-orange-700 text-sm">
+                    Quando um saque é processado
+                  </p>
                 </div>
                 <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200">
-                  <h4 className="font-semibold text-purple-800 mb-2">PAYMENT REQUEST</h4>
-                  <p className="text-purple-700 text-sm">Quando uma solicitação de pagamento é criada</p>
+                  <h4 className="font-semibold text-purple-800 mb-2">
+                    PAYMENT REQUEST
+                  </h4>
+                  <p className="text-purple-700 text-sm">
+                    Quando uma solicitação de pagamento é criada
+                  </p>
                 </div>
               </div>
             </div>
 
             <div className="mb-8">
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Estrutura Base do Webhook</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">
+                Estrutura Base do Webhook
+              </h3>
               <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
                 <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
                   <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{`{
@@ -534,13 +812,22 @@ Observação:
             </div>
 
             <div className="space-y-8">
-              <h3 className="text-xl font-bold text-slate-900 mb-4">Exemplos de Webhooks</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">
+                Exemplos de Webhooks
+              </h3>
               {webhookExamples.map((webhook, index) => (
-                <div key={index} className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300">
+                <div
+                  key={index}
+                  className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300"
+                >
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
                     <div>
-                      <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{webhook.name}</h4>
-                      <p className="text-slate-600 text-sm sm:text-base">{webhook.description}</p>
+                      <h4 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
+                        {webhook.name}
+                      </h4>
+                      <p className="text-slate-600 text-sm sm:text-base">
+                        {webhook.description}
+                      </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {webhook.labels.map((label, labelIndex) => (
@@ -561,7 +848,9 @@ Observação:
                     </h5>
                     <div className="bg-white border border-purple-200 rounded-xl p-4 sm:p-6 font-mono text-sm shadow-sm">
                       <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
-                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{webhook.example}</pre>
+                        <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">
+                          {webhook.example}
+                        </pre>
                       </div>
                     </div>
                   </div>
@@ -584,27 +873,45 @@ Observação:
                 height={48}
                 className="mr-3"
               />
-              <span className="text-xl font-semibold text-slate-800">Pixley</span>
+              <span className="text-xl font-semibold text-slate-800">
+                Pixley
+              </span>
             </div>
-            <p className="text-slate-600 mb-2">&copy; {new Date().getFullYear()} Pixley. Todos os direitos reservados.</p>
-            <p className="text-sm text-slate-500 mb-8">crypto.sandbox.pixley.app</p>
+            <p className="text-slate-600 mb-2">
+              &copy; {new Date().getFullYear()} Pixley. Todos os direitos
+              reservados.
+            </p>
+            <p className="text-sm text-slate-500 mb-8">
+              crypto.sandbox.pixley.app
+            </p>
 
             <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
               <div className="text-left">
-                <h4 className="font-semibold text-slate-800 mb-3">Corporate Address</h4>
+                <h4 className="font-semibold text-slate-800 mb-3">
+                  Corporate Address
+                </h4>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  30 N Gould St Ste R Sheridan,<br />
+                  30 N Gould St Ste R Sheridan,
+                  <br />
                   WY 82801, Wyoming, MI, United States.
                 </p>
               </div>
 
               <div className="text-left">
-                <h4 className="font-semibold text-slate-800 mb-3">Contact Us</h4>
+                <h4 className="font-semibold text-slate-800 mb-3">
+                  Contact Us
+                </h4>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  <a href="tel:+1-321-352-3332" className="hover:text-purple-600 transition-colors block mb-1">
+                  <a
+                    href="tel:+1-321-352-3332"
+                    className="hover:text-purple-600 transition-colors block mb-1"
+                  >
                     +1-(321)-352-3332
                   </a>
-                  <a href="mailto:contact@pixley.app" className="hover:text-purple-600 transition-colors block">
+                  <a
+                    href="mailto:contact@pixley.app"
+                    className="hover:text-purple-600 transition-colors block"
+                  >
                     contact@pixley.app
                   </a>
                 </p>
