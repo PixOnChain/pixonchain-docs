@@ -13,7 +13,7 @@ export default function Home() {
       name: "Registro de Usuário",
       subtitle: "Endpoint público para registro de novos usuários",
       description:
-        "Permite o registro público de novos usuários no sistema Pixley Crypto Transactions, com suporte completo para upload de arquivos durante o processo de cadastro.",
+        "Permite o registro público de novos usuários no sistema Pixley Crypto Transactions, com suporte completo para upload de documentos de identificação (frente e verso) durante o processo de cadastro.",
       method: "POST",
       url: `https://${apiUrl}/api/signup`,
       exampleRequest: `POST https://${apiUrl}/api/signup
@@ -25,7 +25,7 @@ Content-Type: multipart/form-data
   "password": "MinhaSenh@123!",
   "user_type": "user",
   "document_number": "123.456.789-00",
-  "files": ["documento.pdf", "foto.jpg"]
+  "files": ["documento_frente.jpg", "documento_verso.jpg"]
 }`,
       exampleResponse: `{
   "message": "User registered successfully",
@@ -41,10 +41,18 @@ Content-Type: multipart/form-data
   "files": [
     {
       "fileId": "456e7890-e89b-12d3-a456-426614174001",
-      "filename": "document_123e4567.pdf",
-      "originalFilename": "documento.pdf",
-      "mimetype": "application/pdf",
-      "size": 1048576,
+      "filename": "document_frente_123e4567.jpg",
+      "originalFilename": "documento_frente.jpg",
+      "mimetype": "image/jpeg",
+      "size": 2048576,
+      "uploadedAt": "2024-01-15T10:30:00Z"
+    },
+    {
+      "fileId": "456e7890-e89b-12d3-a456-426614174002",
+      "filename": "document_verso_123e4567.jpg",
+      "originalFilename": "documento_verso.jpg",
+      "mimetype": "image/jpeg",
+      "size": 1856432,
       "uploadedAt": "2024-01-15T10:30:00Z"
     }
   ],
@@ -75,11 +83,14 @@ Content-Type: multipart/form-data
 • document_number: Número do documento (CPF, CNPJ, etc.)
 
 📁 CAMPOS OPCIONAIS:
-• files: Arquivos para upload (máximo 10 arquivos, 10MB cada)
+• files: Documentos de identificação para upload (recomendado: frente e verso do documento)
 
-📤 UPLOAD DE ARQUIVOS:
-• Tipos aceitos: PDF, PNG, JPG/JPEG
+📤 UPLOAD DE DOCUMENTOS DE IDENTIFICAÇÃO:
+• Tipos aceitos: PNG, JPG/JPEG, PDF
 • Tamanho máximo: 10MB por arquivo
+• Documentos recomendados: 
+  - documento_frente.jpg (frente do RG/CNH/Passaporte)
+  - documento_verso.jpg (verso do RG/CNH/Passaporte)
 • Quantidade máxima: 10 arquivos por requisição
 • Content-Type: multipart/form-data
 
@@ -90,10 +101,12 @@ Content-Type: multipart/form-data
 • Endpoint público (não requer autenticação prévia)
 
 ✨ FUNCIONALIDADES:
-• Upload simultâneo de arquivos durante o registro
-• Processamento automático de documentos
-• Criação imediata do usuário com arquivos vinculados
-• Retorno de token para acesso imediato ao sistema`,
+• Upload simultâneo de documentos de identificação durante o registro
+• Processamento automático de documentos (frente e verso)
+• Validação de integridade dos arquivos de imagem/PDF
+• Criação imediata do usuário com documentos vinculados
+• Retorno de token para acesso imediato ao sistema
+• Suporte para múltiplos tipos de documento (RG, CNH, Passaporte)`,
     },
     // BOLETO ENDPOINTS
     {
