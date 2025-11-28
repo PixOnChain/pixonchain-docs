@@ -137,7 +137,7 @@ export default function LoginPage() {
 
       {/* Domain Info */}
       <div className="mt-8 text-center">
-        <p className="text-xs text-gray-400">crypto.sandbox.pixley.app</p>
+        <p className="text-xs text-gray-400">crypto.pixley.app</p>
       </div>
     </div>
   )

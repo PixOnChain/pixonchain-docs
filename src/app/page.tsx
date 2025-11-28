@@ -6,108 +6,9 @@ import { FaBook, FaCode, FaRocket, FaShieldAlt } from "react-icons/fa"
 import Image from "next/image"
 
 export default function Home() {
-  const apiUrl = "crypto.sandbox.pixley.app"
+  const apiUrl = "crypto.pixley.app"
 
   const endpoints = [
-    {
-      name: "Registro de Usuário",
-      subtitle: "Endpoint público para registro de novos usuários",
-      description:
-        "Permite o registro público de novos usuários no sistema Pixley Crypto Transactions, com suporte completo para upload de documentos de identificação (frente e verso) durante o processo de cadastro.",
-      method: "POST",
-      url: `https://${apiUrl}/api/signup`,
-      exampleRequest: `POST https://${apiUrl}/api/signup
-Content-Type: multipart/form-data
-
-{
-  "name": "João Silva",
-  "email": "joao.silva@example.com",
-  "password": "MinhaSenh@123!",
-  "user_type": "user",
-  "document_number": "123.456.789-00",
-  "files": ["documento_frente.jpg", "documento_verso.jpg"]
-}`,
-      exampleResponse: `{
-  "message": "User registered successfully",
-  "user": {
-    "user_id": "123e4567-e89b-12d3-a456-426614174000",
-    "name": "João Silva",
-    "email": "joao.silva@example.com",
-    "user_type": "user",
-    "document_number": "123.456.789-00",
-    "is_active": true,
-    "created_at": "2024-01-15T10:30:00Z"
-  },
-  "files": [
-    {
-      "fileId": "456e7890-e89b-12d3-a456-426614174001",
-      "filename": "document_frente_123e4567.jpg",
-      "originalFilename": "documento_frente.jpg",
-      "mimetype": "image/jpeg",
-      "size": 2048576,
-      "uploadedAt": "2024-01-15T10:30:00Z"
-    },
-    {
-      "fileId": "456e7890-e89b-12d3-a456-426614174002",
-      "filename": "document_verso_123e4567.jpg",
-      "originalFilename": "documento_verso.jpg",
-      "mimetype": "image/jpeg",
-      "size": 1856432,
-      "uploadedAt": "2024-01-15T10:30:00Z"
-    }
-  ],
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}`,
-      labels: [
-        {
-          text: "REGISTRO",
-          bgColor: "bg-[#10b981]",
-          textColor: "text-white",
-        },
-        {
-          text: "UPLOAD",
-          bgColor: "bg-[#f59e0b]",
-          textColor: "text-white",
-        },
-        {
-          text: "PÚBLICO",
-          bgColor: "bg-[#3b82f6]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `📋 CAMPOS OBRIGATÓRIOS:
-• name: Nome completo do usuário (2-100 caracteres)
-• email: Email único do usuário (formato válido)
-• password: Senha do usuário (mínimo 8 caracteres)
-• user_type: Tipo de usuário (user, admin, super_admin)
-• document_number: Número do documento (CPF, CNPJ, etc.)
-
-📁 CAMPOS OPCIONAIS:
-• files: Documentos de identificação para upload (recomendado: frente e verso do documento)
-
-📤 UPLOAD DE DOCUMENTOS DE IDENTIFICAÇÃO:
-• Tipos aceitos: PNG, JPG/JPEG, PDF
-• Tamanho máximo: 10MB por arquivo
-• Documentos recomendados: 
-  - documento_frente.jpg (frente do RG/CNH/Passaporte)
-  - documento_verso.jpg (verso do RG/CNH/Passaporte)
-• Quantidade máxima: 10 arquivos por requisição
-• Content-Type: multipart/form-data
-
-🔐 SEGURANÇA:
-• Hash automático de senhas usando bcrypt
-• Validação rigorosa de tipos de arquivo
-• Token JWT retornado para autenticação imediata
-• Endpoint público (não requer autenticação prévia)
-
-✨ FUNCIONALIDADES:
-• Upload simultâneo de documentos de identificação durante o registro
-• Processamento automático de documentos (frente e verso)
-• Validação de integridade dos arquivos de imagem/PDF
-• Criação imediata do usuário com documentos vinculados
-• Retorno de token para acesso imediato ao sistema
-• Suporte para múltiplos tipos de documento (RG, CNH, Passaporte)`,
-    },
     // BOLETO ENDPOINTS
     {
       name: "Pagamento de Boleto",
@@ -118,6 +19,8 @@ Content-Type: multipart/form-data
       url: `https://${apiUrl}/api/boletos/pay`,
       exampleRequest: `POST https://${apiUrl}/api/boletos/pay
 Authorization: Bearer {seu_token_jwt}
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>
 Content-Type: application/json
 
 {
@@ -128,18 +31,20 @@ Content-Type: application/json
       exampleResponse: `{
   "success": true,
   "message": "Boleto adicionado à fila de processamento",
-  "boleto": {
-    "id": "550e8400-e29b-41d4-a716-446655440000",
-    "txId": "34191790010104351004791020150008291070026000",
-    "nominalValue": 260.00,
-    "dueDate": "2024-12-31",
-    "status": "PENDING",
-    "transactionId": "tx_123456789",
-    "createdAt": "2024-01-15T10:30:00Z"
-  },
-  "queueInfo": {
-    "jobId": "job_987654321",
-    "position": 1
+  "data": {
+    "boleto": {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "txId": "34191790010104351004791020150008291070026000",
+      "nominalValue": 260.00,
+      "dueDate": "2024-12-31",
+      "status": "PENDING",
+      "transactionId": "tx_123456789",
+      "createdAt": "2024-01-15T10:30:00Z"
+    },
+    "queueInfo": {
+      "jobId": "job_987654321",
+      "position": 1
+    }
   }
 }`,
       labels: [
@@ -154,8 +59,10 @@ Content-Type: application/json
           textColor: "text-white",
         },
       ],
-      bodyExplanation: `Headers obrigatórios:
+      bodyExplanation: `Autenticação (escolha 1):
 • Authorization: Bearer {seu_token_jwt}
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
 
 Campos da requisição:
 • codBarraLinhaDigitavel: Código de barras ou linha digitável do boleto (obrigatório)
@@ -181,26 +88,31 @@ Status disponíveis:
       method: "GET",
       url: `https://${apiUrl}/api/boletos`,
       exampleRequest: `GET https://${apiUrl}/api/boletos?page=1&limit=10&status=PENDING
-Authorization: Bearer {seu_token_jwt}`,
+Authorization: Bearer {seu_token_jwt}
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>`,
       exampleResponse: `{
-  "boletos": [
-    {
-      "id": "550e8400-e29b-41d4-a716-446655440000",
-      "txId": "34191790010104351004791020150008291070026000",
-      "nominalValue": 260.00,
-      "dueDate": "2024-12-31",
-      "status": "PENDING",
-      "createdAt": "2024-01-15T10:30:00Z",
-      "updatedAt": "2024-01-15T10:30:00Z"
+  "success": true,
+  "data": {
+    "boletos": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "txId": "34191790010104351004791020150008291070026000",
+        "nominalValue": 260.00,
+        "dueDate": "2024-12-31",
+        "status": "PENDING",
+        "createdAt": "2024-01-15T10:30:00Z",
+        "updatedAt": "2024-01-15T10:30:00Z"
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 10,
+      "total": 5,
+      "totalPages": 1,
+      "hasNext": false,
+      "hasPrev": false
     }
-  ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total": 5,
-    "totalPages": 1,
-    "hasNext": false,
-    "hasPrev": false
   }
 }`,
       labels: [
@@ -215,8 +127,10 @@ Authorization: Bearer {seu_token_jwt}`,
           textColor: "text-white",
         },
       ],
-      bodyExplanation: `Headers obrigatórios:
+      bodyExplanation: `Autenticação (escolha 1):
 • Authorization: Bearer {seu_token_jwt}
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
 
 Parâmetros de Query (opcionais):
 • page: Número da página (padrão: 1)
@@ -231,233 +145,201 @@ Parâmetros de Query (opcionais):
 • Acesso apenas aos boletos do usuário autenticado
 • Informações completas de cada boleto`,
     },
-    // TRADE ENDPOINTS
     {
-      name: "Off-Ramp (Saque Crypto para PIX)",
-      subtitle: "Processa transação off-ramp",
-      description: "Processa uma transação off-ramp (saque de crypto para PIX)",
-      method: "POST",
-      url: `https://${apiUrl}/api/trade/off-ramp`,
-      exampleRequest: `POST https://${apiUrl}/api/trade/off-ramp?simulation=false
-x-api-key: <your-api-key>
-x-secret-key: <your-secret-key>
-{
-  "source_currency": "USDT",
-  "source_amount": 50.00,
-  "target_currency": "PIX",
-  "pix_key": "user@example.com",
-  "pix_key_type": "email",
-  "recipient_name": "João Silva",
-  "recipient_document": "12345678901",
-  "network": "Polygon",
-  "externalId": "ext-withdrawal-123"
-}`,
-      exampleResponse: `{
-  "withdrawal_id": "withdrawal_1234567890_abc123",
-  "status": "processing",
-  "source_currency": "USDT",
-  "source_amount": 50.00,
-  "target_currency": "PIX",
-  "estimated_amount_received": 49.00,
-  "estimated_completion": "2024-01-15T10:30:00Z",
-  "message": "Withdrawal is being processed. Blockchain operations have been queued and PIX transfer will be initiated shortly."
-}`,
-      labels: [
-        {
-          text: "OFF-RAMP",
-          bgColor: "bg-[#7747FF]",
-          textColor: "text-white",
-        },
-        {
-          text: "PIX",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `Headers obrigatórios:
-• Authorization: Bearer <token>
-• x-api-key: <your-api-key>
-• x-secret-key: <your-secret-key>
-
-Query Parameters:
-• simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
-
-Campos do corpo da requisição:
-• source_currency: Moeda de origem (ex.: "USDT")
-• source_amount: Valor a ser sacado
-• target_currency: "PIX"
-• pix_key: Chave PIX do destinatário
-• pix_key_type: Tipo da chave PIX ("email", "cpf", etc.)
-• recipient_name: Nome do destinatário
-• recipient_document: Documento do destinatário
-• network: Rede blockchain (ex.: "Polygon")
-• externalId: ID externo da transação`,
-    },
-    {
-      name: "On-Ramp (Compra Crypto com PIX)",
-      subtitle: "Processa transação on-ramp",
-      description: "Processa uma transação on-ramp (compra de crypto com PIX)",
-      method: "POST",
-      url: `https://${apiUrl}/api/trade/on-ramp`,
-      exampleRequest: `POST https://${apiUrl}/api/trade/on-ramp?simulation=false
-x-api-key: <your-api-key>
-x-secret-key: <your-secret-key>
-{
-  "source_currency": "BRL",
-  "source_amount": 100.00,
-  "target_currency": "USDT",
-  "wallet_address": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
-  "network": "Polygon"
-}`,
-      exampleResponse: `{
-  "id": "trade-123",
-  "status": "pending",
-  "qr_code": "00020126580014br.gov.bcb.pix...",
-  "source_currency": "BRL",
-  "source_amount": 100.00,
-  "target_currency": "USDT",
-  "target_amount": 18.52,
-  "wallet_address": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
-  "network": "Polygon",
-  "created_at": "2024-01-15T10:30:00Z"
-}`,
-      labels: [
-        {
-          text: "ON-RAMP",
-          bgColor: "bg-[#3b82f6]",
-          textColor: "text-white",
-        },
-        {
-          text: "PIX",
-          bgColor: "bg-[#00cc66]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `Headers obrigatórios:
-• Authorization: Bearer <token>
-
-Query Parameters:
-• simulation: (boolean, opcional) Se true, retorna apenas dados de simulação
-
-Campos do corpo da requisição:
-• source_currency: "BRL"
-• source_amount: Valor em BRL a ser convertido
-• target_currency: Moeda de destino (ex.: "USDT")
-• wallet_address: Endereço da carteira de destino
-• network: Rede blockchain (ex.: "Polygon")`,
-    },
-    {
-      name: "Buscar Transação On-Ramp",
-      subtitle: "Consulta detalhes de transação",
-      description: "Busca detalhes de uma transação on-ramp específica",
-      method: "GET",
-      url: `https://${apiUrl}/api/transactions/:transactionId`,
-      exampleRequest: `GET https://${apiUrl}/api/transactions/{transactionId}
-x-api-key: <your-api-key>
-x-secret-key: <your-secret-key>`,
-      exampleResponse: `{
-  "qrCode": {
-    "id": "qr-123",
-    "uuid": "550e8400-e29b-41d4-a716-446655440000",
-    "qr_code": "00020126580014br.gov.bcb.pix...",
-    "source_currency": "cPix",
-    "source_amount": 100.00,
-    "target_currency": "USDT",
-    "target_amount": 18.52,
-    "network": "Polygon",
-    "wallet_address": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
-    "fees": 5.00,
-    "pix_status": "pending",
-    "trade_price": 5.40,
-    "net_amount": 95.00,
-    "updated_at": "2024-01-15T10:30:00Z",
-    "tx_hash": "0xabc123...",
-    "explorer_url": "https://polygonscan.com/tx/0xabc123..."
-  }
-}`,
-      labels: [
-        {
-          text: "ON-RAMP",
-          bgColor: "bg-[#3b82f6]",
-          textColor: "text-white",
-        },
-        {
-          text: "QUERY",
-          bgColor: "bg-[#10b981]",
-          textColor: "text-white",
-        },
-      ],
-      bodyExplanation: `Headers obrigatórios:
-• Authorization: Bearer <token>
-• x-api-key: <your-api-key>
-• x-secret-key: <your-secret-key>
-
-Path Parameters:
-• transactionId: ID da transação a ser consultada
-
-Observação:
-• Este endpoint não requer corpo da requisição`,
-    },
-    {
-      name: "Consultar Limites do Usuário",
-      subtitle: "Limites e uso atual",
+      name: "Listar Carteiras",
+      subtitle: "Lista carteiras vinculadas ao usuário",
       description:
-        "Permite que usuários autenticados consultem seus próprios limites e uso atual",
+        "Retorna as carteiras do usuário autenticado e suas blockchains suportadas",
       method: "GET",
-      url: `https://${apiUrl}/api/api/users/me/limits`,
-      exampleRequest: `GET https://${apiUrl}/api/api/users/me/limits
+      url: `https://${apiUrl}/api/wallet/list`,
+      exampleRequest: `GET https://${apiUrl}/api/wallet/list
+Authorization: Bearer {seu_token_jwt}
 x-api-key: <your-api-key>
 x-secret-key: <your-secret-key>`,
       exampleResponse: `{
-  "dailyLimits": {
-    "amount": 1000.00,
-    "count": 10,
-    "active": true
-  },
-  "monthlyLimits": {
-    "amount": 30000.00,
-    "count": 100,
-    "active": true
-  },
-  "dailyUsage": {
-    "amount": 250.00,
-    "count": 3
-  },
-  "monthlyUsage": {
-    "amount": 5500.00,
-    "count": 25
-  },
-  "remainingLimits": {
-    "daily": {
-      "amount": 750.00,
-      "count": 7
-    },
-    "monthly": {
-      "amount": 24500.00,
-      "count": 75
-    }
+  "success": true,
+  "data": {
+    "wallets": [
+      {
+        "id": 1001,
+        "address": "0x7B14e8c72a989B0Ae3D95036E4c5F1DdC23Fa6f8",
+        "blockchains": [
+          "Ethereum",
+          "BSC",
+          "Polygon"
+        ]
+      },
+      {
+        "id": 1002,
+        "address": "0xA3f92c1b4C7F8e52E63B1d4C9C5Fb27E9B8A71d2",
+        "blockchains": [
+          "Ethereum",
+          "Polygon"
+        ]
+      }
+    ]
   }
 }`,
       labels: [
-        {
-          text: "LIMITS",
-          bgColor: "bg-[#f59e0b]",
-          textColor: "text-white",
-        },
-        {
-          text: "USER",
-          bgColor: "bg-[#8b5cf6]",
-          textColor: "text-white",
-        },
+        { text: "CARTEIRA", bgColor: "bg-[#f59e0b]", textColor: "text-white" },
+        { text: "CONSULTA", bgColor: "bg-[#10b981]", textColor: "text-white" },
       ],
-      bodyExplanation: `Headers obrigatórios:
+      bodyExplanation: `Autenticação (escolha 1):
+• Authorization: Bearer {seu_token_jwt}
 • x-api-key: <your-api-key>
 • x-secret-key: <your-secret-key>
 
-Observação:
-• Nenhum parâmetro adicional necessário`,
+Parâmetros de Query (opcionais):
+• page: Número da página (padrão: 1)
+• limit: Itens por página (padrão: 20)
+• blockchain: Filtrar por rede (Ethereum, BSC, Polygon)
+
+🔍 Funcionalidades:
+• Retorna carteiras vinculadas ao usuário
+• Lista blockchains suportadas por cada carteira`,
     },
+    {
+      name: "Consultar Saldos do Usuário",
+      subtitle: "Retorna saldos por moeda da conta autenticada",
+      description:
+        "Lista os saldos por moeda do usuário autenticado, com valores disponível, reservado e total",
+      method: "GET",
+      url: `https://${apiUrl}/api/balance/me`,
+      exampleRequest: `GET https://${apiUrl}/api/balance/me
+Authorization: Bearer {seu_token_jwt}
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>`,
+      exampleResponse: `{
+  "success": true,
+  "data": {
+    "userId": "XXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+    "balances": [
+      {
+        "currency": "BRL",
+        "balance": "1250.89",
+        "reserved": "300.00",
+        "available": "950.89",
+        "created_at": "2025-09-15T12:20:45.112Z",
+        "updated_at": "2025-11-28T14:55:03.441Z"
+      },
+      {
+        "currency": "USDT",
+        "balance": "532.12000000",
+        "reserved": "12.50000000",
+        "available": "519.62000000",
+        "created_at": "2025-09-15T12:20:45.210Z",
+        "updated_at": "2025-11-27T18:42:11.882Z"
+      },
+      {
+        "currency": "USDC",
+        "balance": "120.00000000",
+        "reserved": "0.00000000",
+        "available": "120.00000000",
+        "created_at": "2025-10-02T08:10:22.951Z",
+        "updated_at": "2025-11-20T06:12:30.144Z"
+      },
+      {
+        "currency": "USD",
+        "balance": "87.45000000",
+        "reserved": "10.00000000",
+        "available": "77.45000000",
+        "created_at": "2025-10-02T08:10:23.002Z",
+        "updated_at": "2025-11-25T10:03:09.210Z"
+      },
+      {
+        "currency": "BTC",
+        "balance": "0.00421500",
+        "reserved": "0.00000000",
+        "available": "0.00421500",
+        "created_at": "2025-09-15T12:20:45.330Z",
+        "updated_at": "2025-11-26T22:48:55.512Z"
+      }
+    ],
+    "timestamp": "2025-11-28T15:40:12.999Z"
+  }
+}`,
+      labels: [
+        { text: "SALDO", bgColor: "bg-[#8b5cf6]", textColor: "text-white" },
+        { text: "CONSULTA", bgColor: "bg-[#10b981]", textColor: "text-white" },
+      ],
+      bodyExplanation: `Autenticação (escolha 1):
+• Authorization: Bearer {seu_token_jwt}
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
+
+🔍 Informações retornadas:
+• balances: Lista de moedas com balance, reserved e available
+• timestamp: Momento da coleta dos saldos
+• userId: Identificador do usuário autenticado`,
+    },
+    {
+      name: "Transferência entre Carteiras",
+      subtitle: "Transfere fundos entre carteiras ou para endereço externo",
+      description:
+        "Cria uma transferência de fundos entre carteiras internas ou para um endereço externo em redes suportadas",
+      method: "POST",
+      url: `https://${apiUrl}/api/wallet/transfer`,
+      exampleRequest: `POST https://${apiUrl}/api/wallet/transfer
+Authorization: Bearer {seu_token_jwt}
+x-api-key: <your-api-key>
+x-secret-key: <your-secret-key>
+Content-Type: application/json
+
+{
+  "tokenSymbol": "USDT",
+  "network": "Polygon",
+  "amount": "3.2500",
+  "toAddress": "0x0a7A5239d352244C0303204c3f5D538ec13EF6CE"
+}`,
+      exampleResponse: `{
+  "success": false,
+  "error": "Saldo insuficiente",
+  "error_code": "INSUFFICIENT_BALANCE",
+  "details": {
+    "requested": "3.25000000",
+    "available": "0.00000000",
+    "currency": "USDT"
+  },
+  "timestamp": "2025-11-28T15:04:58.674Z",
+  "message": "Erro na operação"
+}`,
+      labels: [
+        { text: "CARTEIRA", bgColor: "bg-[#f59e0b]", textColor: "text-white" },
+        { text: "TRANSFERÊNCIA", bgColor: "bg-[#8b5cf6]", textColor: "text-white" },
+      ],
+      bodyExplanation: `Autenticação (escolha 1):
+• Authorization: Bearer {seu_token_jwt}
+• x-api-key: <your-api-key>
+• x-secret-key: <your-secret-key>
+
+Campos da requisição:
+• tokenSymbol: Símbolo do token (ex.: USDT)
+• network: Rede da transação (Ethereum, BSC, Polygon)
+• amount: Valor a transferir (string decimal)
+• toAddress: Endereço de destino da carteira
+
+Status disponíveis:
+• PENDING: Transferência criada e aguardando processamento
+• PROCESSING: Em processamento na rede
+• COMPLETED: Confirmada na rede
+• FAILED: Falha na execução ou validação`,
+    },
+    // TRADE ENDPOINTS
   ]
+
+  const priorityOrder = [
+    "Listar Carteiras",
+    "Consultar Saldos do Usuário",
+    "Transferência entre Carteiras",
+  ]
+  const orderedEndpoints = [...endpoints].sort((a, b) => {
+    const ia = priorityOrder.indexOf(a.name)
+    const ib = priorityOrder.indexOf(b.name)
+    const pa = ia === -1 ? 100 : ia
+    const pb = ib === -1 ? 100 : ib
+    if (pa !== pb) return pa - pb
+    return a.name.localeCompare(b.name)
+  })
 
   const webhookExamples = [
     {
@@ -584,7 +466,7 @@ Observação:
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
-              API Documentation - Pixley Crypto Transactions
+              Pixley API Documentation
             </h2>
             <p className="text-slate-600">
               Esta documentação descreve os principais endpoints da API do
@@ -599,7 +481,7 @@ Observação:
                 Base URL
               </h4>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
-                https://crypto.sandbox.pixley.app
+                https://crypto.pixley.app
               </div>
             </div>
 
@@ -609,10 +491,12 @@ Observação:
                 Autenticação
               </h4>
               <p className="text-slate-600 mb-4 text-sm">
-                Todos os endpoints requerem autenticação via JWT token e
-                credenciais de API:
+                Todos os endpoints aceitam autenticação via
+                <span className="font-mono"> Authorization: Bearer &lt;seu-token-jwt&gt; </span>
+                ou via cabeçalhos de API:
               </p>
               <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
+                <div>Authorization: Bearer &lt;seu-token-jwt&gt;</div>
                 <div>x-api-key: &lt;your-api-key&gt;</div>
                 <div>x-secret-key: &lt;your-secret-key&gt;</div>
               </div>
@@ -621,12 +505,34 @@ Observação:
                 obtidas através do nosso suporte.
               </p>
             </div>
+
+            <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 w-full md:col-span-2">
+              <h4 className="text-lg font-semibold text-slate-800 mb-4 flex items-center">
+                <FaRocket className="w-5 h-5 mr-2 text-purple-600" />
+                Health Status (curl)
+              </h4>
+              <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100">
+                curl -s -X GET &quot;https://crypto.pixley.app/api/health&quot; -H &quot;Accept: application/json&quot;
+              </div>
+              <div className="bg-white/60 rounded-xl p-4 font-mono text-sm border border-purple-100 mt-3">
+                <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">{`{
+  "status": "OK",
+  "environment": "production",
+  "service": {
+    "name": "pixley-crypto-transactions",
+    "version": "2.0.0"
+  },
+  "uptime": 41027.390472536,
+  "timestamp": "2025-11-28T15:22:54.901Z"
+}`}</pre>
+              </div>
+            </div>
           </div>
 
           {/* Detailed Endpoints */}
           <div className="space-y-8">
             {/* All Endpoints */}
-            {endpoints.map((endpoint, index) => (
+            {orderedEndpoints.map((endpoint, index) => (
               <div
                 key={index}
                 className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 hover:bg-white/80 transition-all duration-300"
@@ -673,7 +579,7 @@ Observação:
                         </span>
                       </div>
                       {endpoint.exampleRequest &&
-                        endpoint.exampleRequest.includes("{") && (
+                        endpoint.exampleRequest.split("\n").length > 1 && (
                           <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200 overflow-x-auto">
                             <pre className="whitespace-pre-wrap text-xs leading-relaxed text-slate-800 break-words">
                               {endpoint.exampleRequest
@@ -878,55 +784,21 @@ Observação:
       <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200/50 mt-16">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="text-center">
-            <div className="flex items-center justify-center mb-6">
+            <div className="flex flex-col items-center justify-center mb-6">
               <Image
                 src="/pixley_logo.svg"
                 alt="Pixley Logo"
-                width={48}
+                width={128}
                 height={48}
                 className="mr-3"
               />
-              <span className="text-xl font-semibold text-slate-800">
-                Pixley
-              </span>
-            </div>
-            <p className="text-slate-600 mb-2">
-              &copy; {new Date().getFullYear()} Pixley. Todos os direitos
-              reservados.
-            </p>
-            <p className="text-sm text-slate-500 mb-8">
-              crypto.sandbox.pixley.app
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
-              <div className="text-left">
-                <h4 className="font-semibold text-slate-800 mb-3">
-                  Corporate Address
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
+              <div className="text-center">
+                <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                  PIXLEY LLC
+                  <br />
                   30 N Gould St Ste R Sheridan,
                   <br />
-                  WY 82801, Wyoming, MI, United States.
-                </p>
-              </div>
-
-              <div className="text-left">
-                <h4 className="font-semibold text-slate-800 mb-3">
-                  Contact Us
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  <a
-                    href="tel:+1-321-352-3332"
-                    className="hover:text-purple-600 transition-colors block mb-1"
-                  >
-                    +1-(321)-352-3332
-                  </a>
-                  <a
-                    href="mailto:contact@pixley.app"
-                    className="hover:text-purple-600 transition-colors block"
-                  >
-                    contact@pixley.app
-                  </a>
+                  WY 82801, Wyoming, United States.
                 </p>
               </div>
             </div>
